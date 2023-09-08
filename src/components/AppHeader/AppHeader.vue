@@ -48,18 +48,16 @@
 
 <script>
 // import VirtualLogIn from '../VirtualLogIn.vue'
-export default {
-//   components:{
-//     VirtualLogIn
-//   },
-// Example component that accesses usernames
-computed: {
-  usernames() {
-    return this.$store.state.usernames;
-  },
-},
+import { mapGetters } from 'vuex'
 
-};
+export default {
+  computed: {
+    ...mapGetters(['getAllUsernames']),
+    usernames() {
+      return this.getAllUsernames;
+    },
+  },
+}
 </script>
 
 <style scoped>
