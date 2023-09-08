@@ -40,7 +40,6 @@
               },
               username: '',
               password: '',
-              validUsername: '123',
               validPassword: '123',
               usernameError: '',
               passwordError: '',
@@ -50,13 +49,14 @@
           validateForm() {
               this.usernameError = '';
               this.passwordError = '';
-              if (this.username !== this.validUsername) {
-                  this.usernameError = 'Invalid username';
-              }
-              else if (this.password !== this.validPassword) {
+            //   if (this.username !== this.validUsername) {
+            //       this.usernameError = 'Invalid username';
+            //   }
+              if (this.password !== this.validPassword) {
                   this.passwordError = 'Invalid password';
               }
               else {
+                this.$store.commit('ADD_USERNAME', this.username);
                   this.$router.push('/menu');
                   // this.username=this.validUsername;
                   // You can navigate to the next page or perform other actions here

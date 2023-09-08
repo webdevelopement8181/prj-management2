@@ -9,6 +9,15 @@
       <div class="nav-item">{{ username }}</div>
     </div> -->
     <ul>
+        <template>
+  <div>
+    <h1>Usernames:</h1>
+    <ul>
+      <li v-for="username in usernames" :key="username">{{ username }}</li>
+    </ul>
+  </div>
+</template>
+
       <li>
         <span class="icon-item"><font-awesome-icon :icon="['fas', 'user']" /></span>
         <router-link to="/user-management" class="menu-item">   User Management   </router-link>
@@ -43,9 +52,13 @@ export default {
 //   components:{
 //     VirtualLogIn
 //   },
-  props: {
-    username: String, // Pass the username as a prop
+// Example component that accesses usernames
+computed: {
+  usernames() {
+    return this.$store.state.usernames;
   },
+},
+
 };
 </script>
 
