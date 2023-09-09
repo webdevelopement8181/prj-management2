@@ -1,6 +1,6 @@
 <template>
   <div>
-    gggg
+ 
     <b-table hover :items="items"></b-table>
   </div>
 </template>

@@ -11,10 +11,10 @@
     <ul>
         <template>
   <div>
-    <h1>Usernames:</h1>
-    <ul>
+    
+    <!-- <ul>
       <li v-for="username in usernames" :key="username">{{ username }}</li>
-    </ul>
+    </ul> -->
   </div>
 </template>
 
@@ -39,24 +39,26 @@
       
       </li>
       <li>
-        <!-- <VirtualLogIn></VirtualLogIn> -->
+        <VirtualLogin></VirtualLogin>
       </li>
     </ul>
   </nav>
 </div>
+
 </template>
 
 <script>
-// import VirtualLogIn from '../VirtualLogIn.vue'
-import { mapGetters } from 'vuex'
+import VirtualLogin from '@/components/VirtualLogin.vue';
+
+
+
 
 export default {
-  computed: {
-    ...mapGetters(['getAllUsernames']),
-    usernames() {
-      return this.getAllUsernames;
+    computed: {
+       
+       
     },
-  },
+    components: { VirtualLogin }
 }
 </script>
 
