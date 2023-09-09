@@ -7,8 +7,7 @@
       </b-row>
       <!-- active and total customers filtering -->
       <b-row>
-        <!-- :activeCustomers="activeCustomers" -->
-        <!-- @activeCustomerIsActive="setFilterActiveIsActive" -->
+  
         <customer-overview>
           :totalCustomers="numberOfCustomers"
        
@@ -45,7 +44,7 @@
             <b-table 
               striped
               hover
-              :items="items"
+              :items="customers"
               :fields="fields"
               class="text-center"
             >
@@ -173,7 +172,8 @@
   </template>
   
   <script>
- import { mapGetters, mapActions } from "vuex";
+  // import axios from "axios";
+ import { mapGetters, mapActions,mapState } from "vuex";
   import CustomerOverview from "@/components/CustomerOverview.vue";
   import CreateCustomerForm from "@/components/CreateCustomerForm.vue";
   import EditCustomerForm from "@/components/EditCustomerForm.vue";
@@ -240,25 +240,31 @@ import AppHeader from '../components/AppHeader/AppHeader.vue'
         },
         "actions",
       ],
-        // items: [],
-        // numberOfCustomers: 0,
-        // activeCustomers: 0,
-        // activeCustomersData: [],
-        // customerId: 0,
-        // companySearchTerm: "",
-        // tableHeader: "",
-        // showSuccessAlert: false,
-        // alertMessage: "",
+        items: [],
+        numberOfCustomers: 0,
+        activeCustomers: 0,
+        activeCustomersData: [],
+        customerId: 0,
+        companySearchTerm: "",
+        tableHeader: "",
+        showSuccessAlert: false,
+        alertMessage: "",
       };
     },
    
 
 
   computed: {
+    
+    ...mapState("customer", ["customers"]),
     ...mapGetters("customer", ["allCustomers"]), // Map the customer module's getter
   },
  
   mounted() {
+ 
+  this.fetchCustomers();
+
+
     this.getCustomerData();
   },
     methods: {
@@ -275,22 +281,7 @@ async getCustomerData() {
       closeCreateModal() {
         this.$refs["create-customer-modal"].hide();
       },
-      // getCustomerData() {
-      //   axios
-      //     .get("http://localhost:3000/customers/")
-      //     .then((response) => {
-      //       this.eader = "Total Customer";
-      //       this.items = response.data;
-      //       this.numberOfCustomers = response.data.length;
-      //       this.activeCustomersData = response.data.filter(
-      //         (item) => item.customer_status === "active"
-      //       );
-      //       this.activeCustomers = this.activeCustomersData.length;
-      //     })
-      //     .catch((error) => {
-      //       console.log(error);
-      //     });
-      // },
+  
       getRowData(id) {
         this.$refs["edit-customer-modal"].show();
         this.customerId = id;
@@ -302,10 +293,7 @@ async getCustomerData() {
         this.tableHeader = "Total users";
         this.getCustomerData();
       },
-      // setFilterActiveIsActive() {
-      //   this.tableHeader = "Active Customers";
-      //   this.items = this.activeCustomersData;
-      // },
+    
       showAlertCreate() {
         this.showSuccessAlert = true;
         this.alertMessage = "Customer was created successfully!";

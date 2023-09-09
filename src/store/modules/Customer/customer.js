@@ -12,14 +12,22 @@ const mutations = {
 };
 
 const actions = {
-  async fetchCustomers({ commit }) {
-    try {
-      const response = await axios.get("http://locajson-server --watch db.jsonlhost:3000/customers/");
-      commit("SET_CUSTOMERS", response.data);
-    } catch (error) {
-      console.error(error);
-    }
-  },
+ 
+    async fetchCustomers({ commit }) {
+        // console.error("Fetching customers...");
+        try {
+          const response = await axios.get("http://localhost:3000/customers/");
+          if (response.status === 200) {
+            commit("SET_CUSTOMERS", response.data);
+          } else {
+            console.error("Failed to fetch customer data.");
+          }
+        } catch (error) {
+          console.error("Error fetching customer data:", error);
+        }
+      
+      },
+   
 };
 
 const getters = {
@@ -28,9 +36,4 @@ const getters = {
   },
 };
 
-export default {
-  state,
-  mutations,
-  actions,
-  getters,
-};
+export default { namespaced: true, state, mutations, actions, getters, };

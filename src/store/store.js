@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import customerModule from './modules/Customer/customer';
+import customerModule from './modules/customer/customer';
 
 Vue.use(Vuex)
 
@@ -18,6 +18,7 @@ export const store = new Vuex.Store({
     SET_USERNAMES(state, usernames) {
       state.usernames = usernames;
       sessionStorage.setItem('usernames', JSON.stringify(state.usernames));
+      
     },
   },
   actions: {
