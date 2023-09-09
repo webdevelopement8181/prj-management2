@@ -167,13 +167,13 @@
       </b-modal>
 <AppHeader></AppHeader>
 <!-- <AppFooter></AppFooter> -->
-<AppMain></AppMain>
+<!-- <AppMain></AppMain> -->
     </div>
    
   </template>
   
   <script>
-  import axios from "axios";
+ import { mapGetters, mapActions } from "vuex";
   import CustomerOverview from "@/components/CustomerOverview.vue";
   import CreateCustomerForm from "@/components/CreateCustomerForm.vue";
   import EditCustomerForm from "@/components/EditCustomerForm.vue";
@@ -240,43 +240,57 @@ import AppHeader from '../components/AppHeader/AppHeader.vue'
         },
         "actions",
       ],
-        items: [],
-        numberOfCustomers: 0,
-        activeCustomers: 0,
-        activeCustomersData: [],
-        customerId: 0,
-        companySearchTerm: "",
-        tableHeader: "",
-        showSuccessAlert: false,
-        alertMessage: "",
+        // items: [],
+        // numberOfCustomers: 0,
+        // activeCustomers: 0,
+        // activeCustomersData: [],
+        // customerId: 0,
+        // companySearchTerm: "",
+        // tableHeader: "",
+        // showSuccessAlert: false,
+        // alertMessage: "",
       };
     },
-    mounted() {
-      this.getCustomerData();
-    },
+   
+
+
+  computed: {
+    ...mapGetters("customer", ["allCustomers"]), // Map the customer module's getter
+  },
+ 
+  mounted() {
+    this.getCustomerData();
+  },
     methods: {
+      ...mapActions("customer", ["fetchCustomers"]), // Map the customer module's action
+
+async getCustomerData() {
+  await this.fetchCustomers(); // Dispatch the action to fetch customer data
+  // You can now access customer data using this.allCustomers
+  console.log(this.allCustomers);
+},
       showCreateModal() {
         this.$refs["create-customer-modal"].show();
       },
       closeCreateModal() {
         this.$refs["create-customer-modal"].hide();
       },
-      getCustomerData() {
-        axios
-          .get("http://localhost:3000/customers/")
-          .then((response) => {
-            this.eader = "Total Customer";
-            this.items = response.data;
-            this.numberOfCustomers = response.data.length;
-            this.activeCustomersData = response.data.filter(
-              (item) => item.customer_status === "active"
-            );
-            this.activeCustomers = this.activeCustomersData.length;
-          })
-          .catch((error) => {
-            console.log(error);
-          });
-      },
+      // getCustomerData() {
+      //   axios
+      //     .get("http://localhost:3000/customers/")
+      //     .then((response) => {
+      //       this.eader = "Total Customer";
+      //       this.items = response.data;
+      //       this.numberOfCustomers = response.data.length;
+      //       this.activeCustomersData = response.data.filter(
+      //         (item) => item.customer_status === "active"
+      //       );
+      //       this.activeCustomers = this.activeCustomersData.length;
+      //     })
+      //     .catch((error) => {
+      //       console.log(error);
+      //     });
+      // },
       getRowData(id) {
         this.$refs["edit-customer-modal"].show();
         this.customerId = id;

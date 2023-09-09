@@ -1,12 +1,15 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import customerModule from './modules/Customer/customer';
 
 Vue.use(Vuex)
 
 export const store = new Vuex.Store({
   state: {
     usernames: JSON.parse(sessionStorage.getItem('usernames')) || [],
+    customers:[]
   },
+ 
   mutations: {
     ADD_USERNAME(state, username) {
       state.usernames.push(username);
@@ -24,5 +27,8 @@ export const store = new Vuex.Store({
     getAllUsernames(state) {
       return state.usernames;
     },
+  },
+  modules: {
+    customer: customerModule, // Register the customer module
   },
 })
