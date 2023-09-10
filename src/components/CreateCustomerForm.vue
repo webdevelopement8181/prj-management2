@@ -57,7 +57,7 @@
     </b-form-invalid-feedback>
           </b-form-group>
         </b-col>
-  
+<!--   
         <b-col cols="6">
           <b-form-group id="creator-name" label="creator name" label-for="creator-name">
             <b-form-input
@@ -73,8 +73,8 @@
     </b-form-invalid-feedback>
           </b-form-group>
           
-        </b-col>
-        <b-col cols="6">
+        </b-col> -->
+        <!-- <b-col cols="6">
           <b-form-group id="creatoin-time" label="creation time" label-for="creation-time">
             <b-form-input
               id="creatoin-time"
@@ -86,7 +86,7 @@
   
           </b-form-group>
           
-        </b-col>
+        </b-col> -->
   </b-row>
   
       <b-row class="mt-5">
@@ -230,10 +230,7 @@
       }, ); // Update every 1 seco
   },
    watch: {
-      // selectedRole(newVal) {
-      //   // Watch for changes in selectedRole and update isRoleSelected
-      //   this.isRoleSelected = newVal !== null;
-      // },
+    
     },
   
   

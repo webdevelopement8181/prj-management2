@@ -1,7 +1,11 @@
 <template>
     <div>
       <b-row>
-        <b-alert v-model="showSuccessAlert" variant="success" dismissible>
+        <b-alert v-model="showSuccessAlert"      :show="dismissCountDown"
+      dismissible
+      variant="warning"
+      @dismissed="dismissCountDown=0"
+      @dismiss-count-down="countDownChanged">
           {{ alertMessage }}
         </b-alert>
       </b-row>
@@ -195,6 +199,9 @@ import AppHeader from '../components/AppHeader/AppHeader.vue'
     },
     data() {
       return {
+        dismissSecs: 10,
+        dismissCountDown: 0,
+        showDismissibleAlert: false,
         // Note 'isActive' is left out and will not appear in the rendered table
         fields: [
         {
@@ -268,6 +275,10 @@ import AppHeader from '../components/AppHeader/AppHeader.vue'
     this.getCustomerData();
   },
     methods: {
+      
+      countDownChanged(dismissCountDown) {
+        this.dismissCountDown = dismissCountDown
+      },
       ...mapActions("customer", ["fetchCustomers"]), // Map the customer module's action
 
 async getCustomerData() {
@@ -296,6 +307,7 @@ async getCustomerData() {
     
       showAlertCreate() {
         this.showSuccessAlert = true;
+        this.dismissCountDown = this.dismissSecs
         this.alertMessage = "Customer was created successfully!";
       },
       showAlertUpdate() {

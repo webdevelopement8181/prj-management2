@@ -107,7 +107,7 @@
     </template>
     
     <script>
-    import axios from "axios";
+  import { mapGetters } from "vuex";
     
     export default {
       name: "CreateCustomerModal",
@@ -121,7 +121,7 @@
         };
       },
       mounted() {
-        this.getCusomterByID();
+        // this.getCusomterByID();
         setInterval(() => {
         const currentDate = new Date();
         const hours = String(currentDate.getHours()).padStart(2, '0');
@@ -132,6 +132,7 @@
       }, ); // Update 
       },
       computed:{
+        ...mapGetters("customer", ["getCustomerById"]),
         userNameState() {
       if (this.customer && this.customer.last_modifier) {
         const userNameLength = this.customer.last_modifier.length;
@@ -158,39 +159,36 @@
         return true;
       }, 
       },
+      created() {
+    // Fetch the customer data from Vuex using the customer ID
+    this.customer = this.getCustomerById(this.customerId);
+  },
       methods: {
         triggerClose() {
           this.$emit("closeEditModal");
         },
-        getCusomterByID() {
-          axios
-            .get(`http://localhost:3000/customers/${this.customerId}`)
-            .then((response) => {
-              this.customer = response.data;
-            })
-            .catch((error) => {
-              console.log(error);
-            });
-        },
-        updateCustomer() {
-          this.customer.user_type = this.selectedRole;
-          axios
-            .put(
-              `http://localhost:3000/customers/${this.customerId}`,
-              this.customer
-            )
-            .then((response) => {
-              console.log(response.data);
-              this.$emit("closeEditModal");
-              this.$emit("reloadDataTable");
-              this.$emit("showSuccessAlert");
-            })
-            .catch((error) => {
-              console.log(error);
-            });
-        },
-      },
+       
+          updateCustomer() {
       
+    this.$store.dispatch("customer/updateCustomer", this.customer)
+      .then(() => {
+        console.log("Customer updated successfully");
+        this.$emit("closeEditModal");
+        this.$emit("reloadDataTable");
+        this.$emit("showSuccessAlert");
+      })
+      .catch((error) => {
+        console.error("Error updating customer:", error);
+      });
+  },
+      
+  //       clearForm() {
+  //   // Reset the form fields
+  //   this.customer = {};
+  //   this.selectedRole = null;
+  // },
+},
+     
     };
     </script>
     <style>

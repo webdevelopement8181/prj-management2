@@ -11,8 +11,17 @@ const mutations = {
   },
  ADD_CUSTOMER(state, newCustomer) {
   state.customers.push(newCustomer);
+},
+  UPDATE_CUSTOMER(state, updatedCustomer) {
+    // Find the index of the customer to update in the array
+    const index = state.customers.findIndex((customer) => customer.id === updatedCustomer.id);
+    if (index !== -1) {
+      // Update the customer data in the array
+      state.customers.splice(index, 1, updatedCustomer);
+    }
 }
 };
+
 
 const actions = {
  
@@ -49,7 +58,26 @@ const actions = {
           console.error("Error adding customer:", error);
           // Handle any errors related to the HTTP request here.
         }
-      }
+      },
+      async updateCustomer({ commit }, updatedCustomer) {
+        try {
+          // Send the request to the server to update the customer
+          const response = await axios.put(`http://localhost:3000/customers/${updatedCustomer.id}`, updatedCustomer);
+          console.log("it getssss the id")
+          if (response.status === 200) {
+            console.log("it gets the id")
+            // Commit a mutation to update the customer in the store
+            commit("UPDATE_CUSTOMER", updatedCustomer);
+          } else {
+            console.error("Failed to update customer. Server returned:", response);
+            console.log("it doesnt get  the id")
+            // Handle server errors if needed
+          }
+        } catch (error) {
+          console.error("Error updating customer:", error);
+          // Handle any errors related to the HTTP request here
+        }
+      },
       
    
 };
@@ -57,6 +85,9 @@ const actions = {
 const getters = {
   allCustomers(state) {
     return state.customers;
+  },
+  getCustomerById: (state) => (id) => {
+    return state.customers.find((customer) => customer.id === id);
   },
 };
 
