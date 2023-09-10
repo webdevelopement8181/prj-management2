@@ -94,7 +94,7 @@
       
         <b-row class="mt-4">
           <b-col cols="3">
-            <b-button variant="primary" class="px-5" @click="updateCustomer" :disabled="!userNameState||  !isRoleSelected|| (!firstNameState && !lastNameState)"
+            <b-button variant="primary" class="px-5" @click="updateCustomer" :disabled=" !isRoleSelected|| (!firstNameState && !lastNameState)"
               >Updateuser</b-button
             >
           </b-col>

@@ -95,19 +95,17 @@
       </h5>
       </b-row>
       <b-row>
-       <div class="selection-role-constainer">
-        <b-col cols="4">
-  
-          <b-form-checkbox-group v-model="selectedRole" name="role"  >
-            type:
-        <b-form-checkbox value="admin" switch>Admin</b-form-checkbox>
-        <b-form-checkbox value="user" switch>User</b-form-checkbox>
-        
-      </b-form-checkbox-group>
-    
-        </b-col>
-      </div>
-      </b-row>
+  <div class="selection-role-constainer">
+    <b-col cols="4">
+      <b-form-radio-group v-model="selectedRole" name="role">
+        type:
+        <b-form-radio value="admin">Admin</b-form-radio>
+        <b-form-radio value="user">User</b-form-radio>
+      </b-form-radio-group>
+    </b-col>
+  </div>
+</b-row>
+
    
   
       <b-row class="mt-4">
@@ -125,7 +123,8 @@
   </template>
   
   <script>
-  import axios from "axios";
+  // import axios from "axios";
+  // import { mapGetters, mapActions,mapState } from "vuex";
   
   export default {
     name: "CreateCustomerModal",
@@ -136,12 +135,16 @@
         customer: {},
       };
     },
+    
     computed: {
-      
+ 
       isRoleSelected() {
         return this.selectedRole !== null;
+ 
       },
-     
+    //   ...mapState("customer", ["customers"]),
+    // ...mapGetters("customer", ["allCustomers"]), 
+
       creationTimeState(){
   const currentDate=new Date();
   const hours= String(currentDate.getHours()).padStart(2,'0');
@@ -177,27 +180,46 @@
     triggerClose() {
       this.$emit("closeCreateModal");
     },
-    addNewCustomer() {
-      if (this.selectedRole) {
-        // Assign the selected role to this.customer.user_type
-        this.customer.user_type = this.selectedRole;
-        
-        // Perform the Axios request to add a new customer
-        axios
-          .post("http://localhost:3000/customers/", this.customer)
-          .then((response) => {
-            console.log(response.data);
-            this.$emit("closeCreateModal");
-            this.$emit("reloadDataTable");
-            this.$emit("showSuccessAlert");
-          })
-          .catch((error) => {
-            console.log(error);
-          });
+    
+    async addNewCustomer() {
+    // Validate the form
+    if (this.userNameState && this.isRoleSelected && (this.firstNameState || this.lastNameState)) {
+      // if (this.selectedRole) {
+      // Assign the selected role to this.customer.user_type
+      this.customer.user_type = this.selectedRole;
+      // Create a new customer object
+      let newCustomer = {
+        user_name: this.customer.user_name,
+        first_name: this.customer.first_name,
+        last_name: this.customer.last_name,
+        role:  this.customer.user_type,
+        creation_time: this.customer.creation_time,
+      };
+      try {
+        // Dispatch the addCustomer action with the new customer object
+        await this.$store.dispatch("customer/addCustomer", newCustomer);
+        // Clear the form values
+        this.clearForm();
+        // Emit events to close the modal and update the table
+        this.$emit("closeCreateModal"); // Use the correct event name
+        this.$emit("reloadDataTable");
+          this.$emit("showSuccessAlert");
+        // Optionally, you can emit an event to trigger a table update if needed
+        this.$emit("updateTable");
+      } catch (error) {
+        // Handle the error
+        console.error("Error adding customer:", error);
       }
-    },
+    }
   },
+  clearForm() {
+    // Reset the form fields
+    this.customer = {};
+    this.selectedRole = null;
+  },
+},
   mounted(){
+
     setInterval(() => {
         const currentDate = new Date();
         const hours = String(currentDate.getHours()).padStart(2, '0');
@@ -231,3 +253,16 @@
   }
   
   </style>
+  <!-- after add newcustomer -->
+  <!-- // Perform the Axios request to add a new customer
+  // axios
+  //   .post("http://localhost:3000/customers/", this.customer)
+  //   .then((response) => {
+  //     console.log(response.data);
+  //     this.$emit("closeCreateModal");
+  //     this.$emit("reloadDataTable");
+  //     this.$emit("showSuccessAlert");
+  //   })
+  //   .catch((error) => {
+  //     console.log(error);
+  //   }); -->

@@ -213,7 +213,7 @@ import AppHeader from '../components/AppHeader/AppHeader.vue'
           sortable: false,
         },
         {
-          key: "user_type",
+          key: "role",
           label: "type",
           sortable: false,
         },
@@ -332,7 +332,7 @@ margin-right: 52%;
  }
 
 .table-container{
-  margin-left: 25%;
+  margin-left: 10%;
   width: 80%;
   height: 130%;
 }
