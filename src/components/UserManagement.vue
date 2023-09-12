@@ -8,7 +8,7 @@
 
 
 <script>
-import UserCrudTable from '../components/UserCrudTable.vue'
+import UserCrudTable from '../components/UserManagerFiles/UserCrudTable.vue'
 export default{
     components:{
         UserCrudTable

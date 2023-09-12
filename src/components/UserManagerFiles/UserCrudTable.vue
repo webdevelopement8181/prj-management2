@@ -185,12 +185,12 @@
   <script>
   // import axios from "axios";
  import { mapGetters, mapActions,mapState } from "vuex";
-  import CustomerOverview from "@/components/CustomerOverview.vue";
-  import CreateCustomerForm from "@/components/CreateCustomerForm.vue";
-  import EditCustomerForm from "@/components/EditCustomerForm.vue";
-  import DeleteCustomerModal from "@/components/DeleteCustomerModal.vue";
+  import CustomerOverview from "@/components/UserManagerFiles/CustomerOverview.vue";
+  import CreateCustomerForm from "@/components/UserManagerFiles/CreateCustomerForm.vue";
+  import EditCustomerForm from "@/components/UserManagerFiles/EditCustomerForm.vue";
+  import DeleteCustomerModal from "@/components/UserManagerFiles/DeleteCustomerModal.vue";
 // import AppFooter from "../footer/AppFooter.vue";
-import AppHeader from '../components/AppHeader/AppHeader.vue'
+import AppHeader from '@/components/AppHeader/AppHeader.vue'
 // import AppMain from "../AppMain/AppMain.vue";
 
   
@@ -228,28 +228,33 @@ import AppHeader from '../components/AppHeader/AppHeader.vue'
         },
         {
           key: "role",
-          label: "type",
+          label: "Type",
           sortable: false,
         },
         //
         {
           key: "creator_name",
-          label: "creator Name",
+          label: "Creator Name",
           sortable: false,
         },
         {
           key: "creation_time",
-          label: "creation Time",
+          label: "Creation Time",
           sortable: false,
         },
         {
           key: "last_modifier",
-          label: "last Modifier",
+          label: "Last Modifier",
           sortable: false,
         },
         {
           key: "last_modification_time",
-          label: "last Modification Time",
+          label: "Last Modification Time",
+          sortable: false,
+        },
+        {
+          key: "user_group",
+          label: " User Group",
           sortable: false,
         },
         "actions",

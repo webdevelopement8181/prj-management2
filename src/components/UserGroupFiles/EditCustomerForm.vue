@@ -160,7 +160,7 @@ this.hasChanges=false;
     lastNameState() {
         if (this.customer && this.customer.last_name) {
           const lastNameLength = this.customer.last_name.length;
-          return lastNameLength <= 45; // Corrected condition
+          return lastNameLength <= 45; 
         }
         return true;
       }, 
@@ -174,7 +174,7 @@ this.hasChanges=false;
     "customer.first_name": "updateHasChanges",
   "customer.last_name": {
     handler: "updateHasChanges",
-    deep: true, // Use deep option if "last_name" is nested within the "customer" object
+    deep: true, //  deep option if "last_name" is nested within the "customer" object
   },
  
   },

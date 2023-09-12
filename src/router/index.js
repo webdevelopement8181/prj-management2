@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import MainPage from '../components/MainPage.vue'
 import UserManagement from'../components/UserManagement.vue'
+import ManageUserGroup from '../components/ManageUserGroup.vue'
 
 Vue.use(VueRouter)
 
@@ -29,6 +30,11 @@ const routes = [
     path: '/user-management',
     name: 'userManagement',
     component:UserManagement
+  },
+  {
+    path: '/manage-user-group',
+    name: 'manageUserGroup',
+    component:ManageUserGroup 
   },
 ]
 
