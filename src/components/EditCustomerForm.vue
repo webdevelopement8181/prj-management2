@@ -48,12 +48,12 @@
     </b-form-invalid-feedback>
             </b-form-group>
           </b-col>
-    
-         <!-- <b-col cols="6">
+<!--     
+         <b-col cols="6">
           <b-form-group id="last-modifier" label="last modifier" label-for="last-modifier">
             <b-form-input
               id="last-modifier"
-              readonly
+          
               type="text"
               placeholder="last modifier"
               v-model="customer.last_modifier"
@@ -118,6 +118,7 @@
         return {
           selectedRole:null,
           customer: {},
+          hasChanges: false,
         };
       },
       mounted() {
@@ -131,11 +132,12 @@
         this.customer.last_modification_time = time; // Update the input value
 
       }, ); // Update 
-
+this.hasChanges=false;
       },
       computed:{
        
-  ...mapGetters("customer", ["getCustomerById", "getUserName"]),
+  ...mapGetters("customer", ["getCustomerById"]),
+  ...mapGetters([ "getUserName"]),
 
         userNameState() {
       if (this.customer && this.customer.last_modifier) {
@@ -169,22 +171,31 @@
     // this.username = this.getUsername;
   },
   watch: {
-    "customer.first_name": "updateLastModifier",
-    "customer.last_name": "updateLastModifier",
-    "role":"updateLastModifier"
+    "customer.first_name": "updateHasChanges",
+  "customer.last_name": {
+    handler: "updateHasChanges",
+    deep: true, // Use deep option if "last_name" is nested within the "customer" object
+  },
+ 
   },
       methods: {
+        updateHasChanges(){
+       this.hasChanges=true;   
+        },
         updateLastModifier() {
-      // Update the last_modifier field with the username from Vuex
-      const username = this.getUserName(); // Call the function to get the username
+          if(this.hasChanges){
+   //  console.log(this.getUserName)
+   const username = this.getUserName; 
   this.customer.last_modifier = username;
+          }
+ 
     },
         triggerClose() {
           this.$emit("closeEditModal");
         },
        
           updateCustomer() {
-      
+            this.updateLastModifier();
     this.$store.dispatch("customer/updateCustomer", this.customer)
       .then(() => {
         console.log("Customer updated successfully");

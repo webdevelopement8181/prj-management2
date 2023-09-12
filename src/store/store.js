@@ -25,13 +25,12 @@ export const store = new Vuex.Store({
     // Define actions if needed
   },
   getters: {
-    getAllUsernames(state) {
+    getAllUsernames: (state) => {
       return state.usernames;
     },
-    getUserName(state) {
-      return () => {
-        return state.usernames.length > 0 ? state.usernames[0] : '';
-      };
+    getUserName: (state) => {
+      const length = state.usernames.length;
+      return length > 0 ? state.usernames[length - 1] : '';
     }
   },
   modules: {
