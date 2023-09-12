@@ -95,6 +95,13 @@
 
                 }}
               </template>
+              <template #cell(user_group)="data">
+                {{
+                   
+     data.item.user_group
+
+                }}
+              </template>
               <template #cell(customer_status)="data">
                 <b-icon-bookmark-check-fill
                   variant="success"

@@ -9,7 +9,37 @@
         </b-row>
   
   <b-row>
-        <b-col cols="6">
+    <b-col cols="6">
+  <b-form-group id="group-name" label="Group Name" label-for="group-name">
+    <b-form-input
+      id="group-name"
+      type="text"
+      placeholder="group name"
+      v-model="customer.group_name"
+      :state="userGroupState"
+      :valid="userGroupState"
+    ></b-form-input>
+    <b-form-invalid-feedback>
+      User name must be between 5 and 45 characters.
+    </b-form-invalid-feedback>
+  </b-form-group>
+  </b-col>
+  <b-col cols="6">
+  <b-form-group id="user-name" label="User Name" label-for="user-name">
+    <b-form-input
+      id="user-name"
+      type="text"
+      placeholder="User Name"
+      v-model="customer.user_name"
+    
+    ></b-form-input>
+    <b-form-invalid-feedback>
+      User name must be between 5 and 45 characters.
+    </b-form-invalid-feedback>
+  </b-form-group>
+  </b-col>
+
+        <!-- <b-col cols="6">
   <b-form-group id="user-name" label="User Name" label-for="user-name">
     <b-form-input
       id="user-name"
@@ -23,11 +53,11 @@
       User name must be between 5 and 45 characters.
     </b-form-invalid-feedback>
   </b-form-group>
-  </b-col>
+  </b-col> -->
   
   <!-- i added this to the same row as the username -->
   
-  <b-col cols="6">
+  <!-- <b-col cols="6">
           <b-form-group id="first-name" label="first Name" label-for="first-name">
             <b-form-input
               id="first-name"
@@ -41,8 +71,8 @@
      first name must be 48 characters at max level
     </b-form-invalid-feedback>
           </b-form-group>
-        </b-col>
-        <b-col cols="6">
+        </b-col> -->
+        <!-- <b-col cols="6">
           <b-form-group id="last-name" label="last Name" label-for="last-name">
             <b-form-input
               id="last-name"
@@ -56,7 +86,7 @@
     last name must be 48 characters at max level
     </b-form-invalid-feedback>
           </b-form-group>
-        </b-col>
+        </b-col> -->
 <!--   
         <b-col cols="6">
           <b-form-group id="creator-name" label="creator name" label-for="creator-name">
@@ -95,7 +125,7 @@
       </h5>
       </b-row>
       <b-row>
-  <div class="selection-role-constainer">
+  <!-- <div class="selection-role-constainer">
     <b-col cols="4">
       <b-form-radio-group v-model="selectedRole" name="role">
         type:
@@ -103,14 +133,14 @@
         <b-form-radio value="user">User</b-form-radio>
       </b-form-radio-group>
     </b-col>
-  </div>
+  </div> -->
 </b-row>
 
    
   
       <b-row class="mt-4">
         <b-col cols="3">
-          <b-button variant="primary" class="px-5" @click="addNewCustomer"  :disabled="!userNameState||  !isRoleSelected|| (!firstNameState && !lastNameState)"
+          <b-button variant="primary" class="px-5" @click="addNewCustomer"  :disabled="!userGroupState"
             >Add Customer</b-button
           >
         </b-col>
@@ -131,17 +161,17 @@
     data() {
       return {
     
-  selectedRole:null,
+//   selectedRole:null,
         customer: {},
       };
     },
     
     computed: {
  
-      isRoleSelected() {
-        return this.selectedRole !== null;
+    //   isRoleSelected() {
+    //     return this.selectedRole !== null;
  
-      },
+    //   },
     //   ...mapState("customer", ["customers"]),
     // ...mapGetters("customer", ["allCustomers"]), 
 
@@ -153,27 +183,27 @@
       const time =`${hours}:${minus}:${seconds}`;
       return time;
       },
-    userNameState() {
-      if (this.customer && this.customer.user_name) {
-        const userNameLength = this.customer.user_name.length;
-        return userNameLength >= 5 && userNameLength <= 45;
+      userGroupState() {
+      if (this.customer && this.customer.group_name) {
+        const userGroupLength = this.customer.group_name.length;
+        return userGroupLength >= 5 && userGroupLength <= 45;
       }
       return false; // Return false if customer or user_name is not defined
     },
-    firstNameState(){
-      if (this.customer && this.customer.first_name) {
-        const fisrtNameLength = this.customer.first_name.length;
-        return fisrtNameLength >= 0 && fisrtNameLength<= 45;
-      }
-      return true; 
-    },
-    lastNameState(){
-      if (this.customer && this.customer.last_name) {
-        const lastNameLength = this.customer.last_name.length;
-        return lastNameLength >= 0 && lastNameLength<= 45;
-      }
-      return true; 
-    },
+    // firstNameState(){
+    //   if (this.customer && this.customer.first_name) {
+    //     const fisrtNameLength = this.customer.first_name.length;
+    //     return fisrtNameLength >= 0 && fisrtNameLength<= 45;
+    //   }
+    //   return true; 
+    // },
+    // lastNameState(){
+    //   if (this.customer && this.customer.last_name) {
+    //     const lastNameLength = this.customer.last_name.length;
+    //     return lastNameLength >= 0 && lastNameLength<= 45;
+    //   }
+    //   return true; 
+    // },
   },
   
   methods: {
@@ -183,10 +213,9 @@
     
     async addNewCustomer() {
     // Validate the form
-    if (this.userNameState && this.isRoleSelected && (this.firstNameState || this.lastNameState)) {
-      // if (this.selectedRole) {
-      // Assign the selected role to this.customer.user_type
-      this.customer.user_type = this.selectedRole;
+    if (this.userGroupState) {
+  
+    //   this.customer.user_type = this.selectedRole;
       // Create a new customer object
       let newCustomer = {
         user_name: this.customer.user_name,
@@ -194,6 +223,7 @@
         last_name: this.customer.last_name,
         role:  this.customer.user_type,
         creation_time: this.customer.creation_time,
+        group_name: this.customer.group_name,
       };
       try {
         // Dispatch the addCustomer action with the new customer object
@@ -250,16 +280,3 @@
   }
   
   </style>
-  <!-- after add newcustomer -->
-  <!-- // Perform the Axios request to add a new customer
-  // axios
-  //   .post("http://localhost:3000/customers/", this.customer)
-  //   .then((response) => {
-  //     console.log(response.data);
-  //     this.$emit("closeCreateModal");
-  //     this.$emit("reloadDataTable");
-  //     this.$emit("showSuccessAlert");
-  //   })
-  //   .catch((error) => {
-  //     console.log(error);
-  //   }); -->

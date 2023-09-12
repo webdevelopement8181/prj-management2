@@ -53,7 +53,7 @@
               class="text-center"
             >
           
-              <template #cell(user_name)="data">
+             <!-- <template #cell(user_name)="data">
                 {{
                   data.item.user_name
                 }}
@@ -72,12 +72,17 @@
                 {{
                       data.item.user_type
                 }}
+              </template>  -->
+              <template #cell(group_name)="data">
+                {{
+                    data.item.group_name
+                }}
               </template> 
               <template #cell(creator_name)="data">
                 {{
                     data.item.user_name
                 }}
-              </template>
+              </template> 
               <template #cell(creation_time)="data">
                 {{
                       data.item.creation_time
@@ -92,6 +97,13 @@
                 {{
                    
      data.item.last_modifier
+
+                }}
+              </template>
+                 <template #cell(users)="data">
+                {{
+                   
+     data.item.users
 
                 }}
               </template>
@@ -211,27 +223,32 @@ import AppHeader from '@/components/AppHeader/AppHeader.vue'
         showDismissibleAlert: false,
         // Note 'isActive' is left out and will not appear in the rendered table
         fields: [
-        {
-          key: "user_name",
-          label: "UserName",
-          sortable: false,
-        },
-        {
-          key: "first_name",
-          label: "First Name",
-          sortable: false,
-        },
-        {
-          key: "last_name",
-          label: "Last Name",
-          sortable: false,
-        },
-        {
-          key: "role",
-          label: "Type",
-          sortable: false,
-        },
+        // {
+        //   key: "user_name",
+        //   label: "UserName",
+        //   sortable: false,
+        // },
+        // {
+        //   key: "first_name",
+        //   label: "First Name",
+        //   sortable: false,
+        // },
+        // {
+        //   key: "last_name",
+        //   label: "Last Name",
+        //   sortable: false,
+        // },
+        // {
+        //   key: "role",
+        //   label: "Type",
+        //   sortable: false,
+        // },
         //
+        {
+          key: "group_name",
+          label: "Group Name",
+          sortable: false,
+        },
         {
           key: "creator_name",
           label: "Creator Name",
@@ -254,7 +271,12 @@ import AppHeader from '@/components/AppHeader/AppHeader.vue'
         },
         {
           key: "users",
-          label: " users",
+          label: " Users",
+          sortable: false,
+        },
+        {
+          key: "group_name",
+          label: " group Name",
           sortable: false,
         },
         "actions",
