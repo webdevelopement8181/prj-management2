@@ -49,10 +49,11 @@
             </b-form-group>
           </b-col>
     
-        <!-- <b-col cols="6">
+         <!-- <b-col cols="6">
           <b-form-group id="last-modifier" label="last modifier" label-for="last-modifier">
             <b-form-input
               id="last-modifier"
+              readonly
               type="text"
               placeholder="last modifier"
               v-model="customer.last_modifier"
@@ -63,7 +64,7 @@
    first name must be 48 characters at max level
     </b-form-invalid-feedback>
           </b-form-group>
-        </b-col> -->
+        </b-col>  -->
         <!-- <b-col cols="6">
           <b-form-group id="last-modification-time" label="last Modification Time" label-for="last-modification-time">
             <b-form-input
@@ -80,16 +81,15 @@
         
         </b-row>
         <b-row>
-       <div class="selection-role-constainer">
-        <b-col cols="4">
-  
-          <b-form-checkbox-group v-model="selectedRole" name="role">
-        <b-form-checkbox value="admin" switch>Admin</b-form-checkbox>
-        <b-form-checkbox value="user" switch>User</b-form-checkbox>
-      </b-form-checkbox-group>
-     
-        </b-col>
-      </div>
+          <div class="selection-role-constainer">
+    <b-col cols="4">
+      <b-form-radio-group v-model="selectedRole" name="role">
+        type:
+        <b-form-radio value="admin">Admin</b-form-radio>
+        <b-form-radio value="user">User</b-form-radio>
+      </b-form-radio-group>
+    </b-col>
+  </div>
       </b-row>
       
         <b-row class="mt-4">
@@ -129,10 +129,14 @@
         const seconds = String(currentDate.getSeconds()).padStart(2, '0');
         const time = `${hours}:${minutes}:${seconds}`;
         this.customer.last_modification_time = time; // Update the input value
+
       }, ); // Update 
+
       },
       computed:{
-        ...mapGetters("customer", ["getCustomerById"]),
+       
+  ...mapGetters("customer", ["getCustomerById", "getUserName"]),
+
         userNameState() {
       if (this.customer && this.customer.last_modifier) {
         const userNameLength = this.customer.last_modifier.length;
@@ -162,8 +166,19 @@
       created() {
     // Fetch the customer data from Vuex using the customer ID
     this.customer = this.getCustomerById(this.customerId);
+    // this.username = this.getUsername;
+  },
+  watch: {
+    "customer.first_name": "updateLastModifier",
+    "customer.last_name": "updateLastModifier",
+    "role":"updateLastModifier"
   },
       methods: {
+        updateLastModifier() {
+      // Update the last_modifier field with the username from Vuex
+      const username = this.getUserName(); // Call the function to get the username
+  this.customer.last_modifier = username;
+    },
         triggerClose() {
           this.$emit("closeEditModal");
         },
@@ -182,11 +197,6 @@
       });
   },
       
-  //       clearForm() {
-  //   // Reset the form fields
-  //   this.customer = {};
-  //   this.selectedRole = null;
-  // },
 },
      
     };

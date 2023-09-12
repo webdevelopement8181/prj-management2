@@ -19,7 +19,13 @@ const mutations = {
       // Update the customer data in the array
       state.customers.splice(index, 1, updatedCustomer);
     }
+},
+// Mutation in customer.js
+DELETE_CUSTOMER(state, customerId) {
+  state.customers = state.customers.filter((customer) => customer.id !== customerId);
 }
+
+
 };
 
 
@@ -48,7 +54,7 @@ const actions = {
           const response = await axios.post("http://localhost:3000/customers/", newCustomer);
       
           if (response.status === 201) {
-            console.log('added')
+         
             // Data was added on the server successfully, no need to do anything
           } else {
             console.error("Failed to add customer. Server returned:", response);
@@ -63,18 +69,37 @@ const actions = {
         try {
           // Send the request to the server to update the customer
           const response = await axios.put(`http://localhost:3000/customers/${updatedCustomer.id}`, updatedCustomer);
-          console.log("it getssss the id")
+    
           if (response.status === 200) {
-            console.log("it gets the id")
+           
             // Commit a mutation to update the customer in the store
             commit("UPDATE_CUSTOMER", updatedCustomer);
           } else {
             console.error("Failed to update customer. Server returned:", response);
-            console.log("it doesnt get  the id")
+
             // Handle server errors if needed
           }
         } catch (error) {
           console.error("Error updating customer:", error);
+          // Handle any errors related to the HTTP request here
+        }
+      },
+      async deleteCustomer({ commit }, customerId) {
+        try {
+          // Send the request to the server to update the customer
+          const response = await axios.delete(`http://localhost:3000/customers/${customerId.id}`);
+    
+          if (response.status === 200) {
+           
+            // Commit a mutation to update the customer in the store
+            commit("DELETE_CUSTOMER", customerId);
+          } else {
+            console.error("Failed to delete customer. Server returned:", response);
+          
+            // Handle server errors if needed
+          }
+        } catch (error) {
+          console.error("Error deleteing customer:", error);
           // Handle any errors related to the HTTP request here
         }
       },
@@ -89,6 +114,8 @@ const getters = {
   getCustomerById: (state) => (id) => {
     return state.customers.find((customer) => customer.id === id);
   },
+  
+ 
 };
 
 export default { namespaced: true, state, mutations, actions, getters, };

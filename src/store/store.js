@@ -28,6 +28,11 @@ export const store = new Vuex.Store({
     getAllUsernames(state) {
       return state.usernames;
     },
+    getUserName(state) {
+      return () => {
+        return state.usernames.length > 0 ? state.usernames[0] : '';
+      };
+    }
   },
   modules: {
     customer: customerModule, // Register the customer module

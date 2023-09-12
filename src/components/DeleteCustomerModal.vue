@@ -25,29 +25,48 @@
   </template>
   
   <script>
-  import axios from "axios";
+ import { mapGetters } from "vuex";
   
   export default {
     name: "DeleteCustomerModal",
     props: {
       customerId: Number,
     },
+    computed:{
+      ...mapGetters("customer", ["getCustomerById"]),
+    },
+    watch: {
+   
+    customerId: {
+      immediate: true,
+      handler(newCustomerId) {
+        this.customer = this.getCustomerById(newCustomerId);
+      },
+    },
+  },
+//   created(){
+// this.customer=this. getCustomerById(this.customerId);
+//       },
     methods: {
+    
       triggerClose() {
         this.$emit("closeDeleteModal");
       },
+     
       removeCustomerFromData() {
-        axios
-          .delete(`http://localhost:3000/customers/${this.customerId}`)
-          .then(() => {
-            this.$emit("reloadDataTable");
+  this.$store
+    .dispatch("customer/deleteCustomer",this.customer) // Pass the customerId
+    .then(() => {
+      console.log("Customer deleted successfully");
+      this.$emit("reloadDataTable");
             this.$emit("showDeleteAlert");
             this.$emit("closeDeleteModal");
-          })
-          .catch((error) => {
-            console.log(error);
-          });
-      },
+    })
+    .catch((error) => {
+      console.error("Error deleting customer:", error);
+    });
+},
+
     },
   };
   </script>

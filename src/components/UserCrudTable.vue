@@ -88,6 +88,13 @@
                       data.item.last_modification_time
                 }}
               </template>
+              <template #cell(last_modifier)="data">
+                {{
+                   
+     data.item.last_modifier
+
+                }}
+              </template>
               <template #cell(customer_status)="data">
                 <b-icon-bookmark-check-fill
                   variant="success"

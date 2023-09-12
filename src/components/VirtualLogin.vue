@@ -5,7 +5,7 @@
   <!-- modal-class="modal-container" -->
   <!-- <div class="modal-container"> -->
   <b-modal   id="modal-scrollable"  modal-class="modal-container"  size="lg" scrollable title="virtual login">
-    <div v-for="(username, index) in usernames" :key="index">
+    <div v-for="(username, index) in usernames" :key="index.id">
       {{ username }}
     </div>
         <div class="button-container" v-for="i in 10" :key="i">
