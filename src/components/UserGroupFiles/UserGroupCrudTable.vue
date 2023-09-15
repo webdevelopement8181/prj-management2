@@ -1,28 +1,28 @@
 <template>
-    <div>
-      <b-row>
-        <b-alert v-model="showSuccessAlert"      :show="dismissCountDown"
-      dismissible
-      variant="warning"
-      @dismissed="dismissCountDown=0"
-      @dismiss-count-down="countDownChanged">
-          {{ alertMessage }}
-        </b-alert>
-      </b-row>
-      <!-- active and total customers filtering -->
-      <b-row>
-  
-        <customer-overview>
-          :totalCustomers="numberOfCustomers"
-       
-          @totalCustomersIsActive="setFilterTotalIsActive"
-      
-        ></customer-overview>
-      </b-row>
-      <div class="table-container">
-      <b-row class="mt-3" >
+  <div>
+    <b-row>
+      <b-alert
+        v-model="showSuccessAlert"
+        :show="dismissCountDown"
+        dismissible
+        variant="warning"
+        @dismissed="dismissCountDown = 0"
+        @dismiss-count-down="countDownChanged"
+      >
+        {{ alertMessage }}
+      </b-alert>
+    </b-row>
+    <!-- active and total customers filtering -->
+    <b-row>
+      <customer-overview>
+        :totalCustomers="numberOfCustomers"
+        @totalCustomersIsActive="setFilterTotalIsActive" ></customer-overview
+      >
+    </b-row>
+    <div class="table-container">
+      <b-row class="mt-3">
         <b-card>
-          <b-row align-h="between" >
+          <b-row align-h="between">
             <b-col cols="6">
               <h3 class="header-style">{{ tableHeader }}</h3>
             </b-col>
@@ -35,7 +35,7 @@
                     id="show-btn"
                     @click="showCreateModal"
                   >
-                  <!-- add customer part  icons and the text-->
+                    <!-- add customer part  icons and the text-->
                     <b-icon-plus class="text-white"></b-icon-plus>
                     <span class="h6 text-white">New user</span>
                   </b-button>
@@ -44,16 +44,14 @@
             </b-col>
           </b-row>
           <b-row class="mt-3">
-        
-            <b-table 
+            <b-table
               striped
               hover
               :items="customers"
               :fields="fields"
               class="text-center"
             >
-          
-             <!-- <template #cell(user_name)="data">
+              <!-- <template #cell(user_name)="data">
                 {{
                   data.item.user_name
                 }}
@@ -74,38 +72,22 @@
                 }}
               </template>  -->
               <template #cell(group_name)="data">
-                {{
-                    data.item.group_name
-                }}
-              </template> 
+                {{ data.item.group_name }}
+              </template>
               <template #cell(creator_name)="data">
-                {{
-                    data.item.user_name
-                }}
-              </template> 
+                {{ data.item.user_name }}
+              </template>
               <template #cell(creation_time)="data">
-                {{
-                      data.item.creation_time
-                }}
+                {{ data.item.creation_time }}
               </template>
               <template #cell(last_modification_time)="data">
-                {{
-                      data.item.last_modification_time
-                }}
+                {{ data.item.last_modification_time }}
               </template>
               <template #cell(last_modifier)="data">
-                {{
-                   
-     data.item.last_modifier
-
-                }}
+                {{ data.item.last_modifier }}
               </template>
-                 <template #cell(users)="data">
-                {{
-                   
-     data.item.users
-
-                }}
+              <template #cell(users)="data">
+                {{ data.item.users }}
               </template>
               <template #cell(customer_status)="data">
                 <b-icon-bookmark-check-fill
@@ -135,94 +117,79 @@
                   </b-col>
                 </b-row>
               </template>
-              <template>
-
-              </template>
+              <template> </template>
             </b-table>
-     
           </b-row>
         </b-card>
       </b-row>
     </div>
-      <!--  Modal for adding new customers -->
-      <b-modal
-        ref="create-customer-modal"
-        size="xl"
-        hide-footer
-        title="New user"
-      >
-        <create-customer-form
-          @closeCreateModal="closeCreateModal"
-          @reloadDataTable="getCustomerData"
-          @showSuccessAlert="showAlertCreate"
-        ></create-customer-form>
-      </b-modal>
-  
-      Modal for updating customers
-      <b-modal
-        ref="edit-customer-modal"
-        size="xl"
-        hide-footer
-        title="Edit user"
-      >
-        <edit-customer-form
-          @closeEditModal="closeEditModal"
-          @reloadDataTable="getCustomerData"
-          @showSuccessAlert="showAlertUpdate"
-          :customerId="customerId"
-        ></edit-customer-form>
-      </b-modal>
-  
-      Delete Customer Modal
-      <b-modal
-        ref="delete-customer-modal"
-        size="md"
-        hide-footer
-        title="Confirm Deletion"
-      >
-        <delete-customer-modal
-          @closeDeleteModal="closeDeleteModal"
-          @reloadDataTable="getCustomerData"
-          @showDeleteAlert="showDeleteSuccessModal"
-          :customerId="customerId"
-        ></delete-customer-modal>
-      </b-modal>
-<AppHeader></AppHeader>
-<!-- <AppFooter></AppFooter> -->
-<!-- <AppMain></AppMain> -->
-    </div>
-   
-  </template>
-  
-  <script>
-  // import axios from "axios";
- import { mapGetters, mapActions,mapState } from "vuex";
-  import CustomerOverview from "@/components/UserGroupFiles/CustomerOverview.vue";
-  import CreateCustomerForm from "@/components/UserGroupFiles/CreateCustomerForm.vue";
-  import EditCustomerForm from "@/components/UserGroupFiles/EditCustomerForm.vue";
-  import DeleteCustomerModal from "@/components/UserGroupFiles/DeleteCustomerModal.vue";
+    <!--  Modal for adding new customers -->
+    <b-modal ref="create-customer-modal" size="xl" hide-footer title="New user">
+      <create-customer-form
+        @closeCreateModal="closeCreateModal"
+        @reloadDataTable="getCustomerData"
+        @showSuccessAlert="showAlertCreate"
+      ></create-customer-form>
+    </b-modal>
+
+    Modal for updating customers
+    <b-modal ref="edit-customer-modal" size="xl" hide-footer title="Edit user">
+      <edit-customer-form
+        @closeEditModal="closeEditModal"
+        @reloadDataTable="getCustomerData"
+        @showSuccessAlert="showAlertUpdate"
+        :customerId="customerId"
+      ></edit-customer-form>
+    </b-modal>
+
+    Delete Customer Modal
+    <b-modal
+      ref="delete-customer-modal"
+      size="md"
+      hide-footer
+      title="Confirm Deletion"
+    >
+      <delete-customer-modal
+        @closeDeleteModal="closeDeleteModal"
+        @reloadDataTable="getCustomerData"
+        @showDeleteAlert="showDeleteSuccessModal"
+        :customerId="customerId"
+      ></delete-customer-modal>
+    </b-modal>
+    <AppHeader></AppHeader>
+    <!-- <AppFooter></AppFooter> -->
+    <!-- <AppMain></AppMain> -->
+  </div>
+</template>
+
+<script>
+// import axios from "axios";
+import { mapGetters, mapActions, mapState } from 'vuex'
+import CustomerOverview from '@/components/UserGroupFiles/CustomerOverview.vue'
+import CreateCustomerForm from '@/components/UserGroupFiles/CreateCustomerForm.vue'
+import EditCustomerForm from '@/components/UserGroupFiles/EditCustomerForm.vue'
+import DeleteCustomerModal from '@/components/UserGroupFiles/DeleteCustomerModal.vue'
 // import AppFooter from "../footer/AppFooter.vue";
 import AppHeader from '@/components/AppHeader/AppHeader.vue'
 // import AppMain from "../AppMain/AppMain.vue";
 
-  
-  export default {
-    components: {
-      // AppFooter,
-      AppHeader,
-      // AppMain,
-      CustomerOverview,
-      CreateCustomerForm,
-      EditCustomerForm,
-      DeleteCustomerModal,
-    },
-    data() {
-      return {
-        dismissSecs: 10,
-        dismissCountDown: 0,
-        showDismissibleAlert: false,
-        // Note 'isActive' is left out and will not appear in the rendered table
-        fields: [
+export default {
+  components: {
+    // AppFooter,
+    AppHeader,
+    // AppMain,
+    CustomerOverview,
+    CreateCustomerForm,
+    EditCustomerForm,
+    DeleteCustomerModal,
+  },
+  data() {
+    return {
+      dismissSecs: 10,
+      dismissCountDown: 0,
+      showDismissibleAlert: false,
+      // Note 'isActive' is left out and will not appear in the rendered table
+      fields: [
         // {
         //   key: "user_name",
         //   label: "UserName",
@@ -245,143 +212,134 @@ import AppHeader from '@/components/AppHeader/AppHeader.vue'
         // },
         //
         {
-          key: "group_name",
-          label: "Group Name",
+          key: 'group_name',
+          label: 'Group Name',
           sortable: false,
         },
         {
-          key: "creator_name",
-          label: "Creator Name",
+          key: 'creator_name',
+          label: 'Creator Name',
           sortable: false,
         },
         {
-          key: "creation_time",
-          label: "Creation Time",
+          key: 'creation_time',
+          label: 'Creation Time',
           sortable: false,
         },
         {
-          key: "last_modifier",
-          label: "Last Modifier",
+          key: 'last_modifier',
+          label: 'Last Modifier',
           sortable: false,
         },
         {
-          key: "last_modification_time",
-          label: "Last Modification Time",
+          key: 'last_modification_time',
+          label: 'Last Modification Time',
           sortable: false,
         },
         {
-          key: "users",
-          label: " Users",
+          key: 'users',
+          label: ' Users',
           sortable: false,
         },
         {
-          key: "group_name",
-          label: " group Name",
+          key: 'group_name',
+          label: ' group Name',
           sortable: false,
         },
-        "actions",
+        'actions',
       ],
-        items: [],
-        numberOfCustomers: 0,
-        activeCustomers: 0,
-        activeCustomersData: [],
-        customerId: 0,
-        companySearchTerm: "",
-        tableHeader: "",
-        showSuccessAlert: false,
-        alertMessage: "",
-      };
-    },
-   
-
+      items: [],
+      numberOfCustomers: 0,
+      activeCustomers: 0,
+      activeCustomersData: [],
+      customerId: 0,
+      companySearchTerm: '',
+      tableHeader: '',
+      showSuccessAlert: false,
+      alertMessage: '',
+    }
+  },
 
   computed: {
-    
-    ...mapState("customer", ["customers"]),
-    ...mapGetters("customer", ["allCustomers"]), // Map the customer module's getter
+    ...mapState('customer', ['customers']),
+    ...mapGetters('customer', ['allCustomers']), // Map the customer module's getter
   },
- 
+
   mounted() {
- 
-  this.fetchCustomers();
+    this.fetchCustomers()
 
-
-    this.getCustomerData();
+    this.getCustomerData()
   },
-    methods: {
-      
-      countDownChanged(dismissCountDown) {
-        this.dismissCountDown = dismissCountDown
-      },
-      ...mapActions("customer", ["fetchCustomers"]), // Map the customer module's action
-
-async getCustomerData() {
-  await this.fetchCustomers(); // Dispatch the action to fetch customer data
-  // You can now access customer data using this.allCustomers
-  console.log(this.allCustomers);
-},
-      showCreateModal() {
-        this.$refs["create-customer-modal"].show();
-      },
-      closeCreateModal() {
-        this.$refs["create-customer-modal"].hide();
-      },
-  
-      getRowData(id) {
-        this.$refs["edit-customer-modal"].show();
-        this.customerId = id;
-      },
-      closeEditModal() {
-        this.$refs["edit-customer-modal"].hide();
-      },
-      setFilterTotalIsActive() {
-        this.tableHeader = "Total users";
-        this.getCustomerData();
-      },
-    
-      showAlertCreate() {
-        this.showSuccessAlert = true;
-        this.dismissCountDown = this.dismissSecs
-        this.alertMessage = "Customer was created successfully!";
-      },
-      showAlertUpdate() {
-        this.showSuccessAlert = true;
-        this.alertMessage = "Customer was updated successfully";
-      },
-      showDeleteModal(id) {
-        this.$refs["delete-customer-modal"].show();
-        this.customerId = id;
-      },
-      closeDeleteModal() {
-        this.$refs["delete-customer-modal"].hide();
-      },
-      showDeleteSuccessModal() {
-        this.showSuccessAlert = true;
-        this.alertMessage = "Customer was deleted successfully!";
-      },
+  methods: {
+    countDownChanged(dismissCountDown) {
+      this.dismissCountDown = dismissCountDown
     },
-  };
-  </script>
-  
-  <style>
-  .action-item:hover {
-    cursor: pointer;
-  }
-  #show-btn{
-    margin-left: 35%;
-   height: 90%;
-   width: 65%;
-  }
- .header-style{
-margin-right: 52%;
+    ...mapActions('customer', ['fetchCustomers']), // Map the customer module's action
 
- }
+    async getCustomerData() {
+      await this.fetchCustomers() // Dispatch the action to fetch customer data
+      // You can now access customer data using this.allCustomers
+      console.log(this.allCustomers)
+    },
+    showCreateModal() {
+      this.$refs['create-customer-modal'].show()
+    },
+    closeCreateModal() {
+      this.$refs['create-customer-modal'].hide()
+    },
 
-.table-container{
+    getRowData(id) {
+      this.$refs['edit-customer-modal'].show()
+      this.customerId = id
+    },
+    closeEditModal() {
+      this.$refs['edit-customer-modal'].hide()
+    },
+    setFilterTotalIsActive() {
+      this.tableHeader = 'Total users'
+      this.getCustomerData()
+    },
+
+    showAlertCreate() {
+      this.showSuccessAlert = true
+      this.dismissCountDown = this.dismissSecs
+      this.alertMessage = 'Customer was created successfully!'
+    },
+    showAlertUpdate() {
+      this.showSuccessAlert = true
+      this.alertMessage = 'Customer was updated successfully'
+    },
+    showDeleteModal(id) {
+      this.$refs['delete-customer-modal'].show()
+      this.customerId = id
+    },
+    closeDeleteModal() {
+      this.$refs['delete-customer-modal'].hide()
+    },
+    showDeleteSuccessModal() {
+      this.showSuccessAlert = true
+      this.alertMessage = 'Customer was deleted successfully!'
+    },
+  },
+}
+</script>
+
+<style>
+.action-item:hover {
+  cursor: pointer;
+}
+#show-btn {
+  margin-left: 35%;
+  height: 90%;
+  width: 65%;
+}
+.header-style {
+  margin-right: 52%;
+}
+
+.table-container {
   margin-left: 10%;
   width: 80%;
   height: 130%;
 }
-
-
-  </style>
+</style>
