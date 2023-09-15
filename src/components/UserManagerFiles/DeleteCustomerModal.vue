@@ -25,6 +25,7 @@
   </template>
   
   <script>
+  // ,mapActions
  import { mapGetters } from "vuex";
   
   export default {
@@ -34,19 +35,27 @@
     },
     computed:{
       ...mapGetters("customer", ["getCustomerById"]),
+      // ...mapActions("customer", ["deleteCustomer"]),
     },
-    watch: {
+    created() {
+    // Fetch the customer data from Vuex using the customer ID
+    this.customer = this.getCustomerById(this.customerId);
+
+    },
+  //   // this.username = this.getUsername;
+  // },
+  //   watch: {
    
     customerId: {
       immediate: true,
       handler(newCustomerId) {
         this.customer = this.getCustomerById(newCustomerId);
+        // console.log(this.customer)
       },
+    
     },
-  },
-//   created(){
-// this.customer=this. getCustomerById(this.customerId);
-//       },
+  // },
+
     methods: {
     
       triggerClose() {
@@ -54,11 +63,10 @@
       },
      
       removeCustomerFromData() {
-  this.$store
-    .dispatch("customer/deleteCustomer",this.customer) // Pass the customerId
-    .then(() => {
-      console.log("Customer deleted successfully");
-      this.$emit("reloadDataTable");
+
+        this.$store.dispatch('customer/deleteCustomer', this.customer.id) .then(() => {
+        console.log("this is my function")
+        this.$emit("reloadDataTable");
             this.$emit("showDeleteAlert");
             this.$emit("closeDeleteModal");
     })

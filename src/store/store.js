@@ -1,13 +1,15 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import customerModule from './modules/customer/customer';
+// import groupModule from './modules/customer/group';
 
 Vue.use(Vuex)
 
 export const store = new Vuex.Store({
   state: {
     usernames: JSON.parse(sessionStorage.getItem('usernames')) || [],
-    customers:[]
+    customers:[],
+ 
   },
  
   mutations: {
@@ -34,6 +36,8 @@ export const store = new Vuex.Store({
     }
   },
   modules: {
-    customer: customerModule, // Register the customer module
+    customer: customerModule,
+   
+     // Register the customer module
   },
 })

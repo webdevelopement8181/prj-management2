@@ -221,7 +221,7 @@
         user_name: this.customer.user_name,
         first_name: this.customer.first_name,
         last_name: this.customer.last_name,
-        role:  this.customer.user_type,
+        user_type:  this.customer.user_type,
         creation_time: this.customer.creation_time,
         group_name: this.customer.group_name,
       };

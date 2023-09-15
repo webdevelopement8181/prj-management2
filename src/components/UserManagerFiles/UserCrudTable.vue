@@ -191,7 +191,7 @@
   
   <script>
   // import axios from "axios";
- import { mapGetters, mapActions,mapState } from "vuex";
+ import { mapGetters,mapState } from "vuex";
   import CustomerOverview from "@/components/UserManagerFiles/CustomerOverview.vue";
   import CreateCustomerForm from "@/components/UserManagerFiles/CreateCustomerForm.vue";
   import EditCustomerForm from "@/components/UserManagerFiles/EditCustomerForm.vue";
@@ -213,6 +213,7 @@ import AppHeader from '@/components/AppHeader/AppHeader.vue'
     },
     data() {
       return {
+    
         dismissSecs: 10,
         dismissCountDown: 0,
         showDismissibleAlert: false,
@@ -234,7 +235,7 @@ import AppHeader from '@/components/AppHeader/AppHeader.vue'
           sortable: false,
         },
         {
-          key: "role",
+          key: "user_type",
           label: "Type",
           sortable: false,
         },
@@ -283,14 +284,15 @@ import AppHeader from '@/components/AppHeader/AppHeader.vue'
   computed: {
     
     ...mapState("customer", ["customers"]),
-    ...mapGetters("customer", ["allCustomers"]), // Map the customer module's getter
+    ...mapGetters("customer", ["allCustomers"]),
+ 
   },
  
   mounted() {
  
-  this.fetchCustomers();
+  // this.fetchCustomers();
 
-
+this.fetchCustomersFromLocalStorage();
     this.getCustomerData();
   },
     methods: {
@@ -298,14 +300,22 @@ import AppHeader from '@/components/AppHeader/AppHeader.vue'
       countDownChanged(dismissCountDown) {
         this.dismissCountDown = dismissCountDown
       },
-      ...mapActions("customer", ["fetchCustomers"]), // Map the customer module's action
-
-async getCustomerData() {
-  await this.fetchCustomers(); // Dispatch the action to fetch customer data
-  // You can now access customer data using this.allCustomers
-  console.log(this.allCustomers);
-},
-      showCreateModal() {
+      // ...mapActions("customer", ["fetchCustomers"]), // Map the customer module's action
+      async fetchCustomersFromLocalStorage() {
+  try {
+    // const localData = JSON.parse(localStorage.getItem("customers")) || [];
+    this.$store.dispatch("customer/savedCustomers"); // Dispatch the action
+    // console.log("Local Data:", localData);
+  } catch (error) {
+    console.error("Error fetching customer data from local storage:", error);
+  }
+      },
+      async getCustomerData() {
+  
+  //       const localData = JSON.parse(localStorage.getItem("customers")) || [];
+  // this.allCustomers = localData;
+      },
+        showCreateModal() {
         this.$refs["create-customer-modal"].show();
       },
       closeCreateModal() {

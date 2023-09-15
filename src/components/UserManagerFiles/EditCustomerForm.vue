@@ -168,6 +168,8 @@ this.hasChanges=false;
       created() {
     // Fetch the customer data from Vuex using the customer ID
     this.customer = this.getCustomerById(this.customerId);
+    console.log("id"+this.customerId)
+    console.log("cus"+this.customer)
     // this.username = this.getUsername;
   },
   watch: {
@@ -194,19 +196,20 @@ this.hasChanges=false;
           this.$emit("closeEditModal");
         },
        
-          updateCustomer() {
-            this.updateLastModifier();
-    this.$store.dispatch("customer/updateCustomer", this.customer)
-      .then(() => {
-        console.log("Customer updated successfully");
-        this.$emit("closeEditModal");
-        this.$emit("reloadDataTable");
-        this.$emit("showSuccessAlert");
-      })
-      .catch((error) => {
-        console.error("Error updating customer:", error);
-      });
-  },
+        updateCustomer() {
+  this.updateLastModifier();
+
+  this.$store.dispatch("customer/updateCustomer", this.customer)
+    .then(() => {
+      console.log(this.customer);
+      this.$emit("closeEditModal");
+      this.$emit("reloadDataTable");
+      this.$emit("showSuccessAlert");
+    })
+    .catch((error) => {
+      console.error("Error updating customer:", error);
+    });
+},
       
 },
      

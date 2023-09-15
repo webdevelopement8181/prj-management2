@@ -99,6 +99,7 @@
     <b-col cols="4">
       <b-form-radio-group v-model="selectedRole" name="role">
         type:
+        
         <b-form-radio value="admin">Admin</b-form-radio>
         <b-form-radio value="user">User</b-form-radio>
       </b-form-radio-group>
@@ -124,7 +125,7 @@
   
   <script>
   // import axios from "axios";
-  // import { mapGetters, mapActions,mapState } from "vuex";
+  import { mapGetters,mapState } from "vuex";
   
   export default {
     name: "CreateCustomerModal",
@@ -137,13 +138,13 @@
     },
     
     computed: {
- 
-      isRoleSelected() {
-        return this.selectedRole !== null;
- 
-      },
-    //   ...mapState("customer", ["customers"]),
-    // ...mapGetters("customer", ["allCustomers"]), 
+      ...mapState("customer", ["customers"]),
+  ...mapGetters("customer", ["allCustomers"]),
+    
+
+  isRoleSelected() {
+      return this.selectedRole !== null;
+    },
 
       creationTimeState(){
   const currentDate=new Date();
@@ -176,42 +177,50 @@
     },
   },
   
+  watch: {
+    selectedRole(newRole) {
+      localStorage.setItem('user_type', newRole);
+    },
+  },
   methods: {
+    
+   
     triggerClose() {
       this.$emit("closeCreateModal");
     },
+    
     
     async addNewCustomer() {
     // Validate the form
     if (this.userNameState && this.isRoleSelected && (this.firstNameState || this.lastNameState)) {
       // if (this.selectedRole) {
       // Assign the selected role to this.customer.user_type
-      this.customer.user_type = this.selectedRole;
-      // Create a new customer object
-      let newCustomer = {
-        user_name: this.customer.user_name,
-        first_name: this.customer.first_name,
-        last_name: this.customer.last_name,
-        role:  this.customer.user_type,
-        creation_time: this.customer.creation_time,
-      };
-      try {
-        // Dispatch the addCustomer action with the new customer object
-        await this.$store.dispatch("customer/addCustomer", newCustomer);
-        // Clear the form values
-        this.clearForm();
-        // Emit events to close the modal and update the table
-        this.$emit("closeCreateModal"); // Use the correct event name
+   let newCustomer = {
+      user_name: this.customer.user_name,
+      first_name: this.customer.first_name,
+      last_name: this.customer.last_name,
+      user_type: this.customer.user_type,
+      creation_time: this.customer.creation_time,
+    };
+    try {
+  
+      // const savedCustomers = JSON.parse(localStorage.getItem("customers") || "[]");
+      // savedCustomers.push(newCustomer);
+      // localStorage.setItem("customers", JSON.stringify(savedCustomers));
+
+      // Commit the mutation to update the Vuex store
+      await this.$store.dispatch("customer/addCustomer", newCustomer);
+      this.$emit("closeCreateModal"); // Use the correct event name
         this.$emit("reloadDataTable");
           this.$emit("showSuccessAlert");
-        // Optionally, you can emit an event to trigger a table update if needed
-        this.$emit("updateTable");
-      } catch (error) {
-        // Handle the error
-        console.error("Error adding customer:", error);
-      }
+
+      // Clear the form values
+      this.clearForm();
+    } catch (error) {
+      console.error("Error adding customer:", error);
     }
-  },
+  }
+},
   clearForm() {
     // Reset the form fields
     this.customer = {};
@@ -229,9 +238,7 @@
         this.customer.creation_time = time; // Update the input value
       }, ); // Update every 1 seco
   },
-   watch: {
-    
-    },
+ 
   
   
   };
