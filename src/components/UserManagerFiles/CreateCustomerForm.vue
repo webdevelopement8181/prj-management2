@@ -1,17 +1,19 @@
 <template>
   <div class="create-form-container">
-
     <b-form class="mt-3">
-
-      <b-row>
-
-      </b-row>
+      <b-row> </b-row>
 
       <b-row>
         <b-col cols="6">
           <b-form-group id="user-name" label="User Name" label-for="user-name">
-            <b-form-input id="user-name" type="text" placeholder="User Name" v-model="customer.user_name"
-              :state="userNameState" :valid="userNameState"></b-form-input>
+            <b-form-input
+              id="user-name"
+              type="text"
+              placeholder="User Name"
+              v-model="customer.user_name"
+              :state="userNameState"
+              :valid="userNameState"
+            ></b-form-input>
             <b-form-invalid-feedback>
               User name must be between 5 and 45 characters.
             </b-form-invalid-feedback>
@@ -21,9 +23,19 @@
         <!-- i added this to the same row as the username -->
 
         <b-col cols="6">
-          <b-form-group id="first-name" label="first Name" label-for="first-name">
-            <b-form-input id="first-name" type="text" placeholder="first Name" v-model="customer.first_name"
-              :state="firstNameState" :valid="firstNameState"></b-form-input>
+          <b-form-group
+            id="first-name"
+            label="first Name"
+            label-for="first-name"
+          >
+            <b-form-input
+              id="first-name"
+              type="text"
+              placeholder="first Name"
+              v-model="customer.first_name"
+              :state="firstNameState"
+              :valid="firstNameState"
+            ></b-form-input>
             <b-form-invalid-feedback>
               first name must be 48 characters at max level
             </b-form-invalid-feedback>
@@ -31,8 +43,14 @@
         </b-col>
         <b-col cols="6">
           <b-form-group id="last-name" label="last Name" label-for="last-name">
-            <b-form-input id="last-name" type="text" placeholder="last Name" v-model="customer.last_name"
-              :state="lastNameState" :valid="lastNameState"></b-form-input>
+            <b-form-input
+              id="last-name"
+              type="text"
+              placeholder="last Name"
+              v-model="customer.last_name"
+              :state="lastNameState"
+              :valid="lastNameState"
+            ></b-form-input>
             <b-form-invalid-feedback>
               last name must be 48 characters at max level
             </b-form-invalid-feedback>
@@ -71,9 +89,7 @@
       </b-row>
 
       <b-row class="mt-5">
-        <h5>
-
-        </h5>
+        <h5></h5>
       </b-row>
       <b-row>
         <div class="selection-role-constainer">
@@ -88,12 +104,19 @@
         </div>
       </b-row>
 
-
-
       <b-row class="mt-4">
         <b-col cols="3">
-          <b-button variant="primary" class="px-5" @click="addNewCustomer"
-            :disabled="!userNameState || !isRoleSelected || (!firstNameState && !lastNameState)">Add Customer</b-button>
+          <b-button
+            variant="primary"
+            class="px-5"
+            @click="addNewCustomer"
+            :disabled="
+              !userNameState ||
+              !isRoleSelected ||
+              (!firstNameState && !lastNameState)
+            "
+            >Add Customer</b-button
+          >
         </b-col>
         <b-col>
           <b-button variant="warning" @click="triggerClose">Close</b-button>
@@ -102,77 +125,76 @@
     </b-form>
   </div>
 </template>
-  
+
 <script>
 // import axios from "axios";
-import { mapGetters, mapState } from "vuex";
+import { mapGetters, mapState } from 'vuex'
 
 export default {
-  name: "CreateCustomerModal",
+  name: 'CreateCustomerModal',
   data() {
     return {
-
       selectedRole: null,
       customer: {},
-    };
+    }
   },
 
   computed: {
-    ...mapState("customer", ["customers"]),
-    ...mapGetters("customer", ["allCustomers"]),
-
+    ...mapState('customer', ['customers']),
+    ...mapGetters('customer', ['allCustomers']),
 
     isRoleSelected() {
-      return this.selectedRole !== null;
+      return this.selectedRole !== null
     },
 
     creationTimeState() {
-      const currentDate = new Date();
-      const hours = String(currentDate.getHours()).padStart(2, '0');
-      const minus = String(currentDate.getMinutes()).padStart(2, '0');
-      const seconds = String(currentDate.getSeconds()).padStart(2, '0');
-      const time = `${hours}:${minus}:${seconds}`;
-      return time;
+      const currentDate = new Date()
+      const hours = String(currentDate.getHours()).padStart(2, '0')
+      const minus = String(currentDate.getMinutes()).padStart(2, '0')
+      const seconds = String(currentDate.getSeconds()).padStart(2, '0')
+      const time = `${hours}:${minus}:${seconds}`
+      return time
     },
     userNameState() {
       if (this.customer && this.customer.user_name) {
-        const userNameLength = this.customer.user_name.length;
-        return userNameLength >= 5 && userNameLength <= 45;
+        const userNameLength = this.customer.user_name.length
+        return userNameLength >= 5 && userNameLength <= 45
       }
-      return false; // Return false if customer or user_name is not defined
+      return false // Return false if customer or user_name is not defined
     },
     firstNameState() {
       if (this.customer && this.customer.first_name) {
-        const fisrtNameLength = this.customer.first_name.length;
-        return fisrtNameLength >= 0 && fisrtNameLength <= 45;
+        const fisrtNameLength = this.customer.first_name.length
+        return fisrtNameLength >= 0 && fisrtNameLength <= 45
       }
-      return true;
+      return true
     },
     lastNameState() {
       if (this.customer && this.customer.last_name) {
-        const lastNameLength = this.customer.last_name.length;
-        return lastNameLength >= 0 && lastNameLength <= 45;
+        const lastNameLength = this.customer.last_name.length
+        return lastNameLength >= 0 && lastNameLength <= 45
       }
-      return true;
+      return true
     },
   },
 
   watch: {
     selectedRole(newRole) {
-      localStorage.setItem('user_type', newRole);
+      localStorage.setItem('user_type', newRole)
     },
   },
   methods: {
-
-
     triggerClose() {
-      this.$emit("closeCreateModal");
+      this.$emit('closeCreateModal')
     },
-
 
     async addNewCustomer() {
       // Validate the form
-      if (this.userNameState && this.isRoleSelected && (this.firstNameState || this.lastNameState)) {
+      if (
+        this.userNameState &&
+        this.isRoleSelected &&
+        (this.firstNameState || this.lastNameState)
+      ) {
         // if (this.selectedRole) {
         // Assign the selected role to this.customer.user_type
         let newCustomer = {
@@ -181,47 +203,42 @@ export default {
           last_name: this.customer.last_name,
           user_type: this.customer.user_type,
           creation_time: this.customer.creation_time,
-        };
+        }
         try {
-
           // const savedCustomers = JSON.parse(localStorage.getItem("customers") || "[]");
           // savedCustomers.push(newCustomer);
           // localStorage.setItem("customers", JSON.stringify(savedCustomers));
 
           // Commit the mutation to update the Vuex store
-          await this.$store.dispatch("customer/addCustomer", newCustomer);
-          this.$emit("closeCreateModal"); // Use the correct event name
-          this.$emit("reloadDataTable");
-          this.$emit("showSuccessAlert");
+          await this.$store.dispatch('customer/addCustomer', newCustomer)
+          this.$emit('closeCreateModal') // Use the correct event name
+          this.$emit('reloadDataTable')
+          this.$emit('showSuccessAlert')
 
           // Clear the form values
-          this.clearForm();
+          this.clearForm()
         } catch (error) {
-          console.error("Error adding customer:", error);
+          console.error('Error adding customer:', error)
         }
       }
     },
     clearForm() {
       // Reset the form fields
-      this.customer = {};
-      this.selectedRole = null;
+      this.customer = {}
+      this.selectedRole = null
     },
   },
   mounted() {
-
     setInterval(() => {
-      const currentDate = new Date();
-      const hours = String(currentDate.getHours()).padStart(2, '0');
-      const minutes = String(currentDate.getMinutes()).padStart(2, '0');
-      const seconds = String(currentDate.getSeconds()).padStart(2, '0');
-      const time = `${hours}:${minutes}:${seconds}`;
-      this.customer.creation_time = time; // Update the input value
-    },); // Update every 1 seco
+      const currentDate = new Date()
+      const hours = String(currentDate.getHours()).padStart(2, '0')
+      const minutes = String(currentDate.getMinutes()).padStart(2, '0')
+      const seconds = String(currentDate.getSeconds()).padStart(2, '0')
+      const time = `${hours}:${minutes}:${seconds}`
+      this.customer.creation_time = time // Update the input value
+    }) // Update every 1 seco
   },
-
-
-
-};
+}
 </script>
 <style>
 .create-form-container {
@@ -235,11 +252,10 @@ export default {
 
 .selection-role-constainer {
   margin-left: 3%;
-
 }
 </style>
-  <!-- after add newcustomer -->
-  <!-- // Perform the Axios request to add a new customer
+<!-- after add newcustomer -->
+<!-- // Perform the Axios request to add a new customer
   // axios
   //   .post("http://localhost:3000/customers/", this.customer)
   //   .then((response) => {
