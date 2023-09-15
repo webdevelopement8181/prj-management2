@@ -62,7 +62,7 @@ export default {
 
     removeCustomerFromData() {
       this.$store
-        .dispatch('customer/deleteCustomer', this.customer.customerId)
+        .dispatch('customer/deleteCustomer', this.customer.id)
         .then(() => {
           console.log(this.customer.customerId)
           this.$emit('reloadDataTable')

@@ -129,6 +129,7 @@
 <script>
 // import axios from "axios";
 import { mapGetters, mapState } from 'vuex'
+import { v4 as uuidv4 } from 'uuid'
 
 export default {
   name: 'CreateCustomerModal',
@@ -203,6 +204,8 @@ export default {
           last_name: this.customer.last_name,
           user_type: this.customer.user_type,
           creation_time: this.customer.creation_time,
+          group_name: this.customer.group_name,
+          id: uuidv4(),
         }
         try {
           // const savedCustomers = JSON.parse(localStorage.getItem("customers") || "[]");

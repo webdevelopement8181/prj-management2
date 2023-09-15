@@ -154,12 +154,22 @@
 // import axios from "axios";
 // import { mapGetters, mapActions,mapState } from "vuex";
 
+import { v4 as uuidv4 } from 'uuid'
+
 export default {
   name: 'CreateCustomerModal',
   data() {
     return {
       //   selectedRole:null,
-      customer: {},
+      customer: {
+        user_name: '',
+        first_name: '',
+        last_name: '',
+        user_type: '',
+        creation_time: '',
+        group_name: '',
+        id: '',
+      },
     }
   },
 
@@ -212,15 +222,17 @@ export default {
       if (this.userGroupState) {
         //   this.customer.user_type = this.selectedRole;
         // Create a new customer object
-        let newCustomer = {
+        const newCustomer = {
           user_name: this.customer.user_name,
           first_name: this.customer.first_name,
           last_name: this.customer.last_name,
           user_type: this.customer.user_type,
           creation_time: this.customer.creation_time,
           group_name: this.customer.group_name,
+          id: uuidv4(),
         }
         try {
+          console.log('new customer before dispatch: ', newCustomer)
           // Dispatch the addCustomer action with the new customer object
           await this.$store.dispatch('customer/addCustomer', newCustomer)
           // Clear the form values

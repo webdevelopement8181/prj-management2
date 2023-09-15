@@ -57,7 +57,7 @@ const actions = {
     try {
       // Simultaneously commit the mutation to update the store
       commit('ADD_CUSTOMER', newCustomer)
-      console.log('updated costumers: ')
+      console.log('new customer inside dispatch: ', newCustomer)
       // Update local storage
       const savedCustomers = JSON.parse(
         localStorage.getItem('customers') || '[]',

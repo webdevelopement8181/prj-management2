@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import customerModule from './modules/customer/customer'
+import customerModule from './modules/Customer/customer'
 // import groupModule from './modules/customer/group';
 
 Vue.use(Vuex)
