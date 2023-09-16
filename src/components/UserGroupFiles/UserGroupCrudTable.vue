@@ -51,28 +51,17 @@
               :fields="fields"
               class="text-center"
             >
-              <!-- <template #cell(user_name)="data">
-                {{
-                  data.item.user_name
-                }}
+              <template #cell(user_name)="data">
+                {{ data.item.user_name }}
               </template>
               <template #cell(first_name)="data">
-                {{
-                      data.item.first_name
-                }}
-              </template> 
+                {{ data.item.first_name }}
+              </template>
               <template #cell(last_name)="data">
-                {{
-                      data.item.last_name
-                }}
-              </template> 
+                {{ data.item.last_name }}
+              </template>
               <template #cell(user_type)="data">
-                {{
-                      data.item.user_type
-                }}
-              </template>  -->
-              <template #cell(group_name)="data">
-                {{ data.item.group_name }}
+                {{ data.item.user_type }}
               </template>
               <template #cell(creator_name)="data">
                 {{ data.item.user_name }}
@@ -86,8 +75,8 @@
               <template #cell(last_modifier)="data">
                 {{ data.item.last_modifier }}
               </template>
-              <template #cell(users)="data">
-                {{ data.item.users }}
+              <template #cell(user_group)="data">
+                {{ data.item.user_group }}
               </template>
               <template #cell(customer_status)="data">
                 <b-icon-bookmark-check-fill
@@ -164,11 +153,11 @@
 
 <script>
 // import axios from "axios";
-import { mapGetters, mapActions, mapState } from 'vuex'
-import CustomerOverview from '@/components/UserGroupFiles/CustomerOverview.vue'
-import CreateCustomerForm from '@/components/UserGroupFiles/CreateCustomerForm.vue'
-import EditCustomerForm from '@/components/UserGroupFiles/EditCustomerForm.vue'
-import DeleteCustomerModal from '@/components/UserGroupFiles/DeleteCustomerModal.vue'
+import { mapGetters, mapState } from 'vuex'
+import CustomerOverview from '@/components/UserManagerFiles/CustomerOverview.vue'
+import CreateCustomerForm from '@/components/UserManagerFiles/CreateCustomerForm.vue'
+import EditCustomerForm from '@/components/UserManagerFiles/EditCustomerForm.vue'
+import DeleteCustomerModal from '@/components/UserManagerFiles/DeleteCustomerModal.vue'
 // import AppFooter from "../footer/AppFooter.vue";
 import AppHeader from '@/components/AppHeader/AppHeader.vue'
 // import AppMain from "../AppMain/AppMain.vue";
@@ -190,32 +179,27 @@ export default {
       showDismissibleAlert: false,
       // Note 'isActive' is left out and will not appear in the rendered table
       fields: [
-        // {
-        //   key: "user_name",
-        //   label: "UserName",
-        //   sortable: false,
-        // },
-        // {
-        //   key: "first_name",
-        //   label: "First Name",
-        //   sortable: false,
-        // },
-        // {
-        //   key: "last_name",
-        //   label: "Last Name",
-        //   sortable: false,
-        // },
-        // {
-        //   key: "role",
-        //   label: "Type",
-        //   sortable: false,
-        // },
-        //
         {
-          key: 'group_name',
-          label: 'Group Name',
+          key: 'user_name',
+          label: 'UserName',
           sortable: false,
         },
+        {
+          key: 'first_name',
+          label: 'First Name',
+          sortable: false,
+        },
+        {
+          key: 'last_name',
+          label: 'Last Name',
+          sortable: false,
+        },
+        {
+          key: 'user_type',
+          label: 'Type',
+          sortable: false,
+        },
+        //
         {
           key: 'creator_name',
           label: 'Creator Name',
@@ -237,13 +221,8 @@ export default {
           sortable: false,
         },
         {
-          key: 'users',
-          label: ' Users',
-          sortable: false,
-        },
-        {
-          key: 'group_name',
-          label: ' group Name',
+          key: 'user_group',
+          label: ' User Group',
           sortable: false,
         },
         'actions',
@@ -262,24 +241,32 @@ export default {
 
   computed: {
     ...mapState('customer', ['customers']),
-    ...mapGetters('customer', ['allCustomers']), // Map the customer module's getter
+    ...mapGetters('customer', ['allCustomers']),
   },
 
   mounted() {
-    this.fetchCustomers()
+    // this.fetchCustomers();
 
+    this.fetchCustomersFromLocalStorage()
     this.getCustomerData()
   },
   methods: {
     countDownChanged(dismissCountDown) {
       this.dismissCountDown = dismissCountDown
     },
-    ...mapActions('customer', ['fetchCustomers']), // Map the customer module's action
-
+    // ...mapActions("customer", ["fetchCustomers"]), // Map the customer module's action
+    async fetchCustomersFromLocalStorage() {
+      try {
+        // const localData = JSON.parse(localStorage.getItem("customers")) || [];
+        this.$store.dispatch('customer/savedCustomers') // Dispatch the action
+        // console.log("Local Data:", localData);
+      } catch (error) {
+        console.error('Error fetching customer data from local storage:', error)
+      }
+    },
     async getCustomerData() {
-      await this.fetchCustomers() // Dispatch the action to fetch customer data
-      // You can now access customer data using this.allCustomers
-      console.log(this.allCustomers)
+      //       const localData = JSON.parse(localStorage.getItem("customers")) || [];
+      // this.allCustomers = localData;
     },
     showCreateModal() {
       this.$refs['create-customer-modal'].show()

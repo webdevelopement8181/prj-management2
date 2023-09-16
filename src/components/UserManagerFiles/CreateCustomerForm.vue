@@ -135,15 +135,16 @@ export default {
   name: 'CreateCustomerModal',
   data() {
     return {
-      selectedRole: null,
+      selectedRole:null,
       customer: {},
+      hasChanges:false,
     }
   },
 
   computed: {
     ...mapState('customer', ['customers']),
     ...mapGetters('customer', ['allCustomers']),
-
+    ...mapGetters(['getUserName']),
     isRoleSelected() {
       return this.selectedRole !== null
     },
@@ -180,37 +181,50 @@ export default {
   },
 
   watch: {
-    selectedRole(newRole) {
-      localStorage.setItem('user_type', newRole)
+    'customer.user_name': 'updateHasChanges',
+      handler: 'updateHasChanges',
+      deep: true, //  deep option if "last_name" is nested within the "customer" object
     },
-  },
+  
   methods: {
+    updateHasChanges() {
+      this.hasChanges = true
+    },
+    upadateCreator(){
+      if (this.hasChanges) {
+      const username=this.getUserName;
+this.customer.creator_name=username;
+console.log('this is creator function')
+    }
+  },
+  updatedType(){
+this.customer.user_type= this.selectedRole;
+  },
     triggerClose() {
       this.$emit('closeCreateModal')
     },
 
     async addNewCustomer() {
-      // Validate the form
+ this.upadateCreator();
+
       if (
         this.userNameState &&
         this.isRoleSelected &&
         (this.firstNameState || this.lastNameState)
       ) {
-        // if (this.selectedRole) {
-        // Assign the selected role to this.customer.user_type
+        this.updatedType();
         let newCustomer = {
           user_name: this.customer.user_name,
           first_name: this.customer.first_name,
           last_name: this.customer.last_name,
           user_type: this.customer.user_type,
+          creator_name:this.customer.creator_name,
           creation_time: this.customer.creation_time,
           group_name: this.customer.group_name,
           id: uuidv4(),
         }
         try {
-          // const savedCustomers = JSON.parse(localStorage.getItem("customers") || "[]");
-          // savedCustomers.push(newCustomer);
-          // localStorage.setItem("customers", JSON.stringify(savedCustomers));
+        
 
           // Commit the mutation to update the Vuex store
           await this.$store.dispatch('customer/addCustomer', newCustomer)
@@ -257,16 +271,3 @@ export default {
   margin-left: 3%;
 }
 </style>
-<!-- after add newcustomer -->
-<!-- // Perform the Axios request to add a new customer
-  // axios
-  //   .post("http://localhost:3000/customers/", this.customer)
-  //   .then((response) => {
-  //     console.log(response.data);
-  //     this.$emit("closeCreateModal");
-  //     this.$emit("reloadDataTable");
-  //     this.$emit("showSuccessAlert");
-  //   })
-  //   .catch((error) => {
-  //     console.log(error);
-  //   }); -->

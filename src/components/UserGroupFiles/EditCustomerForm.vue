@@ -168,6 +168,8 @@ export default {
   created() {
     // Fetch the customer data from Vuex using the customer ID
     this.customer = this.getCustomerById(this.customerId)
+    console.log('id' + this.customerId)
+    console.log('cus' + this.customer)
     // this.username = this.getUsername;
   },
   watch: {
@@ -194,10 +196,11 @@ export default {
 
     updateCustomer() {
       this.updateLastModifier()
+
       this.$store
         .dispatch('customer/updateCustomer', this.customer)
         .then(() => {
-          console.log('Customer updated successfully')
+          console.log(this.customer)
           this.$emit('closeEditModal')
           this.$emit('reloadDataTable')
           this.$emit('showSuccessAlert')

@@ -64,7 +64,7 @@
                 {{ data.item.user_type }}
               </template>
               <template #cell(creator_name)="data">
-                {{ data.item.user_name }}
+                {{ data.item.creator_name }}
               </template>
               <template #cell(creation_time)="data">
                 {{ data.item.creation_time }}
