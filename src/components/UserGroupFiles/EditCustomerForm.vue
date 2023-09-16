@@ -111,6 +111,7 @@
 <script>
 import { mapGetters } from 'vuex'
 
+
 export default {
   name: 'CreateCustomerModal',
   props: {
@@ -125,14 +126,14 @@ export default {
   },
   mounted() {
     // this.getCusomterByID();
-    setInterval(() => {
-      const currentDate = new Date()
-      const hours = String(currentDate.getHours()).padStart(2, '0')
-      const minutes = String(currentDate.getMinutes()).padStart(2, '0')
-      const seconds = String(currentDate.getSeconds()).padStart(2, '0')
-      const time = `${hours}:${minutes}:${seconds}`
-      this.customer.last_modification_time = time // Update the input value
-    }) // Update
+    // setInterval(() => {
+    //   const currentDate = new Date()
+    //   const hours = String(currentDate.getHours()).padStart(2, '0')
+    //   const minutes = String(currentDate.getMinutes()).padStart(2, '0')
+    //   const seconds = String(currentDate.getSeconds()).padStart(2, '0')
+    //   const time = `${hours}:${minutes}:${seconds}`
+    //   this.customer.last_modification_time = time 
+    // }) 
     this.hasChanges = false
   },
   computed: {
@@ -144,7 +145,7 @@ export default {
         const userNameLength = this.customer.last_modifier.length
         return userNameLength >= 5 && userNameLength <= 45
       }
-      return false // Return false if customer or user_name is not defined
+      return false 
     },
     isRoleSelected() {
       return this.selectedRole !== null
@@ -168,15 +169,15 @@ export default {
   created() {
     // Fetch the customer data from Vuex using the customer ID
     this.customer = this.getCustomerById(this.customerId)
-    console.log('id' + this.customerId)
-    console.log('cus' + this.customer)
+    console.log('ida' + this.customerId)
+    console.log('cusaa' + this.customer)
     // this.username = this.getUsername;
   },
   watch: {
     'customer.first_name': 'updateHasChanges',
     'customer.last_name': {
       handler: 'updateHasChanges',
-      deep: true, //  deep option if "last_name" is nested within the "customer" object
+      deep: true, 
     },
   },
   methods: {
@@ -190,12 +191,23 @@ export default {
         this.customer.last_modifier = username
       }
     },
+    updatedType(){
+this.customer.user_type= this.selectedRole;
+  },
     triggerClose() {
       this.$emit('closeEditModal')
     },
 
     updateCustomer() {
+      this.updatedType()
       this.updateLastModifier()
+
+
+      const currentDate = new Date()
+  const hours = String(currentDate.getHours()).padStart(2, '0')
+  const minutes = String(currentDate.getMinutes()).padStart(2, '0')
+  const seconds = String(currentDate.getSeconds()).padStart(2, '0')
+  this.customer.last_modification_time = `${hours}:${minutes}:${seconds}`
 
       this.$store
         .dispatch('customer/updateCustomer', this.customer)

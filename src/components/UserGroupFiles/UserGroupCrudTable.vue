@@ -47,11 +47,11 @@
             <b-table
               striped
               hover
-              :items="customers"
+              :items="groups"
               :fields="fields"
               class="text-center"
             >
-              <template #cell(user_name)="data">
+              <!-- <template #cell(user_name)="data">
                 {{ data.item.user_name }}
               </template>
               <template #cell(first_name)="data">
@@ -62,9 +62,9 @@
               </template>
               <template #cell(user_type)="data">
                 {{ data.item.user_type }}
-              </template>
+              </template> -->
               <template #cell(creator_name)="data">
-                {{ data.item.user_name }}
+                {{ data.item.creator_name }}
               </template>
               <template #cell(creation_time)="data">
                 {{ data.item.creation_time }}
@@ -75,8 +75,11 @@
               <template #cell(last_modifier)="data">
                 {{ data.item.last_modifier }}
               </template>
-              <template #cell(user_group)="data">
-                {{ data.item.user_group }}
+              <template #cell(group_name)="data">
+                {{ data.item.group_name}}
+              </template>
+              <template #cell(users_list)="data">
+                {{ data.item.users_list}}
               </template>
               <template #cell(customer_status)="data">
                 <b-icon-bookmark-check-fill
@@ -154,10 +157,10 @@
 <script>
 // import axios from "axios";
 import { mapGetters, mapState } from 'vuex'
-import CustomerOverview from '@/components/UserManagerFiles/CustomerOverview.vue'
-import CreateCustomerForm from '@/components/UserManagerFiles/CreateCustomerForm.vue'
-import EditCustomerForm from '@/components/UserManagerFiles/EditCustomerForm.vue'
-import DeleteCustomerModal from '@/components/UserManagerFiles/DeleteCustomerModal.vue'
+import CustomerOverview from '@/components/UserGroupFiles/CustomerOverview.vue'
+import CreateCustomerForm from '@/components/UserGroupFiles/CreateCustomerForm.vue'
+import EditCustomerForm from '@/components/UserGroupFiles/EditCustomerForm.vue'
+import DeleteCustomerModal from '@/components/UserGroupFiles/DeleteCustomerModal.vue'
 // import AppFooter from "../footer/AppFooter.vue";
 import AppHeader from '@/components/AppHeader/AppHeader.vue'
 // import AppMain from "../AppMain/AppMain.vue";
@@ -179,26 +182,31 @@ export default {
       showDismissibleAlert: false,
       // Note 'isActive' is left out and will not appear in the rendered table
       fields: [
-        {
-          key: 'user_name',
-          label: 'UserName',
+        // {
+           {
+          key: 'group_name',
+          label: 'groupName',
           sortable: false,
         },
-        {
-          key: 'first_name',
-          label: 'First Name',
-          sortable: false,
-        },
-        {
-          key: 'last_name',
-          label: 'Last Name',
-          sortable: false,
-        },
-        {
-          key: 'user_type',
-          label: 'Type',
-          sortable: false,
-        },
+        //   key: 'user_name',
+        //   label: 'UserName',
+        //   sortable: false,
+        // },
+        // {
+        //   key: 'first_name',
+        //   label: 'First Name',
+        //   sortable: false,
+        // },
+        // {
+        //   key: 'last_name',
+        //   label: 'Last Name',
+        //   sortable: false,
+        // },
+        // {
+        //   key: 'user_type',
+        //   label: 'Type',
+        //   sortable: false,
+        // },
         //
         {
           key: 'creator_name',
@@ -221,18 +229,19 @@ export default {
           sortable: false,
         },
         {
-          key: 'user_group',
-          label: ' User Group',
+          key: 'users_list',
+          label: ' Users',
           sortable: false,
         },
+        // {
+        //   key: 'user_group',
+        //   label: ' User Group',
+        //   sortable: false,
+        // },
         'actions',
       ],
       items: [],
-      numberOfCustomers: 0,
-      activeCustomers: 0,
-      activeCustomersData: [],
       customerId: 0,
-      companySearchTerm: '',
       tableHeader: '',
       showSuccessAlert: false,
       alertMessage: '',
@@ -240,8 +249,8 @@ export default {
   },
 
   computed: {
-    ...mapState('customer', ['customers']),
-    ...mapGetters('customer', ['allCustomers']),
+    ...mapState('group', ['groups']),
+    ...mapGetters('group', ['allCustomers']),
   },
 
   mounted() {

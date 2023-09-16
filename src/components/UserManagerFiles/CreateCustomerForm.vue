@@ -56,8 +56,8 @@
             </b-form-invalid-feedback>
           </b-form-group>
         </b-col>
-        <!--   
-        <b-col cols="6">
+        
+        <!-- <b-col cols="6">
           <b-form-group id="creator-name" label="creator name" label-for="creator-name">
             <b-form-input
               id="creator-name"
@@ -72,7 +72,7 @@
     </b-form-invalid-feedback>
           </b-form-group>
           
-        </b-col> -->
+        </b-col>  -->
         <!-- <b-col cols="6">
           <b-form-group id="creatoin-time" label="creation time" label-for="creation-time">
             <b-form-input
