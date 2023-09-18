@@ -14,10 +14,10 @@
     </b-row>
     <!-- active and total customers filtering -->
     <b-row>
-      <customer-overview>
+      <!-- <customer-overview>
         :totalCustomers="numberOfCustomers"
         @totalCustomersIsActive="setFilterTotalIsActive" ></customer-overview
-      >
+      > -->
     </b-row>
     <div class="table-container">
       <b-row class="mt-3">
@@ -154,7 +154,7 @@
 <script>
 // import axios from "axios";
 import { mapGetters, mapState } from 'vuex'
-import CustomerOverview from '@/components/UserManagerFiles/CustomerOverview.vue'
+// import CustomerOverview from '@/components/UserManagerFiles/CustomerOverview.vue'
 import CreateCustomerForm from '@/components/UserManagerFiles/CreateCustomerForm.vue'
 import EditCustomerForm from '@/components/UserManagerFiles/EditCustomerForm.vue'
 import DeleteCustomerModal from '@/components/UserManagerFiles/DeleteCustomerModal.vue'
@@ -167,7 +167,7 @@ export default {
     // AppFooter,
     AppHeader,
     // AppMain,
-    CustomerOverview,
+    // CustomerOverview,
     CreateCustomerForm,
     EditCustomerForm,
     DeleteCustomerModal,

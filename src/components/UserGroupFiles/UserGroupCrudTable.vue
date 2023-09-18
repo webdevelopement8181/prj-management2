@@ -14,10 +14,10 @@
     </b-row>
     <!-- active and total customers filtering -->
     <b-row>
-      <customer-overview>
+      <!-- <customer-overview>
         :totalCustomers="numberOfCustomers"
         @totalCustomersIsActive="setFilterTotalIsActive" ></customer-overview
-      >
+      > -->
     </b-row>
     <div class="table-container">
       <b-row class="mt-3">
@@ -124,7 +124,7 @@
       ></create-customer-form>
     </b-modal>
 
-    Modal for updating customers
+    Modal for updating groups
     <b-modal ref="edit-customer-modal" size="xl" hide-footer title="Edit user">
       <edit-customer-form
         @closeEditModal="closeEditModal"
@@ -134,7 +134,7 @@
       ></edit-customer-form>
     </b-modal>
 
-    Delete Customer Modal
+    Delete group Modal
     <b-modal
       ref="delete-customer-modal"
       size="md"
@@ -157,7 +157,7 @@
 <script>
 // import axios from "axios";
 import { mapGetters, mapState } from 'vuex'
-import CustomerOverview from '@/components/UserGroupFiles/CustomerOverview.vue'
+// import CustomerOverview from '@/components/UserGroupFiles/CustomerOverview.vue'
 import CreateCustomerForm from '@/components/UserGroupFiles/CreateCustomerForm.vue'
 import EditCustomerForm from '@/components/UserGroupFiles/EditCustomerForm.vue'
 import DeleteCustomerModal from '@/components/UserGroupFiles/DeleteCustomerModal.vue'
@@ -170,7 +170,7 @@ export default {
     // AppFooter,
     AppHeader,
     // AppMain,
-    CustomerOverview,
+    // CustomerOverview,
     CreateCustomerForm,
     EditCustomerForm,
     DeleteCustomerModal,
@@ -250,7 +250,7 @@ export default {
 
   computed: {
     ...mapState('group', ['groups']),
-    ...mapGetters('group', ['allCustomers']),
+    ...mapGetters('group', ['allGroups']),
   },
 
   mounted() {
@@ -267,7 +267,7 @@ export default {
     async fetchCustomersFromLocalStorage() {
       try {
         // const localData = JSON.parse(localStorage.getItem("customers")) || [];
-        this.$store.dispatch('customer/savedCustomers') // Dispatch the action
+        this.$store.dispatch('group/savedGroups') // Dispatch the action
         // console.log("Local Data:", localData);
       } catch (error) {
         console.error('Error fetching customer data from local storage:', error)
@@ -299,11 +299,11 @@ export default {
     showAlertCreate() {
       this.showSuccessAlert = true
       this.dismissCountDown = this.dismissSecs
-      this.alertMessage = 'Customer was created successfully!'
+      this.alertMessage = 'group was created successfully!'
     },
     showAlertUpdate() {
       this.showSuccessAlert = true
-      this.alertMessage = 'Customer was updated successfully'
+      this.alertMessage = 'group was updated successfully'
     },
     showDeleteModal(id) {
       this.$refs['delete-customer-modal'].show()
@@ -314,7 +314,7 @@ export default {
     },
     showDeleteSuccessModal() {
       this.showSuccessAlert = true
-      this.alertMessage = 'Customer was deleted successfully!'
+      this.alertMessage = 'group was deleted successfully!'
     },
   },
 }

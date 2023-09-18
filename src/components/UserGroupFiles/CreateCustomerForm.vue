@@ -10,7 +10,7 @@
               id="user-name"
               type="text"
               placeholder="User Name"
-              v-model="customer.user_name"
+              v-model="group.user_name"
               :state="userNameState"
               :valid="userNameState"
             ></b-form-input>
@@ -32,7 +32,7 @@
               id="first-name"
               type="text"
               placeholder="first Name"
-              v-model="customer.first_name"
+              v-model="group.first_name"
               :state="firstNameState"
               :valid="firstNameState"
             ></b-form-input>
@@ -47,7 +47,7 @@
               id="last-name"
               type="text"
               placeholder="last Name"
-              v-model="customer.last_name"
+              v-model="group.last_name"
               :state="lastNameState"
               :valid="lastNameState"
             ></b-form-input>
@@ -136,14 +136,14 @@ export default {
   data() {
     return {
       selectedRole:null,
-      customer: {},
+   group: {},
       hasChanges:false,
     }
   },
 
   computed: {
     ...mapState('group', ['groups']),
-    ...mapGetters('group', ['allCustomers']),
+    ...mapGetters('group', ['allGroups']),
     ...mapGetters(['getUserName']),
     isRoleSelected() {
       return this.selectedRole !== null
@@ -158,22 +158,22 @@ export default {
       return time
     },
     userNameState() {
-      if (this.customer && this.customer.user_name) {
-        const userNameLength = this.customer.user_name.length
+      if (this.group && this.group.user_name) {
+        const userNameLength = this.group.user_name.length
         return userNameLength >= 5 && userNameLength <= 45
       }
       return false // Return false if customer or user_name is not defined
     },
     firstNameState() {
-      if (this.customer && this.customer.first_name) {
-        const fisrtNameLength = this.customer.first_name.length
+      if (this.group && this.group.first_name) {
+        const fisrtNameLength = this.group.first_name.length
         return fisrtNameLength >= 0 && fisrtNameLength <= 45
       }
       return true
     },
     lastNameState() {
-      if (this.customer && this.customer.last_name) {
-        const lastNameLength = this.customer.last_name.length
+      if (this.group && this.group.last_name) {
+        const lastNameLength = this.group.last_name.length
         return lastNameLength >= 0 && lastNameLength <= 45
       }
       return true
@@ -193,12 +193,12 @@ export default {
     upadateCreator(){
       if (this.hasChanges) {
       const username=this.getUserName;
-this.customer.creator_name=username;
+this.group.creator_name=username;
 console.log('this is creator function')
     }
   },
   updatedType(){
-this.customer.user_type= this.selectedRole;
+this.group.user_type= this.selectedRole;
   },
     triggerClose() {
       this.$emit('closeCreateModal')
@@ -218,17 +218,17 @@ this.customer.user_type= this.selectedRole;
           // first_name: this.customer.first_name,
           // last_name: this.customer.last_name,
           // user_type: this.customer.user_type,
-          creator_name:this.customer.creator_name,
-          creation_time: this.customer.creation_time,
-          group_name: this.customer.group_name,
-          users_list:this.customer.users_list,
+          creator_name:this.group.creator_name,
+          creation_time: this.group.creation_time,
+          group_name: this.group.group_name,
+          users_list:this.group.users_list,
           id: uuidv4(),
         }
         try {
         
 
           // Commit the mutation to update the Vuex store
-          await this.$store.dispatch('group/addGroups', newGroup)
+          await this.$store.dispatch('group/addGroup',newGroup)
           this.$emit('closeCreateModal') // Use the correct event name
           this.$emit('reloadDataTable')
           this.$emit('showSuccessAlert')
@@ -242,7 +242,7 @@ this.customer.user_type= this.selectedRole;
     },
     clearForm() {
       // Reset the form fields
-      this.customer = {}
+      this.group = {}
       this.selectedRole = null
     },
   },
@@ -253,7 +253,7 @@ this.customer.user_type= this.selectedRole;
       const minutes = String(currentDate.getMinutes()).padStart(2, '0')
       const seconds = String(currentDate.getSeconds()).padStart(2, '0')
       const time = `${hours}:${minutes}:${seconds}`
-      this.customer.creation_time = time // Update the input value
+      this.group.creation_time = time // Update the input value
     }) // Update every 1 seco
   },
 }

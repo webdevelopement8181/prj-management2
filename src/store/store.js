@@ -35,7 +35,8 @@ export const store = new Vuex.Store({
     },
   },
   modules: {
-    customer: customerModule, groupModule
+    customer: customerModule,
+    group: groupModule
 
     // Register the customer module
   },
