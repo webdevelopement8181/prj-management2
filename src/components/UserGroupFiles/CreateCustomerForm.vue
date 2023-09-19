@@ -5,103 +5,21 @@
 
       <b-row>
         <b-col cols="6">
-          <b-form-group id="user-name" label="User Name" label-for="user-name">
+          <b-form-group id="group-name" label="Group Name" label-for="group-name">
             <b-form-input
-              id="user-name"
+              id="group-name"
               type="text"
-              placeholder="User Name"
-              v-model="group.user_name"
-              :state="userNameState"
-              :valid="userNameState"
+              placeholder="Group Name"
+              v-model="group.group_name"
+              :state="groupNameState"
+              :valid="groupNameState"
             ></b-form-input>
             <b-form-invalid-feedback>
-              User name must be between 5 and 45 characters.
+             group name must be between 5 and 45 characters.
             </b-form-invalid-feedback>
           </b-form-group>
         </b-col>
-
-        <!-- i added this to the same row as the username -->
-
-        <b-col cols="6">
-          <b-form-group
-            id="first-name"
-            label="first Name"
-            label-for="first-name"
-          >
-            <b-form-input
-              id="first-name"
-              type="text"
-              placeholder="first Name"
-              v-model="group.first_name"
-              :state="firstNameState"
-              :valid="firstNameState"
-            ></b-form-input>
-            <b-form-invalid-feedback>
-              first name must be 48 characters at max level
-            </b-form-invalid-feedback>
-          </b-form-group>
-        </b-col>
-        <b-col cols="6">
-          <b-form-group id="last-name" label="last Name" label-for="last-name">
-            <b-form-input
-              id="last-name"
-              type="text"
-              placeholder="last Name"
-              v-model="group.last_name"
-              :state="lastNameState"
-              :valid="lastNameState"
-            ></b-form-input>
-            <b-form-invalid-feedback>
-              last name must be 48 characters at max level
-            </b-form-invalid-feedback>
-          </b-form-group>
-        </b-col>
-        
-        <!-- <b-col cols="6">
-          <b-form-group id="creator-name" label="creator name" label-for="creator-name">
-            <b-form-input
-              id="creator-name"
-              type="text"
-              placeholder="creator name"
-              v-model="customer.user_name"
-              :state="lastNameState"
-              :valid="lastNameState"
-            ></b-form-input>
-            <b-form-invalid-feedback>
-    last name must be 48 characters at max level
-    </b-form-invalid-feedback>
-          </b-form-group>
-          
-        </b-col>  -->
-        <!-- <b-col cols="6">
-          <b-form-group id="creatoin-time" label="creation time" label-for="creation-time">
-            <b-form-input
-              id="creatoin-time"
-              type="text"
-              placeholder="creation time"
-              v-model="customer.creation_time"
-            
-            ></b-form-input>
-  
-          </b-form-group>
-          
-        </b-col> -->
-      </b-row>
-
-      <b-row class="mt-5">
-        <h5></h5>
-      </b-row>
-      <b-row>
-        <div class="selection-role-constainer">
-          <b-col cols="4">
-            <b-form-radio-group v-model="selectedRole" name="role">
-              type:
-
-              <b-form-radio value="admin">Admin</b-form-radio>
-              <b-form-radio value="user">User</b-form-radio>
-            </b-form-radio-group>
-          </b-col>
-        </div>
+    
       </b-row>
 
       <b-row class="mt-4">
@@ -111,11 +29,9 @@
             class="px-5"
             @click="addNewCustomer"
             :disabled="
-              !userNameState ||
-              !isRoleSelected ||
-              (!firstNameState && !lastNameState)
+              !groupNameState
             "
-            >Add Customer</b-button
+            >Add group</b-button
           >
         </b-col>
         <b-col>
@@ -157,34 +73,21 @@ export default {
       const time = `${hours}:${minus}:${seconds}`
       return time
     },
-    userNameState() {
-      if (this.group && this.group.user_name) {
-        const userNameLength = this.group.user_name.length
-        return userNameLength >= 5 && userNameLength <= 45
+  groupNameState() {
+      if (this.group && this.group.group_name) {
+        const groupNameLength = this.group.group_name.length
+        return groupNameLength >= 5 && groupNameLength <= 45
       }
       return false // Return false if customer or user_name is not defined
     },
-    firstNameState() {
-      if (this.group && this.group.first_name) {
-        const fisrtNameLength = this.group.first_name.length
-        return fisrtNameLength >= 0 && fisrtNameLength <= 45
-      }
-      return true
-    },
-    lastNameState() {
-      if (this.group && this.group.last_name) {
-        const lastNameLength = this.group.last_name.length
-        return lastNameLength >= 0 && lastNameLength <= 45
-      }
-      return true
-    },
+
   },
 
   watch: {
-    'customer.user_name': 'updateHasChanges',
-      handler: 'updateHasChanges',
-      deep: true, //  deep option if "last_name" is nested within the "customer" object
-    },
+  'group.group_name': 'updateHasChanges',
+  // ...
+},
+
   
   methods: {
     updateHasChanges() {
@@ -197,9 +100,9 @@ this.group.creator_name=username;
 console.log('this is creator function')
     }
   },
-  updatedType(){
-this.group.user_type= this.selectedRole;
-  },
+//   updatedType(){
+// this.group.user_type= this.selectedRole;
+//   },
     triggerClose() {
       this.$emit('closeCreateModal')
     },
@@ -208,19 +111,18 @@ this.group.user_type= this.selectedRole;
  this.upadateCreator();
 
       if (
-        this.userNameState &&
-        this.isRoleSelected &&
-        (this.firstNameState || this.lastNameState)
+        this.groupNameState 
+    
       ) {
-        this.updatedType();
+        // this.updatedType();
         let newGroup = {
           // user_name: this.customer.user_name,
           // first_name: this.customer.first_name,
           // last_name: this.customer.last_name,
           // user_type: this.customer.user_type,
+          group_name: this.group.group_name,
           creator_name:this.group.creator_name,
           creation_time: this.group.creation_time,
-          group_name: this.group.group_name,
           users_list:this.group.users_list,
           id: uuidv4(),
         }

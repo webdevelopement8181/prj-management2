@@ -7,14 +7,14 @@
     </b-row>
     <b-row class="mt-2 mb-3">
       <p class="text-danger">
-        This action is not reversible and may result in the loss if important
-        data.
+        This action is not reversible and may result in the loss of users or the groups 
+    
       </p>
     </b-row>
     <b-row class="mt-4">
       <b-col>
         <b-button variant="danger" @click="removeCustomerFromData"
-          >Delete Customer</b-button
+          >Delete groups</b-button
         >
       </b-col>
       <b-col>
@@ -31,15 +31,16 @@ import { mapGetters } from 'vuex'
 export default {
   name: 'DeleteCustomerModal',
   props: {
-    customerId: Number,
+    customerId: String,
   },
   computed: {
-    ...mapGetters('customer', ['getCustomerById']),
+    ...mapGetters('group', ['getGroupById']),
     // ...mapActions("customer", ["deleteCustomer"]),
   },
   created() {
-    // Fetch the customer data from Vuex using the customer ID
-    this.customer = this.getCustomerById(this.customerId)
+    if (this.customerId) {
+    this.group = this.getGroupById(this.customerId)
+    }
   },
   //   // this.username = this.getUsername;
   // },
@@ -47,9 +48,9 @@ export default {
 
   customerId: {
     immediate: true,
-    handler(newCustomerId) {
-      this.customer = this.getCustomerById(newCustomerId)
-      console.log('newCustomerId: ', newCustomerId)
+    handler(newGroupId) {
+      this.group = this.getCustomerById(newGroupId)
+      console.log('newGroupId: ', newGroupId)
       // console.log(this.customer)
     },
   },
@@ -62,15 +63,15 @@ export default {
 
     removeCustomerFromData() {
       this.$store
-        .dispatch('customer/deleteCustomer', this.customer.id)
+        .dispatch('group/deleteGroup', this.group.id)
         .then(() => {
-          console.log(this.customer.customerId)
+          // console.log(this.customer.customerId)
           this.$emit('reloadDataTable')
           this.$emit('showDeleteAlert')
           this.$emit('closeDeleteModal')
         })
         .catch((error) => {
-          console.error('Error deleting customer:', error)
+          console.error('Error deleting groups:', error)
         })
     },
   },
