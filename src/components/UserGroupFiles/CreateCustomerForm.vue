@@ -19,8 +19,40 @@
             </b-form-invalid-feedback>
           </b-form-group>
         </b-col>
+        <b-col cols="6">
+          <div class="users-container">
+          <b-form-group label="Users">
+    <!-- <b-form-group id="user-list" label="User List" label-for="user-list"> -->
+      <div v-if="isUserNamesEmpty">
+        <p>no user name availabale!</p>
+      </div>
+
+      <multiselect
+        v-model="selectedUserNames"
+        :options="userNames" 
+        :close-on-select="false"
+        :searchable="true"
+        placeholder="Type to search"
+        id="selectedUserNames"
+        name="selectedUserNames"
+        :show-labels="false"
+        multiple 
+        class="custom-multiselect"
+      ></multiselect>
+   
+           </b-form-group>
+          </div>
+    <!-- </b-form-group> -->
+  </b-col>
+      </b-row>
+      <b-row>
+       
     
       </b-row>
+      <b-row>
+
+</b-row>
+
 
       <b-row class="mt-4">
         <b-col cols="3">
@@ -45,12 +77,17 @@
 <script>
 // import axios from "axios";
 import { mapGetters, mapState } from 'vuex'
+import Multiselect from 'vue-multiselect';
 import { v4 as uuidv4 } from 'uuid'
 
 export default {
   name: 'CreateCustomerModal',
+  components:{
+    Multiselect,
+  },
   data() {
     return {
+      selectedUserNames: [],
       selectedRole:null,
    group: {},
       hasChanges:false,
@@ -59,12 +96,24 @@ export default {
 
   computed: {
     ...mapState('group', ['groups']),
+    ...mapGetters('customer', ['userNames']),
     ...mapGetters('group', ['allGroups']),
     ...mapGetters(['getUserName']),
-    isRoleSelected() {
-      return this.selectedRole !== null
-    },
 
+      isUserNamesEmpty() {
+    return this.userNames.length === 0;
+  },
+ 
+
+    // isRoleSelected() {
+    //   return this.selectedRole !== null
+    // },
+    formattedUserNames() {
+    return this.userNames.map((userName) => ({
+      value: userName,
+      text: userName,
+    }));
+  },
     creationTimeState() {
       const currentDate = new Date()
       const hours = String(currentDate.getHours()).padStart(2, '0')
@@ -82,7 +131,9 @@ export default {
     },
 
   },
-
+  created() {
+    console.log('User Names:', this.userNames);
+  },
   watch: {
   'group.group_name': 'updateHasChanges',
   // ...
@@ -100,6 +151,7 @@ this.group.creator_name=username;
 console.log('this is creator function')
     }
   },
+
 //   updatedType(){
 // this.group.user_type= this.selectedRole;
 //   },
@@ -116,14 +168,11 @@ console.log('this is creator function')
       ) {
         // this.updatedType();
         let newGroup = {
-          // user_name: this.customer.user_name,
-          // first_name: this.customer.first_name,
-          // last_name: this.customer.last_name,
-          // user_type: this.customer.user_type,
           group_name: this.group.group_name,
           creator_name:this.group.creator_name,
           creation_time: this.group.creation_time,
-          users_list:this.group.users_list,
+          users_list: this.selectedUserNames,
+      
           id: uuidv4(),
         }
         try {
@@ -173,4 +222,18 @@ console.log('this is creator function')
 .selection-role-constainer {
   margin-left: 3%;
 }
+.custom-multiselect .multiselect__content-wrapper {
+  max-height: 200px; 
+  overflow-y: auto;
+}
+
+.custom-multiselect .multiselect__select {
+  position: relative;
+}
+
+
+.users-container{
+  margin-top: -1.5%;
+}
+
 </style>

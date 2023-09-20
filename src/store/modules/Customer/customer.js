@@ -1,8 +1,8 @@
-// src/store/modules/customer.js
-// import axios from "axios";
+
 
 const state = {
   customers: [],
+  userNames:[]
 }
 
 const mutations = {
@@ -11,6 +11,7 @@ const mutations = {
   },
   ADD_CUSTOMER(state, newCustomer) {
     state.customers.push(newCustomer)
+    state.userNames.push(newCustomer.user_name)
   },
   UPDATE_CUSTOMER(state, updatedCustomer) {
     // Find the index of the customer to update in the array
@@ -21,14 +22,30 @@ const mutations = {
       // Update the customer data in the array
       state.customers.splice(index, 1, updatedCustomer)
     }
+     const usernameIndex = state.userNames.findIndex(
+      (customer) => customer.id === updatedCustomer.id,
+    )
+    if (usernameIndex !== -1) {
+      // Update the customer data in the array
+      state.userNames.splice(usernameIndex, 1, updatedCustomer)
+    }
   },
   // Mutation in customer.js
   DELETE_CUSTOMER(state, customerId) {
     const index = state.customers.findIndex(
-      (customer) => customer.id === customerId,
-    )
+      (customer) => customer.id === customerId
+    );
     if (index !== -1) {
-      state.customers.splice(index, 1)
+      // Remove the user_name from the userNames array
+      const userNameToDelete = state.customers[index].user_name;
+      const userNameIndex = state.userNames.findIndex(
+        (userName) => userName === userNameToDelete
+      );
+      if (userNameIndex !== -1) {
+        state.userNames.splice(userNameIndex, 1);
+      }
+
+      state.customers.splice(index, 1);
     }
   },
 }
@@ -39,20 +56,7 @@ const actions = {
     const localData = JSON.parse(localStorage.getItem('customers')) || []
     commit('SET_CUSTOMERS', localData)
   },
-  // async fetchCustomers({ commit }) {
-  //     // console.error("Fetching customers...");
-  //     try {
-  //       const response = await axios.get("http://localhost:3000/customers/");
-  //       if (response.status === 200) {
-  //         commit("SET_CUSTOMERS", response.data);
-  //       } else {
-  //         console.error("Failed to fetch customer data.");
-  //       }
-  //     } catch (error) {
-  //       console.error("Error fetching customer data:", error);
-  //     }
 
-  //   },
   async addCustomer({ commit }, newCustomer) {
     try {
       // Simultaneously commit the mutation to update the store
@@ -123,6 +127,25 @@ const getters = {
   getCustomerById: (state) => (id) => {
     return state.customers.find((customer) => customer.id === id)
   },
+  userNames(state) {
+    return state.customers.map((customer) => customer.user_name);
+ 
+  },
+
 }
 
 export default { namespaced: true, state, mutations, actions, getters }
+  // async fetchCustomers({ commit }) {
+  //     // console.error("Fetching customers...");
+  //     try {
+  //       const response = await axios.get("http://localhost:3000/customers/");
+  //       if (response.status === 200) {
+  //         commit("SET_CUSTOMERS", response.data);
+  //       } else {
+  //         console.error("Failed to fetch customer data.");
+  //       }
+  //     } catch (error) {
+  //       console.error("Error fetching customer data:", error);
+  //     }
+
+  //   },

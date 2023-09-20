@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import customerModule from './modules/customer/customer'
 import groupModule from './modules/group/group'
+// import usernamesModule from './modules/usernames/usernames'
 // import groupModule from './modules/customer/group';
 
 Vue.use(Vuex)
@@ -36,8 +37,8 @@ export const store = new Vuex.Store({
   },
   modules: {
     customer: customerModule,
-    group: groupModule
+    group: groupModule,
+    // usernames:usernamesModule
 
-    // Register the customer module
   },
 })

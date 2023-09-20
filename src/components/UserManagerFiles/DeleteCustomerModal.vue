@@ -31,7 +31,7 @@ import { mapGetters } from 'vuex'
 export default {
   name: 'DeleteCustomerModal',
   props: {
-    customerId: Number,
+    customerId:String,
   },
   computed: {
     ...mapGetters('customer', ['getCustomerById']),

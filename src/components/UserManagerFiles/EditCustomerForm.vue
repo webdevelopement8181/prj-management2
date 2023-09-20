@@ -115,7 +115,7 @@ import { mapGetters } from 'vuex'
 export default {
   name: 'CreateCustomerModal',
   props: {
-    customerId: Number,
+    customerId:String,
   },
   data() {
     return {
