@@ -7,6 +7,7 @@
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
     "prettier": "prettier --write ."
+    
   },
   "dependencies": {
     "@fortawesome/free-brands-svg-icons": "^6.4.2",
@@ -19,6 +20,7 @@
     "core-js": "^3.8.3",
     "uuid": "^9.0.1",
     "vue": "^2.7.14",
+    "vue-i18n": "^8.28.2",
     "vue-multiselect": "^2.1.7",
     "vue-router": "^3.5.1",
     "vuex": "^2.5.0"

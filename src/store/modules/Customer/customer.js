@@ -51,73 +51,100 @@ const mutations = {
 }
 
 const actions = {
+  // async initStore({ dispatch }) {
+  //   await dispatch('savedCustomers')
+  //   await dispatch('savedUserNames') // Add this line to load userNames
+  // },
   async savedCustomers({ commit }) {
-    // Commit the mutation to update the state
-    const localData = JSON.parse(localStorage.getItem('customers')) || []
-    commit('SET_CUSTOMERS', localData)
+    try {
+      const localCustomers = JSON.parse(localStorage.getItem('customers')) || [];
+      const localUserNames = JSON.parse(localStorage.getItem('userNames')) || [];
+  
+      commit('SET_CUSTOMERS', localCustomers);
+      commit('SET_USERNAMES', localUserNames);
+    } catch (error) {
+      console.error('Error loading data from local storage:', error);
+    }
   },
+  
+
+
 
   async addCustomer({ commit }, newCustomer) {
     try {
-      // Simultaneously commit the mutation to update the store
-      commit('ADD_CUSTOMER', newCustomer)
-      console.log('new customer inside dispatch: ', newCustomer)
-      // Update local storage
+      commit('ADD_CUSTOMER', newCustomer);
+  
+      // Update local storage for customers
       const savedCustomers = JSON.parse(
-        localStorage.getItem('customers') || '[]',
-      )
-      savedCustomers.push(newCustomer)
-      localStorage.setItem('customers', JSON.stringify(savedCustomers))
+        localStorage.getItem('customers') || '[]'
+      );
+      savedCustomers.push(newCustomer);
+      localStorage.setItem('customers', JSON.stringify(savedCustomers));
+  
+      // Update local storage for userNames
+      const savedUserNames = JSON.parse(
+        localStorage.getItem('userNames') || '[]'
+      );
+      savedUserNames.push(newCustomer.user_name);
+      localStorage.setItem('userNames', JSON.stringify(savedUserNames));
     } catch (error) {
-      console.error('Error adding customer:', error)
+      console.error('Error adding customer:', error);
     }
   },
+  
   async updateCustomer({ commit }, updatedCustomer) {
     try {
-      // Commit a mutation to update the customer in the store
-      commit('UPDATE_CUSTOMER', updatedCustomer)
-
-      // Update local storage
+      commit('UPDATE_CUSTOMER', updatedCustomer);
+  
+      // Update local storage for customers
       const savedCustomers = JSON.parse(
-        localStorage.getItem('customers') || '[]',
-      )
+        localStorage.getItem('customers') || '[]'
+      );
       const index = savedCustomers.findIndex(
-        (customer) => customer.id === updatedCustomer.id,
-      )
+        (customer) => customer.id === updatedCustomer.id
+      );
       if (index !== -1) {
-        savedCustomers.splice(index, 1, updatedCustomer)
-        localStorage.setItem('customers', JSON.stringify(savedCustomers))
+        savedCustomers.splice(index, 1, updatedCustomer);
+        localStorage.setItem('customers', JSON.stringify(savedCustomers));
       }
-
-      return Promise.resolve()
+  
+      // Update local storage for userNames
+      const savedUserNames = JSON.parse(
+        localStorage.getItem('userNames') || '[]'
+      );
+      const userNameIndex = savedUserNames.findIndex(
+        (userName) => userName === updatedCustomer.user_name
+      );
+      if (userNameIndex !== -1) {
+        savedUserNames.splice(userNameIndex, 1, updatedCustomer.user_name);
+        localStorage.setItem('userNames', JSON.stringify(savedUserNames));
+      }
+  
+      return Promise.resolve();
     } catch (error) {
-      console.error('Error updating customer:', error)
-
-      return Promise.reject(error)
+      console.error('Error updating customer:', error);
+      return Promise.reject(error);
     }
   },
-  async deleteCustomer({ commit }, customerId) {
-    try {
-      commit('DELETE_CUSTOMER', customerId)
-      console.log('CustomerId:', customerId)
-
-      // Update local storage
-      const savedCustomers = JSON.parse(
-        localStorage.getItem('customers') || '[]',
-      )
-      const updatedCustomers = savedCustomers.filter(
-        (customer) => customer.id !== customerId,
-      )
-      console.log('updated costumerssss: ' + customerId)
-      localStorage.setItem('customers', JSON.stringify(updatedCustomers))
-
-      return Promise.resolve()
-    } catch (error) {
-      console.error('Error deleting customer:', error)
-
-      return Promise.reject(error)
+  
+  DELETE_CUSTOMER(state, customerId) {
+    const index = state.customers.findIndex(
+      (customer) => customer.id === customerId
+    );
+    if (index !== -1) {
+      // Remove the user_name from the userNames array
+      const userNameToDelete = state.customers[index].user_name;
+      const userNameIndex = state.userNames.findIndex(
+        (userName) => userName === userNameToDelete
+      );
+      if (userNameIndex !== -1) {
+        state.userNames.splice(userNameIndex, 1);
+      }
+  
+      state.customers.splice(index, 1);
     }
   },
+  
 }
 
 const getters = {
@@ -135,17 +162,3 @@ const getters = {
 }
 
 export default { namespaced: true, state, mutations, actions, getters }
-  // async fetchCustomers({ commit }) {
-  //     // console.error("Fetching customers...");
-  //     try {
-  //       const response = await axios.get("http://localhost:3000/customers/");
-  //       if (response.status === 200) {
-  //         commit("SET_CUSTOMERS", response.data);
-  //       } else {
-  //         console.error("Failed to fetch customer data.");
-  //       }
-  //     } catch (error) {
-  //       console.error("Error fetching customer data:", error);
-  //     }
-
-  //   },

@@ -132,8 +132,14 @@ export default {
 
   },
   created() {
-    console.log('User Names:', this.userNames);
-  },
+  // Load selected user names from local storage
+  const savedSelectedUserNames = localStorage.getItem('selectedUserNames');
+  if (savedSelectedUserNames) {
+    this.selectedUserNames = JSON.parse(savedSelectedUserNames);
+  }
+  console.log('User Names:', this.userNames);
+},
+
   watch: {
   'group.group_name': 'updateHasChanges',
   // ...
@@ -141,6 +147,11 @@ export default {
 
   
   methods: {
+    updateSelectedUserNames(updatedSelectedUserNames) {
+    this.selectedUserNames = updatedSelectedUserNames;
+    // Save selected user names to local storage
+    localStorage.setItem('selectedUserNames', JSON.stringify(updatedSelectedUserNames));
+  },
     updateHasChanges() {
       this.hasChanges = true
     },
@@ -150,6 +161,10 @@ export default {
 this.group.creator_name=username;
 console.log('this is creator function')
     }
+  },
+  userNamesWithOutQuote(){
+   let WithOutQuoteUser=this.selectedUserNames.join()
+   return WithOutQuoteUser
   },
 
 //   updatedType(){
@@ -171,7 +186,7 @@ console.log('this is creator function')
           group_name: this.group.group_name,
           creator_name:this.group.creator_name,
           creation_time: this.group.creation_time,
-          users_list: this.selectedUserNames,
+          users_list: this.userNamesWithOutQuote(),
       
           id: uuidv4(),
         }

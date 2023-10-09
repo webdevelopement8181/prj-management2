@@ -188,26 +188,7 @@ export default {
           label: 'groupName',
           sortable: false,
         },
-        //   key: 'user_name',
-        //   label: 'UserName',
-        //   sortable: false,
-        // },
-        // {
-        //   key: 'first_name',
-        //   label: 'First Name',
-        //   sortable: false,
-        // },
-        // {
-        //   key: 'last_name',
-        //   label: 'Last Name',
-        //   sortable: false,
-        // },
-        // {
-        //   key: 'user_type',
-        //   label: 'Type',
-        //   sortable: false,
-        // },
-        //
+       
         {
           key: 'creator_name',
           label: 'Creator Name',
