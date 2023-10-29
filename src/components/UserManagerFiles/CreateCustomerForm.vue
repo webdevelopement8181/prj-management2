@@ -9,7 +9,7 @@
             <b-form-input
               id="user-name"
               type="text"
-              placeholder="User Name"
+              :placeholder="$t('user_name_placeholder')"
               v-model="customer.user_name"
               :state="userNameState"
               :valid="userNameState"

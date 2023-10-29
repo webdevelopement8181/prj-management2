@@ -1,66 +1,45 @@
 <template>
   <div class="app-header">
+    <SelectLanguage></SelectLanguage>
     <nav>
-      <!-- <div class="logo">
-      <font-awesome-icon :icon="['fas', 'house']" />
- 
-      <div class="nav-item">{{ username }}</div>
-    </div> -->
       <ul>
-        <template>
-          <div>
-            <!-- <ul>
-      <li v-for="username in usernames" :key="username">{{ username }}</li>
-    </ul> -->
-          </div>
-        </template>
-
         <li>
-          <span class="icon-item"
-            ><font-awesome-icon :icon="['fas', 'user']"
-          /></span>
-          <router-link to="/user-management" class="menu-item">
-            User Management
-          </router-link>
+          <p>{{ $t('hello') }}</p>
+          <span class="icon-item"><font-awesome-icon :icon="['fas', 'user']" /></span>
+          <router-link to="/user-management" class="menu-item">{{ $t('user_management') }}</router-link>
         </li>
         <li>
-          <span class="icon-item">
-            <font-awesome-icon :icon="['fas', 'file']"
-          /></span>
-          <router-link to="/files-management" class="menu-item">
-            file Management</router-link
-          >
+          <span class="icon-item"><font-awesome-icon :icon="['fas', 'file']" /></span>
+          <router-link to="/files-management" class="menu-item">{{ $t('file_management') }}</router-link>
         </li>
         <li>
-          <span class="icon-item">
-            <font-awesome-icon :icon="['fas', 'user-group']"
-          /></span>
-          <router-link to="/manage-user-group" class="menu-item">
-            manage user group</router-link
-          >
+          <span class="icon-item"><font-awesome-icon :icon="['fas', 'user-group']" /></span>
+          <router-link to="/manage-user-group" class="menu-item">{{ $t('manage_user_group') }}</router-link>
         </li>
         <li>
-          <span class="icon-item">
-            <font-awesome-icon :icon="['fas', 'database']" />
-          </span>
-          <router-link to="/storage-space" class="menu-item">
-            storage space</router-link
-          >
+          <span class="icon-item"><font-awesome-icon :icon="['fas', 'database']" /></span>
+          <router-link to="/storage-space" class="menu-item">{{ $t('storage_space') }}</router-link>
         </li>
         <li>
           <VirtualLogin></VirtualLogin>
         </li>
       </ul>
     </nav>
+   
   </div>
 </template>
 
+
 <script>
 import VirtualLogin from '@/components/VirtualLogin.vue'
+import SelectLanguage from '@/components/SelectLanguage.vue';
 
 export default {
   computed: {},
-  components: { VirtualLogin },
+  components: {
+    SelectLanguage,
+    VirtualLogin
+  }
 }
 </script>
 

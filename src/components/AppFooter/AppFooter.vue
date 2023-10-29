@@ -1,13 +1,16 @@
 <template>
   <footer class="app-footer">
     <div class="container">
+      <!-- <selectLanguage></selectLanguage> -->
       <!-- <span class="footer-text">the sticky footer goes here</span> -->
     </div>
   </footer>
 </template>
 
 <script>
+// import selectLanguage from '@/components/SelectLanguage.vue'
 export default {
+  // components:{selectLanguage},
   name: 'AppFooter',
   //   data() {
   //     return {

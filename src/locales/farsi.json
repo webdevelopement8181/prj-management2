@@ -1,0 +1,10 @@
+{
+  "user_management": "مدیریت کاربر",
+  "file_management": "مدیریت فایل",
+  "manage_user_group": "مدیریت گروه کاربری",
+  "storage_space": "فضای ذخیره‌سازی",
+  "virtual_login": "ورود مجازی",
+  "hello": "سلام",
+  "welcomeMessage": "خوش آمدید به برنامه ما",
+  "user_name_placeholder":"نام کاربری"
+}

@@ -132,12 +132,12 @@ export default {
 
   },
   created() {
-  // Load selected user names from local storage
-  const savedSelectedUserNames = localStorage.getItem('selectedUserNames');
-  if (savedSelectedUserNames) {
-    this.selectedUserNames = JSON.parse(savedSelectedUserNames);
-  }
-  console.log('User Names:', this.userNames);
+
+  // const savedSelectedUserNames = localStorage.getItem('selectedUserNames');
+  // if (savedSelectedUserNames) {
+  //   this.selectedUserNames = JSON.parse(savedSelectedUserNames);
+  // }
+  // console.log('User Names:', this.userNames);
 },
 
   watch: {
@@ -147,11 +147,11 @@ export default {
 
   
   methods: {
-    updateSelectedUserNames(updatedSelectedUserNames) {
-    this.selectedUserNames = updatedSelectedUserNames;
-    // Save selected user names to local storage
-    localStorage.setItem('selectedUserNames', JSON.stringify(updatedSelectedUserNames));
-  },
+  //   updateSelectedUserNames(updatedSelectedUserNames) {
+  //   this.selectedUserNames = updatedSelectedUserNames;
+    
+  //   localStorage.setItem('selectedUserNames', JSON.stringify(updatedSelectedUserNames));
+  // },
     updateHasChanges() {
       this.hasChanges = true
     },

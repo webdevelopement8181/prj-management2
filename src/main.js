@@ -2,21 +2,25 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
 import { store } from './store/store'
-import VueI18n from 'vue-i18n';
-import en from './languages/en';
-import fa from './languages/farsi';
+import i18n from './store/modules/languages/languages';
 
-Vue.use(VueI18n);
 
-const i18n = new VueI18n({
-  locale: 'en', // Set the default locale to English
-  messages: {
-    en,
-    fa,
-  },
-});
+// import VueI18n from 'vue-i18n';
+// import en from './locales/en'
+// import fa from './locales/farsi'
 
-// import Multiselect from 'vue-multiselect';
+
+// Vue.use(VueI18n);
+
+// const i18n = new VueI18n({
+//   locale: 'en', // Set the default locale
+//   messages: {
+//     en,
+//     fa
+//   },
+// });
+
+// export { i18n };
 
 
 import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'

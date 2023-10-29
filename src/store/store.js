@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import customerModule from './modules/customer/customer'
 import groupModule from './modules/group/group'
+import languageModule from './modules/languages/languages'
 // import usernamesModule from './modules/usernames/usernames'
 // import groupModule from './modules/customer/group';
 
@@ -9,6 +10,7 @@ Vue.use(Vuex)
 
 export const store = new Vuex.Store({
   state: {
+  
     usernames: JSON.parse(sessionStorage.getItem('usernames')) || [],
     customers: [],
   },
@@ -38,7 +40,13 @@ export const store = new Vuex.Store({
   modules: {
     customer: customerModule,
     group: groupModule,
-    // usernames:usernamesModule
+languages:languageModule
 
   },
 })
+// languageModule.actions.updateI18nLocale = function ({ rootState }, language) {
+//   const i18n = rootState.i18n; // Access the i18n instance from the root state
+//   if (i18n) {
+//     i18n.locale = language;
+//   }
+// };
