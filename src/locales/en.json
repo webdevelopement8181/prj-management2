@@ -7,5 +7,10 @@
   "virtual_login": "Virtual Login",
   "hello": "Hello",
   "welcomeMessage": "Welcome to our application",
-  "user_name_placeholder":"user name"
+  "user_name_placeholder":"user name",
+  "user_name_label":"User Name",
+  "first_name_label":"first Name",
+  "first_name_placeholder":" first Name",
+  "last_name_label":"last name",
+  "last_name_placeholder":"last name"
 }

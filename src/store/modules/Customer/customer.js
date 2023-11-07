@@ -48,7 +48,7 @@ const mutations = {
       state.customers.splice(index, 1);
     }
   },
-}
+};
 
 const actions = {
   // async initStore({ dispatch }) {
@@ -58,10 +58,10 @@ const actions = {
   async savedCustomers({ commit }) {
     try {
       const localCustomers = JSON.parse(localStorage.getItem('customers')) || [];
-      const localUserNames = JSON.parse(localStorage.getItem('userNames')) || [];
+      // const localUserNames = JSON.parse(localStorage.getItem('userNames')) || [];
   
       commit('SET_CUSTOMERS', localCustomers);
-      commit('SET_USERNAMES', localUserNames);
+      // commit('SET_USERNAMES', localUserNames);
     } catch (error) {
       console.error('Error loading data from local storage:', error);
     }
@@ -127,24 +127,17 @@ const actions = {
     }
   },
   
-  DELETE_CUSTOMER(state, customerId) {
-    const index = state.customers.findIndex(
-      (customer) => customer.id === customerId
-    );
+  async deleteCustomer({ commit}, customerId) {
+    commit('DELETE_CUSTOMER', customerId);
+    // Update local storage for customers
+    const savedCustomers = JSON.parse(localStorage.getItem('customers') || '[]');
+    const index = savedCustomers.findIndex((customer) => customer.id === customerId);
     if (index !== -1) {
-      // Remove the user_name from the userNames array
-      const userNameToDelete = state.customers[index].user_name;
-      const userNameIndex = state.userNames.findIndex(
-        (userName) => userName === userNameToDelete
-      );
-      if (userNameIndex !== -1) {
-        state.userNames.splice(userNameIndex, 1);
-      }
-  
-      state.customers.splice(index, 1);
+      savedCustomers.splice(index, 1);
+      localStorage.setItem('customers', JSON.stringify(savedCustomers));
     }
-  },
   
+}
 }
 
 const getters = {

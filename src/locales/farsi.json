@@ -6,5 +6,10 @@
   "virtual_login": "ورود مجازی",
   "hello": "سلام",
   "welcomeMessage": "خوش آمدید به برنامه ما",
-  "user_name_placeholder":"نام کاربری"
+  "user_name_placeholder":"نام کاربری",
+  "user_name_label":"نام کاربری",
+  "first_name_label":"نام",
+  "first_name_placeholder":"نام",
+  "last_name_label":"نام خانوادگی",
+  "last_name_placeholder":"نام خانوادگی"
 }

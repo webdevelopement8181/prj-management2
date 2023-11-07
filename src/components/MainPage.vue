@@ -1,7 +1,7 @@
 <template>
   <div>
     <AppHeader></AppHeader>
-    <AppFooter></AppFooter>
+    <!-- <AppFooter></AppFooter> -->
     <!-- <SelectedLanguage></SelectedLanguage> -->
   
     <!-- <AppMain></AppMain> -->
@@ -10,7 +10,7 @@
 </template>
 <script>
 import AppHeader from '../components/AppHeader/AppHeader.vue'
-import AppFooter from '../components/AppFooter/AppFooter.vue'
+// import AppFooter from '../components/AppFooter/AppFooter.vue'
 // import SelectedLanguage from '../components/SelectLanguage.vue'
 
 // import AppMain from './AppMain/AppMain.vue'
@@ -19,7 +19,7 @@ export default {
   name: 'menuPage',
   components: {
     AppHeader,
-    AppFooter,
+    // AppFooter,
     // SelectedLanguage
   },
   data() {

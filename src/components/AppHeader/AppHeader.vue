@@ -1,10 +1,34 @@
 <template>
-  <div class="app-header">
+  
+  <div :class="['app-header', currentTheme]">
+<div class="sample-div" v-bind:class="currentTheme">
+ <!-- <ColorThemes></ColorThemes> -->
+
+    <div class="theme-options">
+      <div
+        id="theme-black"
+        v-bind:class="{ active: currentTheme === 'theme-purple' }"
+        v-on:click="switchTheme('theme-purple')"
+      ></div>
+      <div
+        id="theme-blue"
+        v-bind:class="{ active: currentTheme === 'theme-blue' }"
+        v-on:click="switchTheme('theme-blue')"
+      ></div>
+      <div
+        id="theme-green"
+        v-bind:class="{ active: currentTheme === 'theme-green' }"
+        v-on:click="switchTheme('theme-green')"
+      ></div> 
+
+    </div>
+</div>
     <SelectLanguage></SelectLanguage>
-    <nav>
-      <ul>
+ 
+    <nav :class="currentTheme">
+       <ul>
         <li>
-          <p>{{ $t('hello') }}</p>
+  
           <span class="icon-item"><font-awesome-icon :icon="['fas', 'user']" /></span>
           <router-link to="/user-management" class="menu-item">{{ $t('user_management') }}</router-link>
         </li>
@@ -33,12 +57,26 @@
 <script>
 import VirtualLogin from '@/components/VirtualLogin.vue'
 import SelectLanguage from '@/components/SelectLanguage.vue';
+// import ColorThemes from '@/components/ColorThemes.vue';
 
 export default {
+  data(){
+    return{
+      currentTheme:localStorage.getItem('theme-color')
+
+    }
+  },
+  methods:{
+    switchTheme(theme){
+      localStorage.setItem('theme-color',theme)
+      this.currentTheme=localStorage.getItem('theme-color')
+    }
+  },
   computed: {},
   components: {
     SelectLanguage,
-    VirtualLogin
+    VirtualLogin,
+    // ColorThemes
   }
 }
 </script>
@@ -61,7 +99,23 @@ ul {
   line-height: 60px;
   background-color: #003865;
 }
+.theme-blue {
+  background-color: #9BBEC8;
+}
 
+.theme-purple {
+  background-color: #C3ACD0;
+}
+
+.theme-green {
+  background-color: #96C291;
+}
+
+.sample-div{
+  margin-left: 80%;
+ height: 20%;
+  width: 12%;
+}
 nav {
   position: fixed;
   top: 0;
@@ -73,7 +127,6 @@ nav {
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   overflow: hidden;
   line-height: 250%;
-
   transition: width 0.2s linear;
 }
 nav:hover {

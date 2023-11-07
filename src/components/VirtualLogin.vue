@@ -3,8 +3,7 @@
     <b-button v-b-modal.modal-scrollable class="virtual-button"
       >virtual login</b-button
     >
-    <!-- modal-class="modal-container" -->
-    <!-- <div class="modal-container"> -->
+   
     <b-modal
       id="modal-scrollable"
       modal-class="modal-container"
@@ -16,10 +15,12 @@
         {{ username }}
       </div>
       <div class="button-container" v-for="i in 10" :key="i">
+
         <div class="language-buttons">
           <b-button pill variant="outline-danger">eng</b-button>
           <b-button pill variant="outline-danger">farsi</b-button>
         </div>
+        <!-- color themes starts -->
         <div id="app" v-bind:class="currentTheme">
           <div class="theme-options">
             <div
@@ -39,11 +40,9 @@
             ></div>
           </div>
         </div>
+        <!-- color theme ends -->
       </div>
-      <!-- <div class="content-box">
-          <h3>Lorem ipsum dolor sit amet consectetur adipisicing elit. Autem eius ipsa, eaque quae quis veniam laboriosam eum non sit consequatur inventore voluptatem quaerat officiis libero. Ducimus quisquam quo dolorum corporis.</h3>
-        
-      </div> -->
+     
     </b-modal>
     <!-- </div> -->
   </div>
@@ -67,9 +66,7 @@ export default {
     usernames() {
       return this.getAllUsernames
     },
-    // usernames() {
-    //   return this.$store.state.usernames; // Access usernames from the Vuex store
-    // },
+ 
   },
 }
 </script>

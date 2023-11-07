@@ -5,7 +5,7 @@
 
       <b-row>
         <b-col cols="6">
-          <b-form-group id="user-name" label="User Name" label-for="user-name">
+          <b-form-group id="user-name" :label="$t('user_name_label')" label-for="user-name">
             <b-form-input
               id="user-name"
               type="text"
@@ -25,13 +25,13 @@
         <b-col cols="6">
           <b-form-group
             id="first-name"
-            label="first Name"
+            :label="$t('first_name_label')"
             label-for="first-name"
           >
             <b-form-input
               id="first-name"
               type="text"
-              placeholder="first Name"
+              :placeholder="$t('first_name_placeholder')"
               v-model="customer.first_name"
               :state="firstNameState"
               :valid="firstNameState"
@@ -42,11 +42,11 @@
           </b-form-group>
         </b-col>
         <b-col cols="6">
-          <b-form-group id="last-name" label="last Name" label-for="last-name">
+          <b-form-group id="last-name" :label="$t('last_name_label')" label-for="last-name">
             <b-form-input
               id="last-name"
               type="text"
-              placeholder="last Name"
+              :placeholder="$t('last_name_placeholder')"
               v-model="customer.last_name"
               :state="lastNameState"
               :valid="lastNameState"

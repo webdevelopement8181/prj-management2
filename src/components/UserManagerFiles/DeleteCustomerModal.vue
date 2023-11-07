@@ -64,7 +64,7 @@ export default {
       this.$store
         .dispatch('customer/deleteCustomer', this.customer.id)
         .then(() => {
-          console.log(this.customer.customerId)
+          console.log( this.customer.id)
           this.$emit('reloadDataTable')
           this.$emit('showDeleteAlert')
           this.$emit('closeDeleteModal')

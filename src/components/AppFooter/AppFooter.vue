@@ -1,4 +1,4 @@
-<template>
+<!-- <template>
   <footer class="app-footer">
     <div class="container">
       <!-- <selectLanguage></selectLanguage> -->
@@ -42,4 +42,4 @@ ul {
   background-color: #003865;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
-</style>
+</style> -->

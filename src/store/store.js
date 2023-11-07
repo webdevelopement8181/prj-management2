@@ -20,10 +20,10 @@ export const store = new Vuex.Store({
       state.usernames.push(username)
       sessionStorage.setItem('usernames', JSON.stringify(state.usernames))
     },
-    SET_USERNAMES(state, usernames) {
-      state.usernames = usernames
-      sessionStorage.setItem('usernames', JSON.stringify(state.usernames))
-    },
+    // SET_USERNAMES(state, usernames) {
+    //   state.usernames = usernames
+    //   sessionStorage.setItem('usernames', JSON.stringify(state.usernames))
+    // },
   },
   actions: {
     // Define actions if needed
