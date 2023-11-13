@@ -1,32 +1,4 @@
-// import Vue from "vue";
-// import VueI18n from "vue-i18n";
-// import {i18n} from "../../../main.js"
-// Vue.use(VueI18n)
-// const language = {
-//   state: {
-//     fallback: 'fa',
-//     locale: 'en', 
-//   },
-//   mutations: {
-//     setLanguage(state, payload) {
-//       state.locale = payload;
-//       i18n.locale = state.locale; // Update the VueI18n locale
-//     },
-//   },
-//   actions: {
-//     changeLanguage({ commit }, payload) {
-//       commit('setLanguage', payload);
-//     },
-//   },
-//   getters: {
-//     language: (state) => state.locale,
-//   },
-// };
 
-// // Other code for the language module
-
-// export default language;
-// i18n.js
 import Vue from 'vue';
 import VueI18n from 'vue-i18n';
 

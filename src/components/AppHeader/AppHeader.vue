@@ -1,10 +1,12 @@
 <template>
   
   <div :class="['app-header', currentTheme]">
+  
+<div class="header-container">
+<div class="theme-container">
 <div class="sample-div" v-bind:class="currentTheme">
- <!-- <ColorThemes></ColorThemes> -->
-
     <div class="theme-options">
+    
       <div
         id="theme-black"
         v-bind:class="{ active: currentTheme === 'theme-purple' }"
@@ -22,13 +24,33 @@
       ></div> 
 
     </div>
+</div> 
 </div>
-    <SelectLanguage></SelectLanguage>
+<div class="language-container">
+  <SelectLanguage></SelectLanguage>
+</div>
+
+
+ 
+
+<!-- username selection starts -->
+<div class="username-container">
+    <b-form-select
+      v-model="selectedUserNames"
+      :options="getAllUsernames"
+      class="mb-3"
+      value-field="item"
+      text-field="name"
+      disabled-field="notEnabled"
+    ></b-form-select>
+  </div>
+  <!-- username selection ends -->
+   
  
     <nav :class="currentTheme">
        <ul>
         <li>
-  
+          <!-- <div class="mt-3">userName <strong>{{ selectedUserNames }}</strong></div> -->
           <span class="icon-item"><font-awesome-icon :icon="['fas', 'user']" /></span>
           <router-link to="/user-management" class="menu-item">{{ $t('user_management') }}</router-link>
         </li>
@@ -49,19 +71,22 @@
         </li>
       </ul>
     </nav>
-   
   </div>
+  </div>
+
 </template>
 
 
 <script>
 import VirtualLogin from '@/components/VirtualLogin.vue'
 import SelectLanguage from '@/components/SelectLanguage.vue';
+import { mapGetters } from 'vuex'
 // import ColorThemes from '@/components/ColorThemes.vue';
 
 export default {
   data(){
     return{
+      selectedUserNames:[],
       currentTheme:localStorage.getItem('theme-color')
 
     }
@@ -72,7 +97,11 @@ export default {
       this.currentTheme=localStorage.getItem('theme-color')
     }
   },
-  computed: {},
+  computed: {
+    ...mapGetters(['getAllUsernames']),
+  
+  },
+
   components: {
     SelectLanguage,
     VirtualLogin,
@@ -80,24 +109,57 @@ export default {
   }
 }
 </script>
+<style lang="scss">
+@import '~@/assets/my_style.scss';
+</style>
 
 <style scoped>
-/* Reset some default styles */
+
 body,
 ul {
   margin: 0;
   padding: 0;
   list-style: none;
+} 
+.theme-options{
+/* background-color: burlywood; */
+height: 10px;
+margin-top: -45px;
+ 
+}
+.header-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative; /* Add position relative */
+  padding: 0 20px; /* Adjust the padding as needed */
+  /* background-color: rgb(226, 250, 215); */
+  height: 90%;
 }
 
+.theme-container {
+width: 20%;
+
+margin-left: 68%;
+
+}
+.language-container {
+    /* background-color: antiquewhite; */
+  margin-left: -35px; /* Add some margin between theme and language */
+}
+.username-container{
+  margin-left:-12px;
+  /* background-color: aqua; */
+}
 .app-header {
   position: absolute;
+padding: 5PX;
   top: 0;
   border-radius: 5px;
   width: 100%;
-  height: 60px;
+  height: 70px;
   line-height: 60px;
-  background-color: #003865;
+ 
 }
 .theme-blue {
   background-color: #9BBEC8;
@@ -111,11 +173,7 @@ ul {
   background-color: #96C291;
 }
 
-.sample-div{
-  margin-left: 80%;
- height: 20%;
-  width: 12%;
-}
+
 nav {
   position: fixed;
   top: 0;
@@ -135,11 +193,11 @@ nav:hover {
   line-height: 450%;
 }
 
-.logo {
+/* .logo {
   padding: 20px 0;
   text-align: center;
   margin-left: 30%;
-}
+} */
 
 .icon-item {
   margin-left: 30%;
