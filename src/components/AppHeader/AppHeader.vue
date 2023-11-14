@@ -6,7 +6,7 @@
 <div class="theme-container">
 <div class="sample-div" v-bind:class="currentTheme">
     <div class="theme-options">
-    
+      <!-- <p>{{ $i18n.locale }}</p> -->
       <div
         id="theme-black"
         v-bind:class="{ active: currentTheme === 'theme-purple' }"
@@ -35,9 +35,11 @@
 
 <!-- username selection starts -->
 <div class="username-container">
+  <!-- the selected username is stroed in here
+  all the usernames are stored in getAllUsernames -->
     <b-form-select
-      v-model="selectedUserNames"
-      :options="getAllUsernames"
+      v-model="selectedUserNames"   
+      :options="getAllUsernames"    
       class="mb-3"
       value-field="item"
       text-field="name"
@@ -89,17 +91,49 @@ export default {
       selectedUserNames:[],
       currentTheme:localStorage.getItem('theme-color')
 
+
     }
   },
+  watch: {
+   selectedUserNames: {
+    handler: 'updateUserPreferences',
+    immediate: true, // Call the handler immediately to load preferences on component mount
+    
+  },
+},
   methods:{
+
+    updateUserPreferences() {
+       console.log( this.selectedUserNames)
+      localStorage.setItem('userPreferences', JSON.stringify({
+        userId: this.selectedUserNames,
+        theme: this.currentTheme,
+        language: this.$i18n.locale,
+      }));
+      this.loadUserPreferences();
+      
+    },
+  
+    loadUserPreferences() {
+      const userPreferences = JSON.parse(localStorage.getItem('userPreferences'));
+      if (userPreferences && userPreferences.userId === this.selectedUserNames) {
+        this.currentTheme = userPreferences.theme;
+       this.$i18n.locale = userPreferences.language;
+      }
+      console.log(this.currentTheme)
+      console.log(this.$i18n.locale)
+    },
+
     switchTheme(theme){
       localStorage.setItem('theme-color',theme)
       this.currentTheme=localStorage.getItem('theme-color')
+      
     }
+
   },
   computed: {
     ...mapGetters(['getAllUsernames']),
-  
+       
   },
 
   components: {
