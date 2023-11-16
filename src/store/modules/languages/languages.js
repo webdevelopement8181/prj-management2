@@ -17,7 +17,7 @@ function loadLocaleMessages() {
   });
   return messages;
 }
-// in case
+
 
 // Function to get the initial locale from local storage or use a default
 function getInitialLocale() {

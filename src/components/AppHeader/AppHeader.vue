@@ -83,7 +83,8 @@
 import VirtualLogin from '@/components/VirtualLogin.vue'
 import SelectLanguage from '@/components/SelectLanguage.vue';
 import { mapGetters } from 'vuex'
-// import ColorThemes from '@/components/ColorThemes.vue';
+// import {bus} from 'src/main'
+
 
 export default {
   data(){
@@ -94,6 +95,17 @@ export default {
 
     }
   },
+  created(){
+    console.log( 'all the usernames in array:',this.getAllUsernames)
+  },
+  // created() {
+   
+  //   bus.$on('languageChanged', this.handleLanguageChange);
+  // },
+  // beforeDestroy() {
+
+  //   bus.$off('languageChanged', this.handleLanguageChange);
+  // },
   watch: {
    selectedUserNames: {
     handler: 'updateUserPreferences',
@@ -101,39 +113,81 @@ export default {
     
   },
 },
-  methods:{
 
-    updateUserPreferences() {
-       console.log( this.selectedUserNames)
-      localStorage.setItem('userPreferences', JSON.stringify({
-        userId: this.selectedUserNames,
-        theme: this.currentTheme,
-        language: this.$i18n.locale,
-      }));
-      this.loadUserPreferences();
-      
-    },
-  
-    loadUserPreferences() {
-      const userPreferences = JSON.parse(localStorage.getItem('userPreferences'));
-      if (userPreferences && userPreferences.userId === this.selectedUserNames) {
-        this.currentTheme = userPreferences.theme;
-       this.$i18n.locale = userPreferences.language;
-      }
-      console.log(this.currentTheme)
-      console.log(this.$i18n.locale)
-    },
+    methods: {
+  //     updateUserPreferences() {
+  //   const storedUserPreferences = JSON.parse(localStorage.getItem('userPreferences')) || {};
+  //   if(storedUserPreferences[this.selectedUserNames]){
+  //     this.currentTheme=storedUserPreferences[this.selectedUserNames].theme;
+  //     this.$i18n.locale=storedUserPreferences[this.selectedUserNames].language;
+  //   }
+
+  //   else{
+  //     storedUserPreferences[this.selectedUserNames] = {
+  //     theme: this.currentTheme,
+  //     language: this.$i18n.locale,
+  //   };
+
+  //   }
+    
+  //   localStorage.setItem('userPreferences', JSON.stringify(storedUserPreferences));
+  //   this.loadUserPreferences();
+  // },
+
+  updateUserPreferences() {
+    const storedUserPreferences = JSON.parse(localStorage.getItem('userPreferences')) || {};
+
+    // Update preferences for the current selected username
+    storedUserPreferences[this.selectedUserNames] = {
+      theme: this.currentTheme,
+      language: this.$i18n.locale,
+    };
+
+    localStorage.setItem('userPreferences', JSON.stringify(storedUserPreferences));
+    this.loadUserPreferences();
+  },
+
+  loadUserPreferences() {
+    const storedUserPreferences = JSON.parse(localStorage.getItem('userPreferences')) || {};
+
+    // Load preferences for the current selected username
+    const userPreferences = storedUserPreferences[this.selectedUserNames];
+    
+    if (userPreferences) {
+      this.currentTheme = userPreferences.theme 
+      this.$i18n.locale = userPreferences.language 
+    } else {
+      // If there are no saved preferences for the current user, set defaults or leave it as is
+      this.currentTheme = localStorage.getItem('theme-color') || 'blue-theme';
+      this.$i18n.locale = localStorage.getItem('selectedLanguage') || 'en';
+    }
+
+    console.log("the selected username:", this.selectedUserNames);
+    console.log(this.currentTheme);
+    console.log(this.$i18n.locale);
+  },
+
 
     switchTheme(theme){
       localStorage.setItem('theme-color',theme)
-      this.currentTheme=localStorage.getItem('theme-color')
+      // this.currentTheme=localStorage.getItem('theme-color')
+      this.currentTheme = theme; // Update the currentTheme immediately
+      this.updateUserPreferences();
       
-    }
+    },
+    changeLanguage(language){
+      this.$i18n.locale=language;
+      this.updateUserPreferences();
+    },
+    // handleLanguageChange(newLanguage) {
+    //   console.log('Selected language changed:', newLanguage);
+ 
+    // },
 
   },
   computed: {
     ...mapGetters(['getAllUsernames']),
-       
+   
   },
 
   components: {
