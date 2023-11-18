@@ -108,7 +108,7 @@ export default {
   // },
   watch: {
    selectedUserNames: {
-    handler: 'updateUserPreferences',
+    handler: 'loadUserPreferences',
     immediate: true, // Call the handler immediately to load preferences on component mount
     
   },
@@ -151,16 +151,19 @@ export default {
     const storedUserPreferences = JSON.parse(localStorage.getItem('userPreferences')) || {};
 
     // Load preferences for the current selected username
-    const userPreferences = storedUserPreferences[this.selectedUserNames];
+    // const userPreferences = storedUserPreferences[this.selectedUserNames];
     
-    if (userPreferences) {
-      this.currentTheme = userPreferences.theme 
-      this.$i18n.locale = userPreferences.language 
-    } else {
-      // If there are no saved preferences for the current user, set defaults or leave it as is
-      this.currentTheme = localStorage.getItem('theme-color') || 'blue-theme';
-      this.$i18n.locale = localStorage.getItem('selectedLanguage') || 'en';
+    if (storedUserPreferences[this.selectedUserNames]) {
+      this.currentTheme=storedUserPreferences[this.selectedUserNames].theme;
+      this.$i18n.locale=storedUserPreferences[this.selectedUserNames].language;
+    }   else{
+       storedUserPreferences[this.selectedUserNames] = {
+       theme: this.currentTheme,
+       language: this.$i18n.locale,
+     };
+
     }
+    
 
     console.log("the selected username:", this.selectedUserNames);
     console.log(this.currentTheme);

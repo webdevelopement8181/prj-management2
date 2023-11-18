@@ -58,7 +58,7 @@ const actions = {
   async savedCustomers({ commit }) {
     try {
       const localCustomers = JSON.parse(localStorage.getItem('customers')) || [];
-      // const localUserNames = JSON.parse(localStorage.getItem('userNames')) || [];
+    
   
       commit('SET_CUSTOMERS', localCustomers);
       // commit('SET_USERNAMES', localUserNames);
