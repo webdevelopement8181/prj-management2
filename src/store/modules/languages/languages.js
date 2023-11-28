@@ -1,7 +1,8 @@
 
 import Vue from 'vue';
 import VueI18n from 'vue-i18n';
-// import {bus} from 'src/main'
+//
+import {eventBus} from '../../../eventBus'
 Vue.use(VueI18n);
 
 // Function to load locale messages
@@ -37,7 +38,8 @@ const i18n = new VueI18n({
 // Watch for changes to the locale and store it in local storage
 i18n.vm.$watch('locale', (newLocale) => {
   localStorage.setItem('selectedLanguage', newLocale);
-  // bus.$emit('languageChanged',newLocale)
+  eventBus.$emit('languageChanged', newLocale);
 });
+
 
 export default i18n;

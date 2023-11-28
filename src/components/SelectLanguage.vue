@@ -9,6 +9,7 @@
 </template>
 
 <script>
+
 export default {
   name: 'locale-changer',
   data() {

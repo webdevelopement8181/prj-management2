@@ -1,7 +1,7 @@
 <template>
   
   <div :class="['app-header', currentTheme]">
-  
+ 
 <div class="header-container">
 <div class="theme-container">
 <div class="sample-div" v-bind:class="currentTheme">
@@ -22,7 +22,7 @@
         v-bind:class="{ active: currentTheme === 'theme-green' }"
         v-on:click="switchTheme('theme-green')"
       ></div> 
-
+    
     </div>
 </div> 
 </div>
@@ -83,6 +83,7 @@
 import VirtualLogin from '@/components/VirtualLogin.vue'
 import SelectLanguage from '@/components/SelectLanguage.vue';
 import { mapGetters } from 'vuex'
+import {eventBus} from '../../eventBus'
 // import {bus} from 'src/main'
 
 
@@ -90,22 +91,24 @@ export default {
   data(){
     return{
       selectedUserNames:[],
-      currentTheme:localStorage.getItem('theme-color')
-
+      currentTheme:localStorage.getItem('theme-color'),
+      selectedLanguage:'',
 
     }
   },
   created(){
     console.log( 'all the usernames in array:',this.getAllUsernames)
   },
-  // created() {
-   
-  //   bus.$on('languageChanged', this.handleLanguageChange);
-  // },
-  // beforeDestroy() {
+  mounted() {
+    if (eventBus) {
+    eventBus.$on('languageChanged', this.changeLanguage.bind(this));
+  }
+  else{
+console.log('the event bus is not available')
+  }
 
-  //   bus.$off('languageChanged', this.handleLanguageChange);
-  // },
+},
+
   watch: {
    selectedUserNames: {
     handler: 'loadUserPreferences',
@@ -115,24 +118,6 @@ export default {
 },
 
     methods: {
-  //     updateUserPreferences() {
-  //   const storedUserPreferences = JSON.parse(localStorage.getItem('userPreferences')) || {};
-  //   if(storedUserPreferences[this.selectedUserNames]){
-  //     this.currentTheme=storedUserPreferences[this.selectedUserNames].theme;
-  //     this.$i18n.locale=storedUserPreferences[this.selectedUserNames].language;
-  //   }
-
-  //   else{
-  //     storedUserPreferences[this.selectedUserNames] = {
-  //     theme: this.currentTheme,
-  //     language: this.$i18n.locale,
-  //   };
-
-  //   }
-    
-  //   localStorage.setItem('userPreferences', JSON.stringify(storedUserPreferences));
-  //   this.loadUserPreferences();
-  // },
 
   updateUserPreferences() {
     const storedUserPreferences = JSON.parse(localStorage.getItem('userPreferences')) || {};
@@ -141,6 +126,8 @@ export default {
     storedUserPreferences[this.selectedUserNames] = {
       theme: this.currentTheme,
       language: this.$i18n.locale,
+     
+  
     };
 
     localStorage.setItem('userPreferences', JSON.stringify(storedUserPreferences));
@@ -149,41 +136,41 @@ export default {
 
   loadUserPreferences() {
     const storedUserPreferences = JSON.parse(localStorage.getItem('userPreferences')) || {};
-
-    // Load preferences for the current selected username
-    // const userPreferences = storedUserPreferences[this.selectedUserNames];
     
     if (storedUserPreferences[this.selectedUserNames]) {
-      this.currentTheme=storedUserPreferences[this.selectedUserNames].theme;
       this.$i18n.locale=storedUserPreferences[this.selectedUserNames].language;
+      this.currentTheme=storedUserPreferences[this.selectedUserNames].theme;
+    
     }   else{
        storedUserPreferences[this.selectedUserNames] = {
-       theme: this.currentTheme,
-       language: this.$i18n.locale,
+        theme: this.currentTheme,
+        language: this.$i18n.locale,
+  
+      
      };
 
     }
     
 
-    console.log("the selected username:", this.selectedUserNames);
-    console.log(this.currentTheme);
-    console.log(this.$i18n.locale);
+    // console.log("the selected username:", this.selectedUserNames);
+    // console.log(this.currentTheme);
+    // console.log(this.$i18n.locale);
+
   },
 
 
     switchTheme(theme){
       localStorage.setItem('theme-color',theme)
-      // this.currentTheme=localStorage.getItem('theme-color')
+ 
       this.currentTheme = theme; // Update the currentTheme immediately
       this.updateUserPreferences();
       
     },
-    changeLanguage(language){
-      this.$i18n.locale=language;
+    changeLanguage(newlocale){
+      this.selectedLanguage=newlocale;
       this.updateUserPreferences();
     },
-    // handleLanguageChange(newLanguage) {
-    //   console.log('Selected language changed:', newLanguage);
+ 
  
     // },
 
@@ -196,7 +183,7 @@ export default {
   components: {
     SelectLanguage,
     VirtualLogin,
-    // ColorThemes
+ 
   }
 }
 </script>
