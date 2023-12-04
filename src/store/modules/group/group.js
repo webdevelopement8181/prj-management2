@@ -2,6 +2,7 @@
 
 const state = {
   groups: [],
+  groupnames:[]
 }
 
 const mutations = {
@@ -9,21 +10,35 @@ const mutations = {
     state.groups = groups;
   },
   ADD_GROUP(state, newGroup) {
-    state.groups.push(newGroup);
+    state.groups.push(newGroup)
+    state.groupnames.push(newGroup.group_name)
   },
   UPDATE_GROUP(state, updatedGroup) {
     const index = state.groups.findIndex(group => group.id === updatedGroup.id);
     if (index !== -1) {
       state.groups.splice(index, 1, updatedGroup);
     }
+    const groupNameIndex = state.groupnames.findIndex(
+      (group)=>group.id===updatedGroup.id,
+    )
+    if(groupNameIndex!==-1){
+      state.groupnames.splice(groupNameIndex,1,updatedGroup)
+    }
   },
   DELETE_GROUP(state, groupId) {
     const index = state.groups.findIndex(group => group.id === groupId);
     if (index !== -1) {
+      const groupNameToDelete=state.groupnames[index].group_name;
+   const groupNameIndex=state.groupnames.findIndex(
+        (group)=>group===groupNameToDelete
+      );
+      if(groupNameIndex!==-1){
+        state.groupnames.splice(groupNameIndex,1)
+      }
       state.groups.splice(index, 1);
     }
   },
-}
+};
 
 const actions = {
   async savedGroups({ commit }) {
@@ -41,8 +56,14 @@ const actions = {
       const savedGroups = JSON.parse(localStorage.getItem('groups') || '[]');
       savedGroups.push(newGroup);
       localStorage.setItem('groups', JSON.stringify(savedGroups));
-    } catch (error) {
-      console.error('Error adding group:', error);
+    
+    const savedGroupName=JSON.parse(
+      localStorage.getItem('groupnames')||'[]'
+    );
+    savedGroupName.push(newGroup.group_name);
+    localStorage.setItem('groupnames',JSON.stringify(savedGroupName));
+    }catch(error){
+      console.log('error catching the group names')
     }
   },
   async updateGroup({ commit }, updatedGroup) {
@@ -58,6 +79,19 @@ const actions = {
         localStorage.setItem('groups', JSON.stringify(savedGroups));
       }
 
+      const savedGroupNames = JSON.parse(
+        localStorage.getItem('groupnames') || '[]'
+      );
+      const groupNameIndex = savedGroupNames.findIndex(
+        (groupName
+          
+          
+          ) => groupName === updatedGroup.group_name
+      );
+      if (groupNameIndex !== -1) {
+        savedGroupNames.splice(groupNameIndex, 1, updatedGroup.group_name);
+        localStorage.setItem('groupnames', JSON.stringify(savedGroupNames));
+      }
       return Promise.resolve();
     } catch (error) {
       console.error('Error updating group:', error);
@@ -67,7 +101,7 @@ const actions = {
   async deleteGroup({ commit }, groupId) {
     try {
       commit('DELETE_GROUP', groupId);
-      console.log('groupId:', groupId);
+
 
       // Update local storage
       const savedGroups = JSON.parse(localStorage.getItem('groups') || '[]');
@@ -90,6 +124,10 @@ const getters = {
   },
   getGroupById: state => id => {
     return state.groups.find(group => group.id === id);
+  },
+groupNames(state) {
+    return state.groups.map((group) => group.group_name);
+ 
   },
 }
 

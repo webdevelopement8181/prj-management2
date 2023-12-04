@@ -47,36 +47,23 @@
             </b-form-invalid-feedback>
           </b-form-group>
         </b-col>
-        <!--     
+            
          <b-col cols="6">
-          <b-form-group id="last-modifier" label="last modifier" label-for="last-modifier">
-            <b-form-input
-              id="last-modifier"
-          
-              type="text"
-              placeholder="last modifier"
-              v-model="customer.last_modifier"
-              :state="userNameState"
-      :valid="userNameState"
-            ></b-form-input>
-            <b-form-invalid-feedback>
-   first name must be 48 characters at max level
-    </b-form-invalid-feedback>
-          </b-form-group>
-        </b-col>  -->
-        <!-- <b-col cols="6">
-          <b-form-group id="last-modification-time" label="last Modification Time" label-for="last-modification-time">
-            <b-form-input
-              id="last-modification-time"
-              type="text"
-              placeholder="last Modification Time"
-              v-model="customer.last_modification_time"
-            ></b-form-input>
-            <b-form-invalid-feedback>
-   first name must be 48 characters at max level
-    </b-form-invalid-feedback>
-          </b-form-group>
-        </b-col> -->
+          <multiselect
+     v-model="selectedGroupName"
+     :options="groupNames" 
+        :close-on-select="false"
+        :searchable="true"
+        placeholder="choose group names"
+        id="selectedGroupName"
+        name="selectedGroupName"
+        :show-labels="false"
+        multiple 
+        class="custom-multiselect"
+      ></multiselect>
+
+        </b-col> 
+  
       </b-row>
       <b-row>
         <div class="selection-role-constainer">
@@ -110,35 +97,34 @@
 
 <script>
 import { mapGetters } from 'vuex'
+import Multiselect from 'vue-multiselect';
 
 
 export default {
   name: 'CreateCustomerModal',
+  components:{
+Multiselect
+  },
   props: {
     customerId:String,
   },
   data() {
     return {
+      selectedGroupName:[],
       selectedRole: null,
       customer: {},
       hasChanges: false,
     }
   },
   mounted() {
-    // this.getCusomterByID();
-    // setInterval(() => {
-    //   const currentDate = new Date()
-    //   const hours = String(currentDate.getHours()).padStart(2, '0')
-    //   const minutes = String(currentDate.getMinutes()).padStart(2, '0')
-    //   const seconds = String(currentDate.getSeconds()).padStart(2, '0')
-    //   const time = `${hours}:${minutes}:${seconds}`
-    //   this.customer.last_modification_time = time 
-    // }) 
+ console.log( "selected group name" , this.groupNames)
+    
     this.hasChanges = false
   },
   computed: {
     ...mapGetters('customer', ['getCustomerById']),
     ...mapGetters(['getUserName']),
+    ...mapGetters('group',['groupNames']),
 
     userNameState() {
       if (this.customer && this.customer.last_modifier) {
@@ -169,8 +155,7 @@ export default {
   created() {
     // Fetch the customer data from Vuex using the customer ID
     this.customer = this.getCustomerById(this.customerId)
-    console.log('ida' + this.customerId)
-    console.log('cusaa' + this.customer)
+
     // this.username = this.getUsername;
   },
   watch: {
@@ -186,7 +171,6 @@ export default {
     },
     updateLastModifier() {
       if (this.hasChanges) {
-        //  console.log(this.getUserName)
         const username = this.getUserName
         this.customer.last_modifier = username
       }
@@ -194,6 +178,8 @@ export default {
     updatedType(){
 this.customer.user_type= this.selectedRole;
   },
+
+
     triggerClose() {
       this.$emit('closeEditModal')
     },
@@ -202,7 +188,8 @@ this.customer.user_type= this.selectedRole;
       this.updatedType()
       this.updateLastModifier()
 
-
+      const formattedgroupName=this.groupNameWithoutQoute();
+  this.customer.user_group=formattedgroupName;
       const currentDate = new Date()
   const hours = String(currentDate.getHours()).padStart(2, '0')
   const minutes = String(currentDate.getMinutes()).padStart(2, '0')
@@ -221,6 +208,11 @@ this.customer.user_type= this.selectedRole;
           console.error('Error updating customer:', error)
         })
     },
+    groupNameWithoutQoute(){
+      let withoutQoute=this.selectedGroupName.join();
+      return withoutQoute;
+    },
+   
   },
 }
 </script>

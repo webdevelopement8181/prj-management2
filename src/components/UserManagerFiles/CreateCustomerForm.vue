@@ -56,7 +56,7 @@
             </b-form-invalid-feedback>
           </b-form-group>
         </b-col>
-        
+   
         <!-- <b-col cols="6">
           <b-form-group id="creator-name" label="creator name" label-for="creator-name">
             <b-form-input
@@ -86,6 +86,20 @@
           </b-form-group>
           
         </b-col> -->
+        <b-col cols="6">
+        <multiselect
+        v-model="selectedGroupNames"
+        :options="groupNames" 
+        :close-on-select="false"
+        :searchable="true"
+        placeholder="choose group names "
+        id="selectedGroupNamess"
+        name="selectedGroupNames"
+        :show-labels="false"
+        multiple 
+        class="custom-multiselect"
+      ></multiselect>
+    </b-col>
       </b-row>
 
       <b-row class="mt-5">
@@ -130,11 +144,16 @@
 // import axios from "axios";
 import { mapGetters, mapState } from 'vuex'
 import { v4 as uuidv4 } from 'uuid'
+import Multiselect from 'vue-multiselect';
 
 export default {
   name: 'CreateCustomerModal',
+  components:{
+Multiselect,
+  },
   data() {
     return {
+      selectedGroupNames:[],
       selectedRole:null,
       customer: {},
       hasChanges:false,
@@ -145,6 +164,7 @@ export default {
     ...mapState('customer', ['customers']),
     ...mapGetters('customer', ['allCustomers']),
     ...mapGetters(['getUserName']),
+    ...mapGetters('group',['groupNames']),
     isRoleSelected() {
       return this.selectedRole !== null
     },
@@ -203,7 +223,10 @@ this.customer.user_type= this.selectedRole;
     triggerClose() {
       this.$emit('closeCreateModal')
     },
-
+groupNamesWithoutQuote(){
+let withoutQuoteGroupNames=this.selectedGroupNames.join()
+return withoutQuoteGroupNames;
+},
     async addNewCustomer() {
  this.upadateCreator();
 
@@ -220,7 +243,8 @@ this.customer.user_type= this.selectedRole;
           user_type: this.customer.user_type,
           creator_name:this.customer.creator_name,
           creation_time: this.customer.creation_time,
-          group_name: this.customer.group_name,
+         user_group: this.groupNamesWithoutQuote(),
+
           id: uuidv4(),
         }
         try {

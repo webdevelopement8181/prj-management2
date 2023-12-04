@@ -32,7 +32,7 @@
         :options="userNames" 
         :close-on-select="false"
         :searchable="true"
-        placeholder="Type to search"
+        placeholder="find user names"
         id="selectedUserNames"
         name="selectedUserNames"
         :show-labels="false"
@@ -187,7 +187,6 @@ console.log('this is creator function')
           creator_name:this.group.creator_name,
           creation_time: this.group.creation_time,
           users_list: this.userNamesWithOutQuote(),
-      
           id: uuidv4(),
         }
         try {
@@ -206,6 +205,8 @@ console.log('this is creator function')
         }
       }
     },
+
+
     clearForm() {
       // Reset the form fields
       this.group = {}
