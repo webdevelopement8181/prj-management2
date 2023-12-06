@@ -16,84 +16,25 @@
             </b-form-invalid-feedback>
           </b-form-group>
         </b-col>
-<!-- 
-        <b-col cols="6">
-          <b-form-group
-            id="first-name"
-            label="first Name"
-            label-for="first-name"
-          >
-            <b-form-input
-              id="first-name"
-              type="text"
-              placeholder="first Name"
-              v-model="group.first_name"
-              :state="firstNameState"
-              :valid="firstNameState"
-            ></b-form-input>
-            <b-form-invalid-feedback>
-              first name must be 48 characters at max level
-            </b-form-invalid-feedback>
-          </b-form-group>
-        </b-col> -->
-        <!-- <b-col cols="6">
-          <b-form-group id="last-name" label="last Name" label-for="last-name">
-            <b-form-input
-              id="last-name"
-              type="text"
-              placeholder="Last Name"
-              v-model="customer.last_name"
-              :state="lastNameState"
-              :valid="lastNameState"
-            ></b-form-input>
-            <b-form-invalid-feedback>
-              last name must be 48 characters at max level
-            </b-form-invalid-feedback>
-          </b-form-group>
-        </b-col> -->
-        <!--     
-         <b-col cols="6">
-          <b-form-group id="last-modifier" label="last modifier" label-for="last-modifier">
-            <b-form-input
-              id="last-modifier"
-          
-              type="text"
-              placeholder="last modifier"
-              v-model="customer.last_modifier"
-              :state="userNameState"
-      :valid="userNameState"
-            ></b-form-input>
-            <b-form-invalid-feedback>
-   first name must be 48 characters at max level
-    </b-form-invalid-feedback>
-          </b-form-group>
-        </b-col>  -->
-        <!-- <b-col cols="6">
-          <b-form-group id="last-modification-time" label="last Modification Time" label-for="last-modification-time">
-            <b-form-input
-              id="last-modification-time"
-              type="text"
-              placeholder="last Modification Time"
-              v-model="customer.last_modification_time"
-            ></b-form-input>
-            <b-form-invalid-feedback>
-   first name must be 48 characters at max level
-    </b-form-invalid-feedback>
-          </b-form-group>
-        </b-col> -->
-      </b-row>
-      <!-- <b-row>
-        <div class="selection-role-constainer">
-          <b-col cols="4">
-            <b-form-radio-group v-model="selectedRole" name="role">
-              type:
-              <b-form-radio value="admin">Admin</b-form-radio>
-              <b-form-radio value="user">User</b-form-radio>
-            </b-form-radio-group>
-          </b-col>
-        </div>
-      </b-row> -->
+ <b-col cols="6">
+<multiselect  v-model="selectedUserName"
+     :options="userNames" 
+        :close-on-select="false"
+        :searchable="true"
+        placeholder="choose group names"
+        id="selectedUserName"
+        name="selectedUserName"
+        :show-labels="false"
+        multiple 
+        class="custom-multiselect">
+      
+</multiselect>
+</b-col>
 
+       
+
+      </b-row>
+  
       <b-row class="mt-4">
         <b-col cols="3">
           <b-button
@@ -114,15 +55,19 @@
 
 <script>
 import { mapGetters } from 'vuex'
-
+import Multiselect from 'vue-multiselect'
 
 export default {
   name: 'CreateCustomerModal',
+  components:{
+Multiselect
+  },
   props: {
     customerId: String,
   },
   data() {
     return {
+      selectedUserName:[],
       selectedRole: null,
      group: {},
       hasChanges: false,
@@ -134,7 +79,9 @@ export default {
   },
   computed: {
     ...mapGetters('group', ['getGroupById']),
+    ...mapGetters('customer', ['userNames']),
     ...mapGetters(['getUserName']),
+   
 
 
    groupNameState() {
@@ -152,8 +99,6 @@ export default {
     this.group = this. getGroupById(this.customerId)
   }
   
-   
-    // this.username = this.getUsername;
   },
   watch: {
 
@@ -163,6 +108,11 @@ export default {
     },
   },
   methods: {
+
+    groupNameWithoutQute(){
+const withoutQute=this.selectedUserName.join();
+return withoutQute;
+    },
     updateHasChanges() {
       this.hasChanges = true
     },
@@ -173,36 +123,38 @@ export default {
         this.group.last_modifier = username
       }
     },
-//     updatedType(){
-// this.customer.user_type= this.selectedRole;
-//   },
+
     triggerClose() {
       this.$emit('closeEditModal')
     },
 
     updateCustomer() {
-      // this.updatedType()
-      this.updateLastModifier()
+  this.updateLastModifier();
+  const formattedGroupName = this.groupNameWithoutQute();
+  this.group.users_list = formattedGroupName;
 
+  const currentDate = new Date();
+  const hours = String(currentDate.getHours()).padStart(2, '0');
+  const minutes = String(currentDate.getMinutes()).padStart(2, '0');
+  const seconds = String(currentDate.getSeconds()).padStart(2, '0');
+  this.group.last_modification_time = `${hours}:${minutes}:${seconds}`;
 
-      const currentDate = new Date()
-  const hours = String(currentDate.getHours()).padStart(2, '0')
-  const minutes = String(currentDate.getMinutes()).padStart(2, '0')
-  const seconds = String(currentDate.getSeconds()).padStart(2, '0')
-  this.group.last_modification_time = `${hours}:${minutes}:${seconds}`
+  this.$store
+    .dispatch('group/updateGroup', this.group)
+    .then(() => {
+      // Success: Close the modal and emit events
+      console.log('Update successful')
+      this.$emit('closeEditModal');
+      this.$emit('reloadDataTable');
+      this.$emit('showSuccessAlert');
+    })
+   
+    .catch((error) => {
+      console.error('Error updating customer:', error);
+      // Handle error if needed
+    });
+},
 
-      this.$store
-        .dispatch('group/updateGroup', this.group)
-        .then(() => {
-          // console.log(this.customer)
-          this.$emit('closeEditModal')
-          this.$emit('reloadDataTable')
-          this.$emit('showSuccessAlert')
-        })
-        .catch((error) => {
-          console.error('Error updating customer:', error)
-        })
-    },
   },
 }
 </script>
@@ -214,5 +166,12 @@ export default {
 .lastname-cntainer {
   margin-left: -3%;
   width: 100%;
+}
+.custom-multiselect{
+margin-right: 10%;
+padding: 5%;
+border-radius: 8px; /* Add your desired border radius */
+  width:100%;
+height: 60%;
 }
 </style>

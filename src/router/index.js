@@ -4,6 +4,7 @@ import HomeView from '../views/HomeView.vue'
 import MainPage from '../components/MainPage.vue'
 import UserManagement from '../components/UserManagement.vue'
 import ManageUserGroup from '../components/ManageUserGroup.vue'
+import FileManagementList from '../components/FileManagementList.vue'
 
 Vue.use(VueRouter)
 
@@ -37,6 +38,12 @@ const routes = [
     name: 'manageUserGroup',
     component: ManageUserGroup,
   },
+  {
+    path:'/files-management',
+    name:'FileManagementList',
+    component:FileManagementList
+  }
+
 ]
 
 const router = new VueRouter({
