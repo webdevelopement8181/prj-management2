@@ -50,7 +50,7 @@ export default {
     immediate: true,
     handler(newGroupId) {
       this.group = this.getCustomerById(newGroupId)
-      console.log('newGroupId: ', newGroupId)
+      console.log('groupId: ')
       // console.log(this.customer)
     },
   },

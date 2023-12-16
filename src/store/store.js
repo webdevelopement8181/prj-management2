@@ -3,6 +3,7 @@ import Vuex from 'vuex'
 import customerModule from './modules/customer/customer'
 import groupModule from './modules/group/group'
 import languageModule from './modules/languages/languages'
+import fileModule from './modules/File/file'
 // import usernamesModule from './modules/usernames/usernames'
 // import groupModule from './modules/customer/group';
 
@@ -40,7 +41,9 @@ export const store = new Vuex.Store({
   modules: {
     customer: customerModule,
     group: groupModule,
-languages:languageModule
+languages:languageModule,
+file:fileModule
+
 
   },
 })
