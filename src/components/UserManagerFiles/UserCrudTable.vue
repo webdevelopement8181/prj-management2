@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="main">
     <b-row>
       <b-alert
         v-model="showSuccessAlert"
@@ -14,10 +14,8 @@
     </b-row>
     <!-- active and total customers filtering -->
     <b-row>
-      <!-- <customer-overview>
-        :totalCustomers="numberOfCustomers"
-        @totalCustomersIsActive="setFilterTotalIsActive" ></customer-overview
-      > -->
+
+     
     </b-row>
     <div class="table-container">
       <b-row class="mt-3">
@@ -30,15 +28,15 @@
               <b-row>
                 <b-col>
                   <!-- add sutomer the button -->
-                  <b-button
-                    variant="primary"
+                  <button
+                    class="btn"
                     id="show-btn"
                     @click="showCreateModal"
                   >
                     <!-- add customer part  icons and the text-->
                     <b-icon-plus class="text-white"></b-icon-plus>
-                    <span class="h6 text-white">New user</span>
-                  </b-button>
+                    <span class="h6 text-white">New User</span>
+                  </button>
                 </b-col>
               </b-row>
             </b-col>
@@ -113,7 +111,8 @@
       </b-row>
     </div>
     <!--  Modal for adding new customers -->
-    <b-modal ref="create-customer-modal" size="xl" hide-footer title="New user">
+    <b-modal ref="create-customer-modal" size="xl" hide-footer title="New user" id="create-modal" >
+
       <create-customer-form
         @closeCreateModal="closeCreateModal"
         @reloadDataTable="getCustomerData"
@@ -121,7 +120,7 @@
       ></create-customer-form>
     </b-modal>
 
-    Modal for updating customers
+  
     <b-modal ref="edit-customer-modal" size="xl" hide-footer title="Edit user">
       <edit-customer-form
         @closeEditModal="closeEditModal"
@@ -131,7 +130,7 @@
       ></edit-customer-form>
     </b-modal>
 
-    Delete Customer Modal
+
     <b-modal
       ref="delete-customer-modal"
       size="md"
@@ -312,6 +311,56 @@ export default {
 </script>
 
 <style>
+@import url('https://fonts.googleapis.com/css2?family=Lato:ital@1&display=swap');
+
+
+.main {
+  font-family: 'Lato', sans-serif;
+
+}
+.btn{
+
+align-items: center;
+background-image: linear-gradient(144deg,#AF40FF, #5B42F3 50%,#00DDEB);
+border: 0;
+border-radius: 8px;
+box-shadow: rgba(151, 65, 252, 0.2) 0 15px 30px -5px;
+box-sizing: border-box;
+color: #FFFFFF;
+display: flex;
+font-family: Phantomsans, sans-serif;
+font-size: 20px;
+justify-content: center;
+line-height: 1em;
+max-width: 100%;
+min-width: 140px;
+padding: 19px 24px;
+text-decoration: none;
+user-select: none;
+-webkit-user-select: none;
+touch-action: manipulation;
+white-space: nowrap;
+cursor: pointer;
+}
+
+.btn:active,
+.btn:hover {
+outline: 0;
+}
+
+@media (min-width: 768px) {
+.btn{
+  font-size: 24px;
+  min-width: 196px;
+}
+}
+
+
+#create-modal{
+  /* background-color: aquamarine; */
+  color:#0F2167;
+}
+
 .action-item:hover {
   cursor: pointer;
 }

@@ -5,6 +5,7 @@ import MainPage from '../components/MainPage.vue'
 import UserManagement from '../components/UserManagement.vue'
 import ManageUserGroup from '../components/ManageUserGroup.vue'
 import FileManagementList from '../components/FileManagementList.vue'
+import StorageSpace from '../components/StorageSpace/StorageSpace.vue'
 
 Vue.use(VueRouter)
 
@@ -42,6 +43,11 @@ const routes = [
     path:'/files-management',
     name:'FileManagementList',
     component:FileManagementList
+  },
+  {
+    path:'/storage-space',
+    name:'StorageSpace',
+    component:StorageSpace
   }
 
 ]

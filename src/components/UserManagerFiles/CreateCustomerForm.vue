@@ -1,10 +1,16 @@
 <template>
+  <div class="main">
   <div class="create-form-container">
+    
     <b-form class="mt-3">
-      <b-row> </b-row>
+      <b-row> 
+    
+      </b-row>
 
       <b-row>
+        
         <b-col cols="6">
+          <!-- added $t for the translation -->
           <b-form-group id="user-name" :label="$t('user_name_label')" label-for="user-name">
             <b-form-input
               id="user-name"
@@ -57,35 +63,7 @@
           </b-form-group>
         </b-col>
    
-        <!-- <b-col cols="6">
-          <b-form-group id="creator-name" label="creator name" label-for="creator-name">
-            <b-form-input
-              id="creator-name"
-              type="text"
-              placeholder="creator name"
-              v-model="customer.user_name"
-              :state="lastNameState"
-              :valid="lastNameState"
-            ></b-form-input>
-            <b-form-invalid-feedback>
-    last name must be 48 characters at max level
-    </b-form-invalid-feedback>
-          </b-form-group>
-          
-        </b-col>  -->
-        <!-- <b-col cols="6">
-          <b-form-group id="creatoin-time" label="creation time" label-for="creation-time">
-            <b-form-input
-              id="creatoin-time"
-              type="text"
-              placeholder="creation time"
-              v-model="customer.creation_time"
-            
-            ></b-form-input>
-  
-          </b-form-group>
-          
-        </b-col> -->
+        
         <b-col cols="6">
         <multiselect
         v-model="selectedGroupNames"
@@ -106,7 +84,8 @@
         <h5></h5>
       </b-row>
       <b-row>
-        <div class="selection-role-constainer">
+<!-- seletcting role started -->
+        <!-- <div class="selection-role-constainer">
           <b-col cols="4">
             <b-form-radio-group v-model="selectedRole" name="role">
               type:
@@ -115,29 +94,35 @@
               <b-form-radio value="user">User</b-form-radio>
             </b-form-radio-group>
           </b-col>
-        </div>
+        </div> -->
+        <!-- selection role end -->
+        <section class="radio-section" >
+	<div class="radio-list" >
+		<div class="radio-item"><input name="radio" id="radio2" type="radio"     value="admin"  v-model="selectedRole"><label for="radio2">admin</label></div>
+		<div class="radio-item"><input name="radio" id="radio3" type="radio"   value="user"   v-model="selectedRole"><label for="radio3">user</label></div>
+	</div>
+</section>
       </b-row>
 
       <b-row class="mt-4">
-        <b-col cols="3">
-          <b-button
-            variant="primary"
-            class="px-5"
+        <b-col cols="3" >
+          <button class="create-btn"
             @click="addNewCustomer"
             :disabled="
               !userNameState ||
               !isRoleSelected ||
               (!firstNameState && !lastNameState)
             "
-            >Add Customer</b-button
+            >Add Customer</button
           >
         </b-col>
         <b-col>
-          <b-button variant="warning" @click="triggerClose">Close</b-button>
+          <button class="create-btn" @click="triggerClose">Close</button>
         </b-col>
       </b-row>
     </b-form>
   </div>
+</div>
 </template>
 
 <script>
@@ -282,6 +267,145 @@ return withoutQuoteGroupNames;
 }
 </script>
 <style>
+@import url('https://fonts.googleapis.com/css2?family=Lato:ital@1&display=swap');
+
+
+.main {
+  font-family: 'Lato', sans-serif;
+
+}
+a {
+	text-decoration: none;
+}
+ul {
+	list-style-type: none;
+}
+
+.radio-section {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+  margin-left: -38%;
+height: 20vh;
+	/* height: 100vh; */
+}
+
+
+.radio-item [type="radio"] {
+	display: none;
+}
+.radio-item + .radio-item {
+	margin-top: 15px;
+}
+.radio-item label {
+	display: block;
+	padding: 20px 60px;
+  background: #b9ceec;
+	border: 2px solid rgba(255, 255, 255, 0.1);
+	border-radius: 8px;
+	cursor: pointer;
+	font-size: 18px;
+	font-weight: 400;
+	min-width: 250px;
+	white-space: nowrap;
+	position: relative;
+	transition: 0.4s ease-in-out 0s;
+}
+.radio-item label:after,
+.radio-item label:before {
+	content: "";
+	position: absolute;
+	border-radius: 50%;
+}
+.radio-item label:after {
+	height: 19px;
+	width: 19px;
+	border: 2px solid #524eee;
+	left: 19px;
+	top: calc(50% - 12px);
+}
+.radio-item label:before {
+	background: #524eee;
+	height: 20px;
+	width: 20px;
+	left: 21px;
+	top: calc(50%-5px);
+	transform: scale(5);
+	opacity: 0;
+	visibility: hidden;
+	transition: 0.4s ease-in-out 0s;
+}
+.radio-item [type="radio"]:checked ~ label {
+	border-color: #524eee;
+}
+.radio-item [type="radio"]:checked ~ label::before {
+	opacity: 1;
+	visibility: visible;
+	transform: scale(1);
+}
+
+
+.create-btn{
+  appearance: button;
+  background-color: #4D4AE8;
+  background-image: linear-gradient(180deg, rgba(255, 255, 255, .15), rgba(255, 255, 255, 0));
+  border: 1px solid #4D4AE8;
+  border-radius: 1rem;
+  box-shadow: rgba(255, 255, 255, 0.15) 0 1px 0 inset,rgba(46, 54, 80, 0.075) 0 1px 1px;
+  box-sizing: border-box;
+  color: #FFFFFF;
+  cursor: pointer;
+  display: inline-block;
+  font-family: Inter,sans-serif;
+  font-size: 1rem;
+  font-weight: 500;
+  line-height: 1.5;
+  margin: 0;
+  padding: .5rem 1rem;
+  text-align: center;
+  text-transform: none;
+  transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  vertical-align: middle;
+}
+
+.create-btn:focus:not(:focus-visible),
+.create-btn:focus {
+  outline: 0;
+}
+
+.create-btn:hover {
+  background-color: #3733E5;
+  border-color: #3733E5;
+}
+
+.create-btn:focus {
+  background-color: #413FC5;
+  border-color: #3E3BBA;
+  box-shadow: rgba(255, 255, 255, 0.15) 0 1px 0 inset, rgba(46, 54, 80, 0.075) 0 1px 1px, rgba(104, 101, 235, 0.5) 0 0 0 .2rem;
+}
+
+.create-btn:active {
+  background-color: #3E3BBA;
+  background-image: none;
+  border-color: #3A38AE;
+  box-shadow: rgba(46, 54, 80, 0.125) 0 3px 5px inset;
+}
+
+.create-btn:active:focus {
+  box-shadow: rgba(46, 54, 80, 0.125) 0 3px 5px inset, rgba(104, 101, 235, 0.5) 0 0 0 .2rem;
+}
+
+.create-btn:disabled {
+  background-image: none;
+  box-shadow: none;
+  opacity: .65;
+  pointer-events: none;
+}
+
+
 .create-form-container {
   width: 100%;
   margin-left: 0.5%;
@@ -294,4 +418,5 @@ return withoutQuoteGroupNames;
 .selection-role-constainer {
   margin-left: 3%;
 }
+
 </style>

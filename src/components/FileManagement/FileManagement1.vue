@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="main">
     <b-row>
       <b-alert
         v-model="showSuccessAlert"
@@ -31,6 +31,7 @@
                     variant="primary"
                     id="show-btn"
                     @click="showCreateModal"
+                    class="btn"
                   >
                     <!-- add customer part  icons and the text-->
                     <b-icon-plus class="text-white"></b-icon-plus>
@@ -125,12 +126,8 @@ import AppHeader from '@/components/AppHeader/AppHeader.vue'
 
 export default {
   components: {
-    // AppFooter,
     AppHeader,
-    // AppMain,
-    // CustomerOverview,
   CreateFile,
-    // EditCustomerForm,
     DeleteFile,
   },
   data() {
@@ -179,8 +176,7 @@ export default {
   },
 
   mounted() {
-    // this.fetchCustomers();
-
+   
     this.fetchCustomersFromLocalStorage()
     this.getCustomerData()
   },
@@ -193,7 +189,7 @@ export default {
       try {
       
         this.$store.dispatch('file/savedFiles') // Dispatch the action
-        // console.log("Local Data:", localData);
+
       } catch (error) {
         console.error('Error fetching customer data from local storage:', error)
       }
@@ -217,12 +213,9 @@ export default {
     showAlertCreate() {
       this.showSuccessAlert = true
       this.dismissCountDown = this.dismissSecs
-      this.alertMessage = 'group was created successfully!'
+      this.alertMessage = 'file was created successfully!'
     },
-    showAlertUpdate() {
-      this.showSuccessAlert = true
-      this.alertMessage = 'group was updated successfully'
-    },
+   
     showDeleteModal(id) {
       this.$refs['delete-customer-modal'].show()
       this.customerId = id
@@ -232,15 +225,63 @@ export default {
     },
     showDeleteSuccessModal() {
       this.showSuccessAlert = true
-      this.alertMessage = 'group was deleted successfully!'
+      this.alertMessage = 'file was deleted successfully!'
     },
   },
 }
 </script>
 
 <style>
+
+  @import url('https://fonts.googleapis.com/css2?family=Lato:ital@1&display=swap');
+
+
+.main {
+  font-family: 'Lato', sans-serif;
+
+}
+
+
+.btn{
+
+  align-items: center;
+  background-image: linear-gradient(144deg,#AF40FF, #5B42F3 50%,#00DDEB);
+  border: 0;
+  border-radius: 8px;
+  box-shadow: rgba(151, 65, 252, 0.2) 0 15px 30px -5px;
+  box-sizing: border-box;
+  color: #FFFFFF;
+  display: flex;
+  font-family: Phantomsans, sans-serif;
+  font-size: 20px;
+  justify-content: center;
+  line-height: 1em;
+  max-width: 100%;
+  min-width: 140px;
+  padding: 19px 24px;
+  text-decoration: none;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.btn:active,
+.btn:hover {
+  outline: 0;
+}
+
+@media (min-width: 768px) {
+  .btn{
+    font-size: 24px;
+    min-width: 196px;
+  }
+}
+
 .action-item:hover {
   cursor: pointer;
+
 }
 #show-btn {
   margin-left: 35%;
@@ -256,4 +297,5 @@ export default {
   width: 80%;
   height: 130%;
 }
+
 </style>

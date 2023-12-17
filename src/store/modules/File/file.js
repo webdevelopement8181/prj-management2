@@ -1,17 +1,4 @@
-// store/modules/files.js
-// const state = {
-//   files: JSON.parse(localStorage.getItem('files')) || [],
-// };
 
-// const mutations = {
-//   setFiles(state, files) {
-//     state.files = files;
-//     localStorage.setItem('files', JSON.stringify(state.files));
-//   },
-//   addFile(state, file) {
-//     state.files.push(file);
-//     localStorage.setItem('files', JSON.stringify(state.files));
-//   },
 const state={
   files:[],
 }
