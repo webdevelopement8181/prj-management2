@@ -1,5 +1,5 @@
 <template>
-  
+  <div class="main">
   <div :class="['app-header', currentTheme]">
  
 <div class="header-container">
@@ -35,16 +35,18 @@
 
 <!-- username selection starts -->
 <div class="username-container">
+
   <!-- the selected username is stroed in here
   all the usernames are stored in getAllUsernames -->
     <b-form-select
       v-model="selectedUserNames"   
       :options="getAllUsernames"    
-      class="mb-3"
+      class="custom-select-style mb-3"
       value-field="item"
       text-field="name"
       disabled-field="notEnabled"
     ></b-form-select>
+
   </div>
   <!-- username selection ends -->
    
@@ -75,7 +77,7 @@
     </nav>
   </div>
   </div>
-
+</div>
 </template>
 
 
@@ -192,13 +194,23 @@ console.log('the event bus is not available')
 </style>
 
 <style scoped>
+main{
+  
+  @import url('https://fonts.googleapis.com/css2?family=Lato:ital@1&display=swap');
 
+
+
+  font-family: 'Lato', sans-serif;
+
+
+}
 body,
 ul {
   margin: 0;
   padding: 0;
   list-style: none;
 } 
+
 .theme-options{
 /* background-color: burlywood; */
 height: 10px;
@@ -279,12 +291,16 @@ nav:hover {
 
 .icon-item {
   margin-left: 30%;
+  text-decoration-line:none;
+
 }
 .nav-item {
   margin-left: 34px;
   font-size: 16px;
 }
 .menu-item {
+
+  text-decoration-line:none;
   display: block;
   line-height: 300%;
   color: rgb(85, 83, 83);
@@ -294,7 +310,7 @@ nav:hover {
 }
 
 .menu-item:hover {
-  background-color: #f0f0f0;
+  background-color: #FFF7D4;
 }
 
 .router-link-exact-active {

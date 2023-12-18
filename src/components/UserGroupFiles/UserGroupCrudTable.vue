@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="main">
     <b-row>
       <b-alert
         v-model="showSuccessAlert"
@@ -124,7 +124,7 @@
       ></create-customer-form>
     </b-modal>
 
-    Modal for updating groups
+   
     <b-modal ref="edit-customer-modal" size="xl" hide-footer title="Edit user">
       <edit-customer-form
         @closeEditModal="closeEditModal"
@@ -134,7 +134,7 @@
       ></edit-customer-form>
     </b-modal>
 
-    Delete group Modal
+ 
     <b-modal
       ref="delete-customer-modal"
       size="md"
@@ -302,6 +302,14 @@ export default {
 </script>
 
 <style>
+
+@import url('https://fonts.googleapis.com/css2?family=Lato:ital@1&display=swap');
+
+
+.main {
+  font-family: 'Lato', sans-serif;
+
+}
 .btn{
 
 align-items: center;

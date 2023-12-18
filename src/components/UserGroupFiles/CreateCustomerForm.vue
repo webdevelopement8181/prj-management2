@@ -2,9 +2,9 @@
   <div class="create-form-container">
     <b-form class="mt-3">
       <b-row> </b-row>
-
+<div class="groupName">
       <b-row>
-        <b-col cols="6">
+        <b-col cols="5">
           <b-form-group id="group-name" label="Group Name" label-for="group-name">
             <b-form-input
               id="group-name"
@@ -19,28 +19,33 @@
             </b-form-invalid-feedback>
           </b-form-group>
         </b-col>
-        <b-col cols="6">
-          <div class="users-container">
-          <b-form-group label="Users">
-    <!-- <b-form-group id="user-list" label="User List" label-for="user-list"> -->
-      <div v-if="isUserNamesEmpty">
-        <p>no user name availabale!</p>
+     
+      </b-row>
+    </div>
+      <b-row>
+        <div v-if="isUserNamesEmpty" class="selectionError">
+        <p>first choose a username</p>
       </div>
-      <!-- <label for="multi-select">Multiple Select</label>
-<div class="select select--multiple">
-  <select id="multi-select" multiple>
-    <option value="Option 1">Option 1</option>
-    <option value="Option 2">Option 2</option>
-    <option value="Option 3">Option 3</option>
-    <option value="Option 4">Option 4</option>
-    <option value="Option 5">Option 5</option>
-    <option value="Option length">
-      Option that has too long of a value to fit
-    </option>
-  </select>
-  <span class="focus"></span>
-</div> -->
+        <b-col cols="5">
+          <div class="users-container">
+          
+    <!-- <b-form-group id="user-list" label="User List" label-for="user-list"> -->
+     
+      <!-- <div>
+    <label for="multi-select">Multiple Select</label>
+    <div class="select select--multiple">
+      <select id="multi-select" multiple v-model="selectedUsernames">
+        <option v-for="username in computedUserNames" :key="username" :value="username">
+          {{ username }}
+        </option>
+      </select>
+      <span class="focus"></span>
+    </div>
+  </div> -->
+
+
       <multiselect
+    
         v-model="selectedUserNames"
         :options="userNames" 
         :close-on-select="false"
@@ -48,18 +53,15 @@
         placeholder="find user names"
         id="selectedUserNames"
         name="selectedUserNames"
-        :show-labels="true"
+        :show-labels="false"
         multiple 
         class="custom-multiselect"
       ></multiselect>
    
-           </b-form-group>
+
           </div>
     <!-- </b-form-group> -->
   </b-col>
-      </b-row>
-      <b-row>
-       
     
       </b-row>
       <b-row>
@@ -112,6 +114,9 @@ export default {
     ...mapGetters('group', ['allGroups']),
     ...mapGetters(['getUserName']),
 
+computedUserNames(){
+  return this.userName
+},
       isUserNamesEmpty() {
     return this.userNames.length === 0;
   },
@@ -145,11 +150,7 @@ export default {
   },
   created() {
 
-  // const savedSelectedUserNames = localStorage.getItem('selectedUserNames');
-  // if (savedSelectedUserNames) {
-  //   this.selectedUserNames = JSON.parse(savedSelectedUserNames);
-  // }
-  // console.log('User Names:', this.userNames);
+  
 },
 
   watch: {
@@ -159,11 +160,12 @@ export default {
 
   
   methods: {
-  //   updateSelectedUserNames(updatedSelectedUserNames) {
-  //   this.selectedUserNames = updatedSelectedUserNames;
-    
-  //   localStorage.setItem('selectedUserNames', JSON.stringify(updatedSelectedUserNames));
-  // },
+
+
+ userNameCheck(){
+  console.log('userNames are',this.userNames)
+ },
+  
     updateHasChanges() {
       this.hasChanges = true
     },
@@ -238,7 +240,11 @@ console.log('this is creator function')
 }
 </script>
 <style>
+@import url('https://fonts.googleapis.com/css2?family=Lato:ital@1&display=swap');
 
+.groupMultiSelect{
+padding: 12%;
+}
 .create-btn{
   appearance: button;
   background-color: #4D4AE8;
@@ -303,6 +309,7 @@ console.log('this is creator function')
 .create-form-container {
   width: 100%;
   margin-left: 0.5%;
+  font-family: 'Lato', sans-serif;
 }
 
 .lastname-container {
@@ -323,9 +330,15 @@ console.log('this is creator function')
 
 
 .users-container{
-  margin-top: -1.5%;
+width: 110%;
+margin-left: -5%;
 }
+.selectionError{
 
-
+  margin-bottom:-5%;
+}
+.groupName{
+  margin-bottom: 4%;
+}
 
 </style>

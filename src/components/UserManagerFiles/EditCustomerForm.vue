@@ -49,24 +49,30 @@
 
      
         </b-col>
-            
-         <b-col cols="6">
-          <multiselect
-     v-model="selectedGroupName"
-     :options="groupNames" 
+      </b-row>
+        <!-- <div v-if="isGroupNamesEmpty" class="selectionError">
+        <p>first choose a group name</p>
+      </div> -->
+<div class="multiselect-container">
+      <b-row class=multiselect-container>
+        <b-col cols="6">
+        <multiselect
+        v-model="selectedGroupNames"
+        :options="groupNames" 
         :close-on-select="false"
         :searchable="true"
-        placeholder="choose group names"
-        id="selectedGroupName"
-        name="selectedGroupName"
+        placeholder="choose group names "
+        id="selectedGroupNamess"
+        name="selectedGroupNames"
         :show-labels="false"
         multiple 
         class="custom-multiselect"
       ></multiselect>
-
-        </b-col> 
-  
+    </b-col>
       </b-row>
+    </div>
+  
+      
       <b-row>
 
         <section class="radio-section" >
@@ -75,15 +81,7 @@
 		<div class="radio-item"><input name="radio" id="radio3" type="radio"   value="user"   v-model="selectedRole"><label for="radio3">user</label></div>
 	</div>
 </section>
-        <!-- <div class="selection-role-constainer">
-          <b-col cols="4">
-            <b-form-radio-group v-model="selectedRole" name="role">
-              type:
-              <b-form-radio value="admin">Admin</b-form-radio>
-              <b-form-radio value="user">User</b-form-radio>
-            </b-form-radio-group>
-          </b-col>
-        </div> -->
+     
       </b-row>
 
       <b-row class="mt-4">
@@ -187,7 +185,9 @@ Multiselect
 this.customer.user_type= this.selectedRole;
   },
 
-
+  // isGroupNamesEmpty() {
+  //   return this.groupNames.length === 0;
+  // },
     triggerClose() {
       this.$emit('closeEditModal')
     },
@@ -259,4 +259,15 @@ this.customer.user_type= this.selectedRole;
   margin-left: -3%;
   width: 100%;
 }
+.multiselect-container{
+  width: 106%;
+margin-left: -2%;
+margin-top: 1%
+
+
+}
+/* .selectionError{
+
+margin-top: -10%;
+} */
 </style>

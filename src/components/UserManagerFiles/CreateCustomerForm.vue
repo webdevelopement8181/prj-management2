@@ -63,7 +63,13 @@
           </b-form-group>
         </b-col>
    
-        
+      </b-row>
+      
+      <!-- <div v-if="isGroupNamesEmpty" class="selectionError">
+        <p>first choose a group name</p>
+      </div> -->
+<div class="multiselect-container">
+      <b-row class=multiselect-container>
         <b-col cols="6">
         <multiselect
         v-model="selectedGroupNames"
@@ -79,23 +85,9 @@
       ></multiselect>
     </b-col>
       </b-row>
-
-      <b-row class="mt-5">
-        <h5></h5>
-      </b-row>
+    </div>
       <b-row>
-<!-- seletcting role started -->
-        <!-- <div class="selection-role-constainer">
-          <b-col cols="4">
-            <b-form-radio-group v-model="selectedRole" name="role">
-              type:
 
-              <b-form-radio value="admin">Admin</b-form-radio>
-              <b-form-radio value="user">User</b-form-radio>
-            </b-form-radio-group>
-          </b-col>
-        </div> -->
-        <!-- selection role end -->
         <section class="radio-section" >
 	<div class="radio-list" >
 		<div class="radio-item"><input name="radio" id="radio2" type="radio"     value="admin"  v-model="selectedRole"><label for="radio2">admin</label></div>
@@ -153,7 +145,10 @@ Multiselect,
     isRoleSelected() {
       return this.selectedRole !== null
     },
-
+  //   isGroupNamesEmpty() {
+  //   return this.groupNames.length === 0;
+  // },
+ 
     creationTimeState() {
       const currentDate = new Date()
       const hours = String(currentDate.getHours()).padStart(2, '0')
@@ -416,7 +411,18 @@ height: 20vh;
 }
 
 .selection-role-constainer {
-  margin-left: 3%;
+  margin-left: -5%;
 }
+.multiselect-container{
+  width: 106%;
+margin-left: -2%;
+margin-top: 5%
+
+
+}
+/* .selectionError{
+
+margin-top: -5%;
+} */
 
 </style>

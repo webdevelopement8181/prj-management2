@@ -1,6 +1,7 @@
 <template>
   <div class="edit-form-container">
     <b-form class="mt-3">
+      <div class="groupName">
       <b-row>
         <b-col cols="6">
           <b-form-group id="group-name" label="group Name" label-for="group-name">
@@ -16,6 +17,13 @@
             </b-form-invalid-feedback>
           </b-form-group>
         </b-col>
+      </b-row>
+    </div>
+    <div v-if="isUserNamesEmpty" class="selectionError">
+        <p>first choose a username</p>
+      </div>
+      <div class="users-container">
+      <b-row>
  <b-col cols="6">
 <multiselect  v-model="selectedUserName"
      :options="userNames" 
@@ -32,8 +40,8 @@
 </b-col>
 
        
-
-      </b-row>
+</b-row>
+</div>
   
       <b-row class="mt-4">
         <b-col cols="3">
@@ -81,7 +89,10 @@ Multiselect
     ...mapGetters('customer', ['userNames']),
     ...mapGetters(['getUserName']),
    
-
+    isUserNamesEmpty() {
+    return this.userNames.length === 0;
+  },
+ 
 
    groupNameState() {
       if (this.group && this.group.group_name) {
@@ -158,6 +169,7 @@ return withoutQute;
 }
 </script>
 <style>
+@import url('https://fonts.googleapis.com/css2?family=Lato:ital@1&display=swap');
 .create-btn{
   appearance: button;
   background-color: #4D4AE8;
@@ -185,6 +197,7 @@ return withoutQute;
 }
 .edit-form-container {
   margin-left: 5%;
+  font-family: 'Lato', sans-serif;
 }
 
 .lastname-cntainer {
@@ -197,5 +210,17 @@ padding: 5%;
 border-radius: 8px; /* Add your desired border radius */
   width:100%;
 height: 60%;
+}
+.selectionError{
+
+margin-top:5%;
+}
+/* .groupName{
+margin-bottom: 4%;
+} */
+.users-container{
+width: 110%;
+margin-left: -2.5%;
+margin-top: 3%;
 }
 </style>
