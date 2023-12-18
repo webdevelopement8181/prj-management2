@@ -27,6 +27,7 @@ ul {
   padding: 0;
   list-style: none;
 }
+
 .app-footer {
   position: absolute;
   z-index: -1;
@@ -38,7 +39,8 @@ ul {
   border-radius: 5px;
   /* Set the fixed height of the footer here */
   height: 60px;
-  line-height: 60px; /* Vertically center the text there */
+  line-height: 60px;
+  /* Vertically center the text there */
   background-color: #003865;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }

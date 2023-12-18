@@ -1,77 +1,74 @@
 <template>
-
     <b-col>
-    <div class="manage-files">
-         <form id="file-upload-form" class="uploader">
-            <input id="file-upload" type="file" name="fileUpload" accept="image/*, .pdf" @change="handleFileUpload" />
-            <label for="file-upload" id="file-drag">
-                <p class="uploader-icon-p">
-                    <font-awesome-icon :icon="['fas', 'upload']"  style="font-size: 2.5em; color:#0F2167" />
-                </p>
-                <div id="start">
-                    <div class="upload-semi-text">Select a file or drag here</div>
-                    <div id="notimage" class="hidden">Please select an image</div>
-                    <span id="file-upload-btn" class="btn btn-primary"  @click="handleFileUpload" >Select a file</span>
-                    <div class="upload-semi-text" style="font-size: 13px;">PDF or Image</div>
-                </div>
-            </label>
-        </form>
-    </div>
+        <div class="manage-files">
+            <form id="file-upload-form" class="uploader">
+                <input id="file-upload" type="file" name="fileUpload" accept="image/*, .pdf" @change="handleFileUpload" />
+                <label for="file-upload" id="file-drag">
+                    <p class="uploader-icon-p">
+                        <font-awesome-icon :icon="['fas', 'upload']" style="font-size: 2.5em; color:#0F2167" />
+                    </p>
+                    <div id="start">
+                        <div class="upload-semi-text">Select a file or drag here</div>
+                        <div id="notimage" class="hidden">Please select an image</div>
+                        <span id="file-upload-btn" class="btn btn-primary" @click="handleFileUpload">Select a file</span>
+                        <div class="upload-semi-text" style="font-size: 13px;">PDF or Image</div>
+                    </div>
+                </label>
+            </form>
+        </div>
     </b-col>
-
 </template>
 <script>
 import { mapGetters, mapState } from 'vuex'
 import { v4 as uuidv4 } from 'uuid'
 
-export default{
-    data(){
-return{
-fileInfo:{
-file_name:'',
-file_format:'',
-size:0,
-upload_time:new Date().toLocaleString(),
-id: uuidv4(),
+export default {
+    data() {
+        return {
+            fileInfo: {
+                file_name: '',
+                file_format: '',
+                size: 0,
+                upload_time: new Date().toLocaleString(),
+                id: uuidv4(),
+
+            },
+
+        }
+    },
+    computed: {
+        ...mapState('file', ['files']),
+        ...mapGetters('file', ['allFiles'])
 
     },
- 
-}
-}  ,
-computed:{
-    ...mapState('file',['files']),
-    ...mapGetters('file',['allFiles'])
+    methods: {
 
-},
-methods:{
+        triggerClose() {
+            this.$emit('closeCreateModal')
+        },
 
-    triggerClose() {
-      this.$emit('closeCreateModal')
+        handleFileUpload(event) {
+            if (event.target.files && event.target.files[0]) {
+                const file = event.target.files[0];
+                this.fileInfo.file_name = file.name.split(".").shift();
+                this.fileInfo.size = Math.round((file.size / 1024 / 1024) * 100) / 100;
+                const fileFormat = file.type.split('/')[1];
+                this.fileInfo.file_format = fileFormat;
+
+                this.$store.dispatch('file/addFiles', this.fileInfo);
+                this.$emit('closeCreateModal');
+                this.$emit('reloadDataTable');
+                this.$emit('showSuccessAlert');
+            }
+        }
+
     },
-
-    handleFileUpload(event) {
-    if (event.target.files && event.target.files[0]) {
-        const file = event.target.files[0];
-        this.fileInfo.file_name = file.name.split(".").shift();
-        this.fileInfo.size = Math.round((file.size / 1024 / 1024) * 100) / 100;
-        const fileFormat = file.type.split('/')[1];
-        this.fileInfo.file_format = fileFormat;
-    
-        this.$store.dispatch('file/addFiles', this.fileInfo);
-        this.$emit('closeCreateModal');
-        this.$emit('reloadDataTable');
-        this.$emit('showSuccessAlert');
-    }
-}
-
-},
 }
 
 
 </script>
 <style>
-
- #manage-files {
+#manage-files {
     display: block;
     width: 87%;
     height: 100%;
@@ -90,7 +87,7 @@ methods:{
 /* File uploader */
 
 #file-upload-form {
-    width:500px;
+    width: 500px;
     height: 173px;
     padding-bottom: 78px;
     margin-top: 70px;
@@ -122,12 +119,11 @@ methods:{
     user-select: none;
     cursor: pointer;
     background-color: #F3F8FF
-   
 }
 
 #file-drag:hover {
     border-color: #49108B;
-  
+
 }
 
 #start {
@@ -224,34 +220,26 @@ div.upload-semi-text {
     color: #5f6982;
 }
 
-
-
-
-
-/* CSS */
 #file-upload-btn {
 
-  background: #5E5DF0;
-  border-radius: 999px;
-  box-shadow: #5E5DF0 0 10px 20px -10px;
-  box-sizing: border-box;
-  color: #FFFFFF;
-  cursor: pointer;
-  font-family: Inter,Helvetica,"Apple Color Emoji","Segoe UI Emoji",NotoColorEmoji,"Noto Color Emoji","Segoe UI Symbol","Android Emoji",EmojiSymbols,-apple-system,system-ui,"Segoe UI",Roboto,"Helvetica Neue","Noto Sans",sans-serif;
-  font-size: 16px;
-  font-weight: 700;
-  line-height: 24px;
-  opacity: 1;
-  outline: 0 solid transparent;
-  padding: 8px 18px;
-  user-select: none;
-  -webkit-user-select: none;
-  touch-action: manipulation;
-  width: fit-content;
-  word-break: break-word;
-  border: 0;
+    background: #5E5DF0;
+    border-radius: 999px;
+    box-shadow: #5E5DF0 0 10px 20px -10px;
+    box-sizing: border-box;
+    color: #FFFFFF;
+    cursor: pointer;
+    font-family: Inter, Helvetica, "Apple Color Emoji", "Segoe UI Emoji", NotoColorEmoji, "Noto Color Emoji", "Segoe UI Symbol", "Android Emoji", EmojiSymbols, -apple-system, system-ui, "Segoe UI", Roboto, "Helvetica Neue", "Noto Sans", sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 24px;
+    opacity: 1;
+    outline: 0 solid transparent;
+    padding: 8px 18px;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    width: fit-content;
+    word-break: break-word;
+    border: 0;
 }
-
-
-
 </style>

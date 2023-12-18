@@ -35,16 +35,13 @@ export default {
   },
   computed: {
     ...mapGetters('group', ['getGroupById']),
-    // ...mapActions("customer", ["deleteCustomer"]),
+  
   },
   created() {
     if (this.customerId) {
     this.group = this.getGroupById(this.customerId)
     }
   },
-  //   // this.username = this.getUsername;
-  // },
-  //   watch: {
 
   customerId: {
     immediate: true,
@@ -54,7 +51,6 @@ export default {
       // console.log(this.customer)
     },
   },
-  // },
 
   methods: {
     triggerClose() {

@@ -4,29 +4,14 @@
       <b-row>
         <b-col cols="6">
           <b-form-group id="user-name" label="user Name" label-for="user-name">
-            <b-form-input
-              id="user-name"
-              type="text"
-              readonly
-              v-model="customer.user_name"
-            ></b-form-input>
+            <b-form-input id="user-name" type="text" readonly v-model="customer.user_name"></b-form-input>
           </b-form-group>
         </b-col>
 
         <b-col cols="6">
-          <b-form-group
-            id="first-name"
-            label="first Name"
-            label-for="first-name"
-          >
-            <b-form-input
-              id="first-name"
-              type="text"
-              placeholder="first Name"
-              v-model="customer.first_name"
-              :state="firstNameState"
-              :valid="firstNameState"
-            ></b-form-input>
+          <b-form-group id="first-name" label="first Name" label-for="first-name">
+            <b-form-input id="first-name" type="text" placeholder="first Name" v-model="customer.first_name"
+              :state="firstNameState" :valid="firstNameState"></b-form-input>
             <b-form-invalid-feedback>
               first name must be 48 characters at max level
             </b-form-invalid-feedback>
@@ -34,67 +19,48 @@
         </b-col>
         <b-col cols="6">
           <b-form-group id="last-name" label="last Name" label-for="last-name">
-            <b-form-input
-              id="last-name"
-              type="text"
-              placeholder="Last Name"
-              v-model="customer.last_name"
-              :state="lastNameState"
-              :valid="lastNameState"
-            ></b-form-input>
+            <b-form-input id="last-name" type="text" placeholder="Last Name" v-model="customer.last_name"
+              :state="lastNameState" :valid="lastNameState"></b-form-input>
             <b-form-invalid-feedback>
               last name must be 48 characters at max level
             </b-form-invalid-feedback>
           </b-form-group>
 
-     
+
         </b-col>
       </b-row>
-        <!-- <div v-if="isGroupNamesEmpty" class="selectionError">
-        <p>first choose a group name</p>
-      </div> -->
-<div class="multiselect-container">
-      <b-row class=multiselect-container>
-        <b-col cols="6">
-        <multiselect
-        v-model="selectedGroupNames"
-        :options="groupNames" 
-        :close-on-select="false"
-        :searchable="true"
-        placeholder="choose group names "
-        id="selectedGroupNamess"
-        name="selectedGroupNames"
-        :show-labels="false"
-        multiple 
-        class="custom-multiselect"
-      ></multiselect>
-    </b-col>
-      </b-row>
-    </div>
-  
-      
+
+      <div class="multiselect-container">
+        <b-row class=multiselect-container>
+          <b-col cols="6">
+            <multiselect v-model="selectedGroupNames" :options="groupNames" :close-on-select="false" :searchable="true"
+              placeholder="choose group names " id="selectedGroupNamess" name="selectedGroupNames" :show-labels="false"
+              multiple class="custom-multiselect"></multiselect>
+          </b-col>
+        </b-row>
+      </div>
+
+
       <b-row>
 
-        <section class="radio-section" >
-	<div class="radio-list" >
-		<div class="radio-item"><input name="radio" id="radio2" type="radio"     value="admin"  v-model="selectedRole"><label for="radio2">admin</label></div>
-		<div class="radio-item"><input name="radio" id="radio3" type="radio"   value="user"   v-model="selectedRole"><label for="radio3">user</label></div>
-	</div>
-</section>
-     
+        <section class="radio-section">
+          <div class="radio-list">
+            <div class="radio-item"><input name="radio" id="radio2" type="radio" value="admin"
+                v-model="selectedRole"><label for="radio2">admin</label></div>
+            <div class="radio-item"><input name="radio" id="radio3" type="radio" value="user"
+                v-model="selectedRole"><label for="radio3">user</label></div>
+          </div>
+        </section>
+
       </b-row>
 
       <b-row class="mt-4">
         <b-col cols="3">
-          <button
-           class="create-btn"
-            @click="updateCustomer"
-            :disabled="!isRoleSelected || (!firstNameState && !lastNameState)"
-            >Updateuser</button
-          >
+          <button class="create-btn" @click="updateCustomer"
+            :disabled="!isRoleSelected || (!firstNameState && !lastNameState)">Updateuser</button>
         </b-col>
         <b-col>
-          <button  class="create-btn" @click="triggerClose">Close</button>
+          <button class="create-btn" @click="triggerClose">Close</button>
         </b-col>
       </b-row>
     </b-form>
@@ -108,36 +74,36 @@ import Multiselect from 'vue-multiselect';
 
 export default {
   name: 'CreateCustomerModal',
-  components:{
-Multiselect
+  components: {
+    Multiselect
   },
   props: {
-    customerId:String,
+    customerId: String,
   },
   data() {
     return {
-      selectedGroupName:[],
+      selectedGroupName: [],
       selectedRole: null,
       customer: {},
       hasChanges: false,
     }
   },
   mounted() {
- console.log( "selected group name" , this.groupNames)
-    
+    console.log("selected group name", this.groupNames)
+
     this.hasChanges = false
   },
   computed: {
     ...mapGetters('customer', ['getCustomerById']),
     ...mapGetters(['getUserName']),
-    ...mapGetters('group',['groupNames']),
+    ...mapGetters('group', ['groupNames']),
 
     userNameState() {
       if (this.customer && this.customer.last_modifier) {
         const userNameLength = this.customer.last_modifier.length
         return userNameLength >= 5 && userNameLength <= 45
       }
-      return false 
+      return false
     },
     isRoleSelected() {
       return this.selectedRole !== null
@@ -168,7 +134,7 @@ Multiselect
     'customer.first_name': 'updateHasChanges',
     'customer.last_name': {
       handler: 'updateHasChanges',
-      deep: true, 
+      deep: true,
     },
   },
   methods: {
@@ -181,13 +147,13 @@ Multiselect
         this.customer.last_modifier = username
       }
     },
-    updatedType(){
-this.customer.user_type= this.selectedRole;
-  },
+    updatedType() {
+      this.customer.user_type = this.selectedRole;
+    },
 
-  // isGroupNamesEmpty() {
-  //   return this.groupNames.length === 0;
-  // },
+    // isGroupNamesEmpty() {
+    //   return this.groupNames.length === 0;
+    // },
     triggerClose() {
       this.$emit('closeEditModal')
     },
@@ -196,13 +162,13 @@ this.customer.user_type= this.selectedRole;
       this.updatedType()
       this.updateLastModifier()
 
-      const formattedgroupName=this.groupNameWithoutQoute();
-  this.customer.user_group=formattedgroupName;
+      const formattedgroupName = this.groupNameWithoutQoute();
+      this.customer.user_group = formattedgroupName;
       const currentDate = new Date()
-  const hours = String(currentDate.getHours()).padStart(2, '0')
-  const minutes = String(currentDate.getMinutes()).padStart(2, '0')
-  const seconds = String(currentDate.getSeconds()).padStart(2, '0')
-  this.customer.last_modification_time = `${hours}:${minutes}:${seconds}`
+      const hours = String(currentDate.getHours()).padStart(2, '0')
+      const minutes = String(currentDate.getMinutes()).padStart(2, '0')
+      const seconds = String(currentDate.getSeconds()).padStart(2, '0')
+      this.customer.last_modification_time = `${hours}:${minutes}:${seconds}`
 
       this.$store
         .dispatch('customer/updateCustomer', this.customer)
@@ -216,28 +182,27 @@ this.customer.user_type= this.selectedRole;
           console.error('Error updating customer:', error)
         })
     },
-    groupNameWithoutQoute(){
-      let withoutQoute=this.selectedGroupName.join();
+    groupNameWithoutQoute() {
+      let withoutQoute = this.selectedGroupName.join();
       return withoutQoute;
     },
-   
+
   },
 }
 </script>
 <style>
-
-.create-btn{
+.create-btn {
   appearance: button;
   background-color: #4D4AE8;
   background-image: linear-gradient(180deg, rgba(255, 255, 255, .15), rgba(255, 255, 255, 0));
   border: 1px solid #4D4AE8;
   border-radius: 1rem;
-  box-shadow: rgba(255, 255, 255, 0.15) 0 1px 0 inset,rgba(46, 54, 80, 0.075) 0 1px 1px;
+  box-shadow: rgba(255, 255, 255, 0.15) 0 1px 0 inset, rgba(46, 54, 80, 0.075) 0 1px 1px;
   box-sizing: border-box;
   color: #FFFFFF;
   cursor: pointer;
   display: inline-block;
-  font-family: Inter,sans-serif;
+  font-family: Inter, sans-serif;
   font-size: 1rem;
   font-weight: 500;
   line-height: 1.5;
@@ -245,12 +210,13 @@ this.customer.user_type= this.selectedRole;
   padding: .5rem 1rem;
   text-align: center;
   text-transform: none;
-  transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+  transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out;
   user-select: none;
   -webkit-user-select: none;
   touch-action: manipulation;
   vertical-align: middle;
 }
+
 .edit-form-container {
   margin-left: 5%;
 }
@@ -259,13 +225,13 @@ this.customer.user_type= this.selectedRole;
   margin-left: -3%;
   width: 100%;
 }
-.multiselect-container{
+
+.multiselect-container {
   width: 106%;
-margin-left: -2%;
-margin-top: 1%
-
-
+  margin-left: -2%;
+  margin-top: 1%
 }
+
 /* .selectionError{
 
 margin-top: -10%;

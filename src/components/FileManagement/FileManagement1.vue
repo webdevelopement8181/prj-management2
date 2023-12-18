@@ -1,20 +1,14 @@
 <template>
   <div class="main">
     <b-row>
-      <b-alert
-        v-model="showSuccessAlert"
-        :show="dismissCountDown"
-        dismissible
-        variant="warning"
-        @dismissed="dismissCountDown = 0"
-        @dismiss-count-down="countDownChanged"
-      >
+      <b-alert v-model="showSuccessAlert" :show="dismissCountDown" dismissible variant="warning"
+        @dismissed="dismissCountDown = 0" @dismiss-count-down="countDownChanged">
         {{ alertMessage }}
       </b-alert>
     </b-row>
     <!-- active and total customers filtering -->
     <b-row>
-     
+
     </b-row>
     <div class="table-container">
       <b-row class="mt-3">
@@ -27,12 +21,7 @@
               <b-row>
                 <b-col>
                   <!-- add sutomer the button -->
-                  <b-button
-                    variant="primary"
-                    id="show-btn"
-                    @click="showCreateModal"
-                    class="btn"
-                  >
+                  <b-button variant="primary" id="show-btn" @click="showCreateModal" class="btn">
                     <!-- add customer part  icons and the text-->
                     <b-icon-plus class="text-white"></b-icon-plus>
                     <span class="h6 text-white">New File</span>
@@ -42,14 +31,8 @@
             </b-col>
           </b-row>
           <b-row class="mt-3">
-            <b-table
-              striped
-              hover
-              :items="files"
-              :fields="fields"
-              class="text-center"
-            >
-          
+            <b-table striped hover :items="files" :fields="fields" class="text-center">
+
               <template #cell(creator_name)="data">
                 {{ data.item.file_name }}
               </template>
@@ -63,23 +46,15 @@
                 {{ data.item.upload_time }}
               </template>
               <template #cell(customer_status)="data">
-                <b-icon-bookmark-check-fill
-                  variant="success"
-                  v-if="data.item.customer_status === 'active'"
-                ></b-icon-bookmark-check-fill>
-                <b-icon-bookmark-x-fill
-                  variant="danger"
-                  v-else
-                ></b-icon-bookmark-x-fill>
+                <b-icon-bookmark-check-fill variant="success"
+                  v-if="data.item.customer_status === 'active'"></b-icon-bookmark-check-fill>
+                <b-icon-bookmark-x-fill variant="danger" v-else></b-icon-bookmark-x-fill>
               </template>
               <template #cell(actions)="data">
                 <b-row>
                   <b-col cols="12">
-                    <b-icon-trash-fill
-                      class="action-item"
-                      variant="danger"
-                      @click="showDeleteModal(data.item.id)"
-                    ></b-icon-trash-fill>
+                    <b-icon-trash-fill class="action-item" variant="danger"
+                      @click="showDeleteModal(data.item.id)"></b-icon-trash-fill>
                   </b-col>
                 </b-row>
               </template>
@@ -91,35 +66,22 @@
     </div>
     <!--  Modal for adding new customers -->
     <b-modal ref="create-customer-modal" size="xl" hide-footer title="upload File">
-      <createFile
-        @closeCreateModal="closeCreateModal"
-        @reloadDataTable="getCustomerData"
-        @showSuccessAlert="showAlertCreate"
-      ></createFile>
+      <createFile @closeCreateModal="closeCreateModal" @reloadDataTable="getCustomerData"
+        @showSuccessAlert="showAlertCreate"></createFile>
     </b-modal>
-    <b-modal
-      ref="delete-customer-modal"
-      size="md"
-      hide-footer
-      title="Confirm Deletion"
-    >
-      <DeleteFile
-
-        @closeDeleteModal="closeDeleteModal"
-        @reloadDataTable="getCustomerData"
-        @showDeleteAlert="showDeleteSuccessModal"
-        :customerId="customerId"
-      ></DeleteFile>
+    <b-modal ref="delete-customer-modal" size="md" hide-footer title="Confirm Deletion">
+      <DeleteFile @closeDeleteModal="closeDeleteModal" @reloadDataTable="getCustomerData"
+        @showDeleteAlert="showDeleteSuccessModal" :customerId="customerId"></DeleteFile>
     </b-modal>
     <AppHeader></AppHeader>
-   
+
   </div>
 </template>
 
 <script>
 // import axios from "axios";
 import { mapGetters, mapState } from 'vuex'
-import   CreateFile from '@/components/FileManagement/CreateFile.vue'
+import CreateFile from '@/components/FileManagement/CreateFile.vue'
 import DeleteFile from '@/components/FileManagement/DeleteFile.vue'
 import AppHeader from '@/components/AppHeader/AppHeader.vue'
 
@@ -127,7 +89,7 @@ import AppHeader from '@/components/AppHeader/AppHeader.vue'
 export default {
   components: {
     AppHeader,
-  CreateFile,
+    CreateFile,
     DeleteFile,
   },
   data() {
@@ -138,12 +100,12 @@ export default {
       // Note 'isActive' is left out and will not appear in the rendered table
       fields: [
         // {
-           {
+        {
           key: 'file_name',
           label: 'FileName',
           sortable: false,
         },
-       
+
         {
           key: 'file_format',
           label: 'FileFormat',
@@ -159,7 +121,7 @@ export default {
           label: 'UploadTime',
           sortable: false,
         },
-   
+
         'actions',
       ],
       items: [],
@@ -176,7 +138,7 @@ export default {
   },
 
   mounted() {
-   
+
     this.fetchCustomersFromLocalStorage()
     this.getCustomerData()
   },
@@ -184,10 +146,10 @@ export default {
     countDownChanged(dismissCountDown) {
       this.dismissCountDown = dismissCountDown
     },
-    
+
     async fetchCustomersFromLocalStorage() {
       try {
-      
+
         this.$store.dispatch('file/savedFiles') // Dispatch the action
 
       } catch (error) {
@@ -195,7 +157,7 @@ export default {
       }
     },
     async getCustomerData() {
-    
+
     },
     showCreateModal() {
       this.$refs['create-customer-modal'].show()
@@ -204,7 +166,7 @@ export default {
       this.$refs['create-customer-modal'].hide()
     },
 
-    
+
     setFilterTotalIsActive() {
       this.tableHeader = 'Total users'
       this.getCustomerData()
@@ -215,7 +177,7 @@ export default {
       this.dismissCountDown = this.dismissSecs
       this.alertMessage = 'file was created successfully!'
     },
-   
+
     showDeleteModal(id) {
       this.$refs['delete-customer-modal'].show()
       this.customerId = id
@@ -232,8 +194,7 @@ export default {
 </script>
 
 <style>
-
-  @import url('https://fonts.googleapis.com/css2?family=Lato:ital@1&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lato:ital@1&display=swap');
 
 
 .main {
@@ -242,10 +203,10 @@ export default {
 }
 
 
-.btn{
+.btn {
 
   align-items: center;
-  background-image: linear-gradient(144deg,#AF40FF, #5B42F3 50%,#00DDEB);
+  background-image: linear-gradient(144deg, #AF40FF, #5B42F3 50%, #00DDEB);
   border: 0;
   border-radius: 8px;
   box-shadow: rgba(151, 65, 252, 0.2) 0 15px 30px -5px;
@@ -273,7 +234,7 @@ export default {
 }
 
 @media (min-width: 768px) {
-  .btn{
+  .btn {
     font-size: 24px;
     min-width: 196px;
   }
@@ -283,11 +244,13 @@ export default {
   cursor: pointer;
 
 }
+
 #show-btn {
   margin-left: 35%;
   height: 90%;
   width: 65%;
 }
+
 .header-style {
   margin-right: 52%;
 }
@@ -297,5 +260,4 @@ export default {
   width: 80%;
   height: 130%;
 }
-
 </style>

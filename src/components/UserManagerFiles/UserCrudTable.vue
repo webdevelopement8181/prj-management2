@@ -1,21 +1,15 @@
 <template>
   <div class="main">
     <b-row>
-      <b-alert
-        v-model="showSuccessAlert"
-        :show="dismissCountDown"
-        dismissible
-        variant="warning"
-        @dismissed="dismissCountDown = 0"
-        @dismiss-count-down="countDownChanged"
-      >
+      <b-alert v-model="showSuccessAlert" :show="dismissCountDown" dismissible variant="warning"
+        @dismissed="dismissCountDown = 0" @dismiss-count-down="countDownChanged">
         {{ alertMessage }}
       </b-alert>
     </b-row>
     <!-- active and total customers filtering -->
     <b-row>
 
-     
+
     </b-row>
     <div class="table-container">
       <b-row class="mt-3">
@@ -28,11 +22,7 @@
               <b-row>
                 <b-col>
                   <!-- add sutomer the button -->
-                  <button
-                    class="btn"
-                    id="show-btn"
-                    @click="showCreateModal"
-                  >
+                  <button class="btn" id="show-btn" @click="showCreateModal">
                     <!-- add customer part  icons and the text-->
                     <b-icon-plus class="text-white"></b-icon-plus>
                     <span class="h6 text-white">New User</span>
@@ -42,13 +32,7 @@
             </b-col>
           </b-row>
           <b-row class="mt-3">
-            <b-table
-              striped
-              hover
-              :items="customers"
-              :fields="fields"
-              class="text-center"
-            >
+            <b-table striped hover :items="customers" :fields="fields" class="text-center">
               <template #cell(user_name)="data">
                 {{ data.item.user_name }}
               </template>
@@ -77,30 +61,19 @@
                 {{ data.item.user_group }}
               </template>
               <template #cell(customer_status)="data">
-                <b-icon-bookmark-check-fill
-                  variant="success"
-                  v-if="data.item.customer_status === 'active'"
-                ></b-icon-bookmark-check-fill>
-                <b-icon-bookmark-x-fill
-                  variant="danger"
-                  v-else
-                ></b-icon-bookmark-x-fill>
+                <b-icon-bookmark-check-fill variant="success"
+                  v-if="data.item.customer_status === 'active'"></b-icon-bookmark-check-fill>
+                <b-icon-bookmark-x-fill variant="danger" v-else></b-icon-bookmark-x-fill>
               </template>
               <template #cell(actions)="data">
                 <b-row>
                   <b-col cols="7">
-                    <b-icon-pencil-square
-                      class="action-item"
-                      variant="primary"
-                      @click="getRowData(data.item.id)"
-                    ></b-icon-pencil-square>
+                    <b-icon-pencil-square class="action-item" variant="primary"
+                      @click="getRowData(data.item.id)"></b-icon-pencil-square>
                   </b-col>
                   <b-col cols="1">
-                    <b-icon-trash-fill
-                      class="action-item"
-                      variant="danger"
-                      @click="showDeleteModal(data.item.id)"
-                    ></b-icon-trash-fill>
+                    <b-icon-trash-fill class="action-item" variant="danger"
+                      @click="showDeleteModal(data.item.id)"></b-icon-trash-fill>
                   </b-col>
                 </b-row>
               </template>
@@ -111,38 +84,22 @@
       </b-row>
     </div>
     <!--  Modal for adding new customers -->
-    <b-modal ref="create-customer-modal" size="xl" hide-footer title="New user" id="create-modal" >
+    <b-modal ref="create-customer-modal" size="xl" hide-footer title="New user" id="create-modal">
 
-      <create-customer-form
-        @closeCreateModal="closeCreateModal"
-        @reloadDataTable="getCustomerData"
-        @showSuccessAlert="showAlertCreate"
-      ></create-customer-form>
+      <create-customer-form @closeCreateModal="closeCreateModal" @reloadDataTable="getCustomerData"
+        @showSuccessAlert="showAlertCreate"></create-customer-form>
     </b-modal>
 
-  
+
     <b-modal ref="edit-customer-modal" size="xl" hide-footer title="Edit user">
-      <edit-customer-form
-        @closeEditModal="closeEditModal"
-        @reloadDataTable="getCustomerData"
-        @showSuccessAlert="showAlertUpdate"
-        :customerId="customerId"
-      ></edit-customer-form>
+      <edit-customer-form @closeEditModal="closeEditModal" @reloadDataTable="getCustomerData"
+        @showSuccessAlert="showAlertUpdate" :customerId="customerId"></edit-customer-form>
     </b-modal>
 
 
-    <b-modal
-      ref="delete-customer-modal"
-      size="md"
-      hide-footer
-      title="Confirm Deletion"
-    >
-      <delete-customer-modal
-        @closeDeleteModal="closeDeleteModal"
-        @reloadDataTable="getCustomerData"
-        @showDeleteAlert="showDeleteSuccessModal"
-        :customerId="customerId"
-      ></delete-customer-modal>
+    <b-modal ref="delete-customer-modal" size="md" hide-footer title="Confirm Deletion">
+      <delete-customer-modal @closeDeleteModal="closeDeleteModal" @reloadDataTable="getCustomerData"
+        @showDeleteAlert="showDeleteSuccessModal" :customerId="customerId"></delete-customer-modal>
     </b-modal>
     <AppHeader></AppHeader>
     <!-- <AppFooter></AppFooter> -->
@@ -318,57 +275,60 @@ export default {
   font-family: 'Lato', sans-serif;
 
 }
-.btn{
 
-align-items: center;
-background-image: linear-gradient(144deg,#AF40FF, #5B42F3 50%,#00DDEB);
-border: 0;
-border-radius: 8px;
-box-shadow: rgba(151, 65, 252, 0.2) 0 15px 30px -5px;
-box-sizing: border-box;
-color: #FFFFFF;
-display: flex;
-font-family: Phantomsans, sans-serif;
-font-size: 20px;
-justify-content: center;
-line-height: 1em;
-max-width: 100%;
-min-width: 140px;
-padding: 19px 24px;
-text-decoration: none;
-user-select: none;
--webkit-user-select: none;
-touch-action: manipulation;
-white-space: nowrap;
-cursor: pointer;
+.btn {
+
+  align-items: center;
+  background-image: linear-gradient(144deg, #AF40FF, #5B42F3 50%, #00DDEB);
+  border: 0;
+  border-radius: 8px;
+  box-shadow: rgba(151, 65, 252, 0.2) 0 15px 30px -5px;
+  box-sizing: border-box;
+  color: #FFFFFF;
+  display: flex;
+  font-family: Phantomsans, sans-serif;
+  font-size: 20px;
+  justify-content: center;
+  line-height: 1em;
+  max-width: 100%;
+  min-width: 140px;
+  padding: 19px 24px;
+  text-decoration: none;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  white-space: nowrap;
+  cursor: pointer;
 }
 
 .btn:active,
 .btn:hover {
-outline: 0;
+  outline: 0;
 }
 
 @media (min-width: 768px) {
-.btn{
-  font-size: 24px;
-  min-width: 196px;
-}
+  .btn {
+    font-size: 24px;
+    min-width: 196px;
+  }
 }
 
 
-#create-modal{
+#create-modal {
   /* background-color: aquamarine; */
-  color:#0F2167;
+  color: #0F2167;
 }
 
 .action-item:hover {
   cursor: pointer;
 }
+
 #show-btn {
   margin-left: 35%;
   height: 90%;
   width: 65%;
 }
+
 .header-style {
   margin-right: 52%;
 }

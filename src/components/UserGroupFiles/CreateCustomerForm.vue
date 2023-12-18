@@ -2,36 +2,30 @@
   <div class="create-form-container">
     <b-form class="mt-3">
       <b-row> </b-row>
-<div class="groupName">
-      <b-row>
-        <b-col cols="5">
-          <b-form-group id="group-name" label="Group Name" label-for="group-name">
-            <b-form-input
-              id="group-name"
-              type="text"
-              placeholder="Group Name"
-              v-model="group.group_name"
-              :state="groupNameState"
-              :valid="groupNameState"
-            ></b-form-input>
-            <b-form-invalid-feedback>
-             group name must be between 5 and 45 characters.
-            </b-form-invalid-feedback>
-          </b-form-group>
-        </b-col>
-     
-      </b-row>
-    </div>
+      <div class="groupName">
+        <b-row>
+          <b-col cols="5">
+            <b-form-group id="group-name" label="Group Name" label-for="group-name">
+              <b-form-input id="group-name" type="text" placeholder="Group Name" v-model="group.group_name"
+                :state="groupNameState" :valid="groupNameState"></b-form-input>
+              <b-form-invalid-feedback>
+                group name must be between 5 and 45 characters.
+              </b-form-invalid-feedback>
+            </b-form-group>
+          </b-col>
+
+        </b-row>
+      </div>
       <b-row>
         <div v-if="isUserNamesEmpty" class="selectionError">
-        <p>first choose a username</p>
-      </div>
+          <p>first choose a username</p>
+        </div>
         <b-col cols="5">
           <div class="users-container">
-          
-    <!-- <b-form-group id="user-list" label="User List" label-for="user-list"> -->
-     
-      <!-- <div>
+
+            <!-- <b-form-group id="user-list" label="User List" label-for="user-list"> -->
+
+            <!-- <div>
     <label for="multi-select">Multiple Select</label>
     <div class="select select--multiple">
       <select id="multi-select" multiple v-model="selectedUsernames">
@@ -44,41 +38,25 @@
   </div> -->
 
 
-      <multiselect
-    
-        v-model="selectedUserNames"
-        :options="userNames" 
-        :close-on-select="false"
-        :searchable="true"
-        placeholder="find user names"
-        id="selectedUserNames"
-        name="selectedUserNames"
-        :show-labels="false"
-        multiple 
-        class="custom-multiselect"
-      ></multiselect>
-   
+            <multiselect v-model="selectedUserNames" :options="userNames" :close-on-select="false" :searchable="true"
+              placeholder="find user names" id="selectedUserNames" name="selectedUserNames" :show-labels="false" multiple
+              class="custom-multiselect"></multiselect>
+
 
           </div>
-    <!-- </b-form-group> -->
-  </b-col>
-    
+          <!-- </b-form-group> -->
+        </b-col>
+
       </b-row>
       <b-row>
 
-</b-row>
+      </b-row>
 
 
       <b-row class="mt-4">
         <b-col cols="3">
-          <button
-          class="create-btn"
-            @click="addNewCustomer"
-            :disabled="
-              !groupNameState
-            "
-            >Add group</button
-          >
+          <button class="create-btn" @click="addNewCustomer" :disabled="!groupNameState
+            ">Add group</button>
         </b-col>
         <b-col>
           <button class="create-btn" @click="triggerClose">Close</button>
@@ -96,15 +74,15 @@ import { v4 as uuidv4 } from 'uuid'
 
 export default {
   name: 'CreateCustomerModal',
-  components:{
+  components: {
     Multiselect,
   },
   data() {
     return {
       selectedUserNames: [],
-      selectedRole:null,
-   group: {},
-      hasChanges:false,
+      selectedRole: null,
+      group: {},
+      hasChanges: false,
     }
   },
 
@@ -114,23 +92,19 @@ export default {
     ...mapGetters('group', ['allGroups']),
     ...mapGetters(['getUserName']),
 
-computedUserNames(){
-  return this.userName
-},
-      isUserNamesEmpty() {
-    return this.userNames.length === 0;
-  },
- 
+    computedUserNames() {
+      return this.userName
+    },
+    isUserNamesEmpty() {
+      return this.userNames.length === 0;
+    },
 
-    // isRoleSelected() {
-    //   return this.selectedRole !== null
-    // },
     formattedUserNames() {
-    return this.userNames.map((userName) => ({
-      value: userName,
-      text: userName,
-    }));
-  },
+      return this.userNames.map((userName) => ({
+        value: userName,
+        text: userName,
+      }));
+    },
     creationTimeState() {
       const currentDate = new Date()
       const hours = String(currentDate.getHours()).padStart(2, '0')
@@ -139,7 +113,7 @@ computedUserNames(){
       const time = `${hours}:${minus}:${seconds}`
       return time
     },
-  groupNameState() {
+    groupNameState() {
       if (this.group && this.group.group_name) {
         const groupNameLength = this.group.group_name.length
         return groupNameLength >= 5 && groupNameLength <= 45
@@ -150,64 +124,64 @@ computedUserNames(){
   },
   created() {
 
-  
-},
+
+  },
 
   watch: {
-  'group.group_name': 'updateHasChanges',
-  // ...
-},
+    'group.group_name': 'updateHasChanges',
+    // ...
+  },
 
-  
+
   methods: {
 
 
- userNameCheck(){
-  console.log('userNames are',this.userNames)
- },
-  
+    userNameCheck() {
+      console.log('userNames are', this.userNames)
+    },
+
     updateHasChanges() {
       this.hasChanges = true
     },
-    upadateCreator(){
+    upadateCreator() {
       if (this.hasChanges) {
-      const username=this.getUserName;
-this.group.creator_name=username;
-console.log('this is creator function')
-    }
-  },
-  userNamesWithOutQuote(){
-   let WithOutQuoteUser=this.selectedUserNames.join()
-   return WithOutQuoteUser
-  },
+        const username = this.getUserName;
+        this.group.creator_name = username;
+        console.log('this is creator function')
+      }
+    },
+    userNamesWithOutQuote() {
+      let WithOutQuoteUser = this.selectedUserNames.join()
+      return WithOutQuoteUser
+    },
 
-//   updatedType(){
-// this.group.user_type= this.selectedRole;
-//   },
+    //   updatedType(){
+    // this.group.user_type= this.selectedRole;
+    //   },
     triggerClose() {
       this.$emit('closeCreateModal')
     },
 
     async addNewCustomer() {
- this.upadateCreator();
+      this.upadateCreator();
 
       if (
-        this.groupNameState 
-    
+        this.groupNameState
+
       ) {
         // this.updatedType();
         let newGroup = {
           group_name: this.group.group_name,
-          creator_name:this.group.creator_name,
+          creator_name: this.group.creator_name,
           creation_time: this.group.creation_time,
           users_list: this.userNamesWithOutQuote(),
           id: uuidv4(),
         }
         try {
-        
+
 
           // Commit the mutation to update the Vuex store
-          await this.$store.dispatch('group/addGroup',newGroup)
+          await this.$store.dispatch('group/addGroup', newGroup)
           this.$emit('closeCreateModal') // Use the correct event name
           this.$emit('reloadDataTable')
           this.$emit('showSuccessAlert')
@@ -242,21 +216,22 @@ console.log('this is creator function')
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Lato:ital@1&display=swap');
 
-.groupMultiSelect{
-padding: 12%;
+.groupMultiSelect {
+  padding: 12%;
 }
-.create-btn{
+
+.create-btn {
   appearance: button;
   background-color: #4D4AE8;
   background-image: linear-gradient(180deg, rgba(255, 255, 255, .15), rgba(255, 255, 255, 0));
   border: 1px solid #4D4AE8;
   border-radius: 1rem;
-  box-shadow: rgba(255, 255, 255, 0.15) 0 1px 0 inset,rgba(46, 54, 80, 0.075) 0 1px 1px;
+  box-shadow: rgba(255, 255, 255, 0.15) 0 1px 0 inset, rgba(46, 54, 80, 0.075) 0 1px 1px;
   box-sizing: border-box;
   color: #FFFFFF;
   cursor: pointer;
   display: inline-block;
-  font-family: Inter,sans-serif;
+  font-family: Inter, sans-serif;
   font-size: 1rem;
   font-weight: 500;
   line-height: 1.5;
@@ -264,7 +239,7 @@ padding: 12%;
   padding: .5rem 1rem;
   text-align: center;
   text-transform: none;
-  transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+  transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out;
   user-select: none;
   -webkit-user-select: none;
   touch-action: manipulation;
@@ -319,8 +294,9 @@ padding: 12%;
 .selection-role-constainer {
   margin-left: 3%;
 }
+
 .custom-multiselect .multiselect__content-wrapper {
-  max-height: 200px; 
+  max-height: 200px;
   overflow-y: auto;
 }
 
@@ -329,16 +305,17 @@ padding: 12%;
 }
 
 
-.users-container{
-width: 110%;
-margin-left: -5%;
+.users-container {
+  width: 110%;
+  margin-left: -5%;
 }
-.selectionError{
 
-  margin-bottom:-5%;
+.selectionError {
+
+  margin-bottom: -5%;
 }
-.groupName{
+
+.groupName {
   margin-bottom: 4%;
 }
-
 </style>

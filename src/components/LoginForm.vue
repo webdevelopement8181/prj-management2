@@ -6,12 +6,7 @@
           <form @submit.prevent="validateForm" class="login-form">
             <h2>Login Form</h2>
             <label for="username">Username:</label>
-            <input
-              id="username"
-              type="text"
-              v-model="username"
-              placeholder="Username"
-            />
+            <input id="username" type="text" v-model="username" placeholder="Username" />
             <span class="error-message">{{ usernameError }}</span>
 
             <label for="password">Password:</label>
@@ -79,19 +74,26 @@ export default {
 
 .box-container {
   position: relative;
-  width: 380px; /* Adjust the width as needed */
-  height: 490px; /* Adjust the height as needed */
-  background-color: #e96479; /* New color */
-  border-radius: 60px 5px; /* Increased border-radius for the larger container */
+  width: 380px;
+  /* Adjust the width as needed */
+  height: 490px;
+  /* Adjust the height as needed */
+  background-color: #e96479;
+  /* New color */
+  border-radius: 60px 5px;
+  /* Increased border-radius for the larger container */
   display: flex;
   justify-content: center;
   align-items: center;
   margin-top: 9%;
 }
+
 .box {
   position: relative;
-  width: 90%; /* Adjust the width as needed */
-  height: 90%; /* Adjust the height as needed */
+  width: 90%;
+  /* Adjust the width as needed */
+  height: 90%;
+  /* Adjust the height as needed */
   background-color: #1c1c1c;
   border-radius: 10% 2.5%;
   overflow: hidden;
@@ -103,7 +105,8 @@ export default {
   align-items: center;
   justify-content: center;
   height: 100%;
-  padding: 5%; /* Added padding for better alignment */
+  padding: 5%;
+  /* Added padding for better alignment */
 }
 
 h2 {
@@ -140,5 +143,4 @@ button {
 
 button:hover {
   background-color: #ff387a;
-}
-</style>
+}</style>

@@ -41,10 +41,6 @@ export default {
     // Fetch the customer data from Vuex using the customer ID
     this.customer = this.getCustomerById(this.customerId)
   },
-  //   // this.username = this.getUsername;
-  // },
-  //   watch: {
-
   customerId: {
     immediate: true,
     handler(newCustomerId) {
