@@ -1,4 +1,5 @@
 <template>
+   
   <div class="main-div">
     <div class="container">
       <div class="box-container">
@@ -18,7 +19,9 @@
         </div>
       </div>
     </div>
+   
   </div>
+ 
 </template>
 
 <script>

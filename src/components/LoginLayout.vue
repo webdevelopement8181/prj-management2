@@ -1,4 +1,4 @@
-<!-- <template>
+<template>
   <div class="home">
    
     <LoginForm></LoginForm>
@@ -15,4 +15,4 @@ export default {
     LoginForm,
   },
 }
-</script> -->
+</script>

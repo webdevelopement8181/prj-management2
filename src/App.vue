@@ -1,12 +1,22 @@
 <template>
-  <div id="app">
-    <nav>
-      <!-- <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link> -->
-    </nav>
-    <router-view />
+  <div class="main-layout">
+    <!-- <AppHeader/> -->
+    <div class="content-container">
+      <router-view />
+    </div>
   </div>
 </template>
+<script>
+// @ is an alias to /src
+// import AppHeader from '../src/components/AppHeader/AppHeader.vue'
+
+export default {
+  name: 'HomeView',
+  components: {
+    // AppHeader,
+  },
+}
+</script>
 
 <style>
 #app {
@@ -28,5 +38,9 @@ nav a {
 
 nav a.router-link-exact-active {
   color: #42b983;
+}
+.content-container {
+  padding-top: 70px; /* Adjust the value based on the height of your app header */
+  padding: 20px; /* Additional padding as needed */
 }
 </style>

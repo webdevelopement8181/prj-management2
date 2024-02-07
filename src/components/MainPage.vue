@@ -1,7 +1,8 @@
 <template>
   <div>
+    <router-view />
     <AppHeader></AppHeader>
-  
+   
   </div>
 </template>
 <script>

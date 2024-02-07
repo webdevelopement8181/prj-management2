@@ -10,9 +10,9 @@
     <b-row>
 
     </b-row>
-    <div class="table-container">
+    <div class="table-container justify-content-end">
       <b-row class="mt-3">
-        <b-card>
+        <b-card class="ml-auto">
           <b-row align-h="between">
             <b-col cols="6">
               <h3 class="header-style">{{ tableHeader }}</h3>
@@ -73,22 +73,21 @@
       <DeleteFile @closeDeleteModal="closeDeleteModal" @reloadDataTable="getCustomerData"
         @showDeleteAlert="showDeleteSuccessModal" :customerId="customerId"></DeleteFile>
     </b-modal>
-    <AppHeader></AppHeader>
+    <!-- <AppHeader></AppHeader> -->
 
   </div>
 </template>
 
 <script>
-// import axios from "axios";
 import { mapGetters, mapState } from 'vuex'
 import CreateFile from '@/components/FileManagement/CreateFile.vue'
 import DeleteFile from '@/components/FileManagement/DeleteFile.vue'
-import AppHeader from '@/components/AppHeader/AppHeader.vue'
+// import AppHeader from '@/components/AppHeader/AppHeader.vue'
 
 
 export default {
   components: {
-    AppHeader,
+//  AppHeader,
     CreateFile,
     DeleteFile,
   },
@@ -175,7 +174,7 @@ export default {
     showAlertCreate() {
       this.showSuccessAlert = true
       this.dismissCountDown = this.dismissSecs
-      this.alertMessage = 'file was created successfully!'
+      // this.alertMessage = 'file was created successfully!'
     },
 
     showDeleteModal(id) {
@@ -251,13 +250,14 @@ export default {
   width: 65%;
 }
 
-.header-style {
-  margin-right: 52%;
-}
+/* .header-style {
+
+
+} */
 
 .table-container {
-  margin-left: 10%;
-  width: 80%;
-  height: 130%;
+margin-bottom:50%;
+color: aqua;
+ 
 }
 </style>

@@ -55,7 +55,7 @@
     <b-modal ref="delete-customer-modal" size="md" hide-footer title="Confirm Deletion">
 
     </b-modal>
-    <AppHeader></AppHeader>
+    <!-- <AppHeader></AppHeader> -->
 
   </div>
 </template>
@@ -64,13 +64,13 @@
 
 import { mapGetters, mapState } from 'vuex'
 
-import AppHeader from '@/components/AppHeader/AppHeader.vue'
+// import AppHeader from '@/components/AppHeader/AppHeader.vue'
 
 
 export default {
   components: {
 
-    AppHeader,
+    // AppHeader,
 
   },
   data() {

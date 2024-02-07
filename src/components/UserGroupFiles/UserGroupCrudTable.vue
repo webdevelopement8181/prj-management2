@@ -148,29 +148,24 @@
         :customerId="customerId"
       ></delete-customer-modal>
     </b-modal>
-    <AppHeader></AppHeader>
-    <!-- <AppFooter></AppFooter> -->
-    <!-- <AppMain></AppMain> -->
+    <!-- <AppHeader></AppHeader> -->
+    
   </div>
 </template>
 
 <script>
-// import axios from "axios";
+
 import { mapGetters, mapState } from 'vuex'
-// import CustomerOverview from '@/components/UserGroupFiles/CustomerOverview.vue'
 import CreateCustomerForm from '@/components/UserGroupFiles/CreateCustomerForm.vue'
 import EditCustomerForm from '@/components/UserGroupFiles/EditCustomerForm.vue'
 import DeleteCustomerModal from '@/components/UserGroupFiles/DeleteCustomerModal.vue'
-// import AppFooter from "../footer/AppFooter.vue";
-import AppHeader from '@/components/AppHeader/AppHeader.vue'
-// import AppMain from "../AppMain/AppMain.vue";
+
+// import AppHeader from '@/components/AppHeader/AppHeader.vue'
+
 
 export default {
   components: {
-    // AppFooter,
-    AppHeader,
-    // AppMain,
-    // CustomerOverview,
+    // AppHeader,
     CreateCustomerForm,
     EditCustomerForm,
     DeleteCustomerModal,
@@ -360,7 +355,8 @@ outline: 0;
 }
 
 .table-container {
-  margin-left: 10%;
+  margin-right: 30%;
+  margin-top: 10%;
   width: 80%;
   height: 130%;
 }

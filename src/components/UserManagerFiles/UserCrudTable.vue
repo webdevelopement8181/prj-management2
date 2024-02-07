@@ -101,29 +101,22 @@
       <delete-customer-modal @closeDeleteModal="closeDeleteModal" @reloadDataTable="getCustomerData"
         @showDeleteAlert="showDeleteSuccessModal" :customerId="customerId"></delete-customer-modal>
     </b-modal>
-    <AppHeader></AppHeader>
-    <!-- <AppFooter></AppFooter> -->
-    <!-- <AppMain></AppMain> -->
+    <!-- <AppHeader></AppHeader> -->
+   
   </div>
 </template>
 
 <script>
-// import axios from "axios";
 import { mapGetters, mapState } from 'vuex'
-// import CustomerOverview from '@/components/UserManagerFiles/CustomerOverview.vue'
 import CreateCustomerForm from '@/components/UserManagerFiles/CreateCustomerForm.vue'
 import EditCustomerForm from '@/components/UserManagerFiles/EditCustomerForm.vue'
 import DeleteCustomerModal from '@/components/UserManagerFiles/DeleteCustomerModal.vue'
-// import AppFooter from "../footer/AppFooter.vue";
-import AppHeader from '@/components/AppHeader/AppHeader.vue'
-// import AppMain from "../AppMain/AppMain.vue";
+// import AppHeader from '@/components/AppHeader/AppHeader.vue'
+
 
 export default {
   components: {
-    // AppFooter,
-    AppHeader,
-    // AppMain,
-    // CustomerOverview,
+    // AppHeader,
     CreateCustomerForm,
     EditCustomerForm,
     DeleteCustomerModal,
