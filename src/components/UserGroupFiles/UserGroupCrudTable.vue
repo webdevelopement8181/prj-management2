@@ -37,7 +37,7 @@
                   >
                     <!-- add customer part  icons and the text-->
                     <b-icon-plus class="text-white"></b-icon-plus>
-                    <span class="h6 text-white">New group</span>
+                    <span class="h6 text-white">{{ $t('new-group') }}</span>
                   </button>
                 </b-col>
               </b-row>
@@ -48,7 +48,7 @@
               striped
               hover
               :items="groups"
-              :fields="fields"
+              :fields=" translatedFields"
               class="text-center"
             >
               <!-- <template #cell(user_name)="data">
@@ -116,7 +116,7 @@
       </b-row>
     </div>
     <!--  Modal for adding new customers -->
-    <b-modal ref="create-customer-modal" size="xl" hide-footer title="New user">
+    <b-modal ref="create-customer-modal" size="xl" hide-footer :title="$t('new-user')">
       <create-customer-form
         @closeCreateModal="closeCreateModal"
         @reloadDataTable="getCustomerData"
@@ -125,7 +125,8 @@
     </b-modal>
 
    
-    <b-modal ref="edit-customer-modal" size="xl" hide-footer title="Edit user">
+    <b-modal ref="edit-customer-modal" size="xl" hide-footer :title="$t('edit-user')">
+
       <edit-customer-form
         @closeEditModal="closeEditModal"
         @reloadDataTable="getCustomerData"
@@ -135,12 +136,7 @@
     </b-modal>
 
  
-    <b-modal
-      ref="delete-customer-modal"
-      size="md"
-      hide-footer
-      title="Confirm Deletion"
-    >
+    <b-modal ref="delete-customer-modal" size="md" hide-footer :title="$t('confirm-deletion')">
       <delete-customer-modal
         @closeDeleteModal="closeDeleteModal"
         @reloadDataTable="getCustomerData"
@@ -176,46 +172,42 @@ export default {
       dismissCountDown: 0,
       showDismissibleAlert: false,
       // Note 'isActive' is left out and will not appear in the rendered table
-      fields: [
-        // {
-           {
-          key: 'group_name',
-          label: 'groupName',
-          sortable: false,
-        },
+      // fields: [
+      //   // {
+      //      {
+      //     key: 'group_name',
+      //     label: 'groupName',
+      //     sortable: false,
+      //   },
        
-        {
-          key: 'creator_name',
-          label: 'Creator Name',
-          sortable: false,
-        },
-        {
-          key: 'creation_time',
-          label: 'Creation Time',
-          sortable: false,
-        },
-        {
-          key: 'last_modifier',
-          label: 'Last Modifier',
-          sortable: false,
-        },
-        {
-          key: 'last_modification_time',
-          label: 'Last Modification Time',
-          sortable: false,
-        },
-        {
-          key: 'users_list',
-          label: ' Users',
-          sortable: false,
-        },
-        // {
-        //   key: 'user_group',
-        //   label: ' User Group',
-        //   sortable: false,
-        // },
-        'actions',
-      ],
+      //   {
+      //     key: 'creator_name',
+      //     label: 'Creator Name',
+      //     sortable: false,
+      //   },
+      //   {
+      //     key: 'creation_time',
+      //     label: 'Creation Time',
+      //     sortable: false,
+      //   },
+      //   {
+      //     key: 'last_modifier',
+      //     label: 'Last Modifier',
+      //     sortable: false,
+      //   },
+      //   {
+      //     key: 'last_modification_time',
+      //     label: 'Last Modification Time',
+      //     sortable: false,
+      //   },
+      //   {
+      //     key: 'users_list',
+      //     label: ' Users',
+      //     sortable: false,
+      //   },
+       
+      //   'actions',
+      // ],
       items: [],
       customerId: 0,
       tableHeader: '',
@@ -227,6 +219,47 @@ export default {
   computed: {
     ...mapState('group', ['groups']),
     ...mapGetters('group', ['allGroups']),
+    translatedFields(){
+      return[
+      {
+    key: 'group_name',
+    label: this.$t('group-name'),
+    sortable: false,
+  },
+  {
+    key: 'creator_name',
+    label: this.$t('creator-name'),
+    sortable: false,
+  },
+  {
+    key: 'creation_time',
+    label: this.$t('creation-time'),
+    sortable: false,
+  },
+  {
+    key: 'last_modifier',
+    label: this.$t('last-modifier'),
+    sortable: false,
+  },
+  {
+    key: 'last_modification_time',
+    label: this.$t('last-modification-time'),
+    sortable: false,
+  },
+  {
+    key: 'users_list',
+    label: this.$t('users'),
+    sortable: false,
+  },
+  {
+    key: 'actions',
+  label: this.$t('actions'),
+  }
+    
+      // ],
+      
+      ]
+    }
   },
 
   mounted() {

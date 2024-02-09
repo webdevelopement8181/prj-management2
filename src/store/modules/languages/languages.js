@@ -3,8 +3,9 @@ import Vue from 'vue';
 import VueI18n from 'vue-i18n';
 //
 import {eventBus} from '../../../eventBus'
-Vue.use(VueI18n);
 
+Vue.use(VueI18n);
+const rtlLanguages =  ['farsi'];
 // Function to load locale messages
 function loadLocaleMessages() {
   const locales = require.context('../../../locales', true, /[A-Za-z0-9-_\s]+\.json$/i);
@@ -13,12 +14,18 @@ function loadLocaleMessages() {
     const matched = key.match(/[A-Za-z0-9_]+\.json/i);
     if (matched && matched.length > 0) {
       const locale = matched[0].slice(0, -5); // Remove '.json' extension
-      messages[locale] = locales(key);
+      console.log('Locale:', locale); 
+      const isRTL = rtlLanguages.includes(locale); 
+      console.log("is rtl:",isRTL)
+      if (isRTL) {
+        messages[locale] = { ...locales(key), direction: 'rtl' };
+      } else {
+        messages[locale] = locales(key);
+      }
     }
   });
   return messages;
 }
-
 
 // Function to get the initial locale from local storage or use a default
 function getInitialLocale() {

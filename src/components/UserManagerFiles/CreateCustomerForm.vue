@@ -64,10 +64,7 @@
         </b-col>
    
       </b-row>
-      
-      <!-- <div v-if="isGroupNamesEmpty" class="selectionError">
-        <p>first choose a group name</p>
-      </div> -->
+
 <div class="multiselect-container">
       <b-row class=multiselect-container>
         <b-col cols="6">

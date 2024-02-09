@@ -1,5 +1,5 @@
 
-{
+{ 
   "user_management": "User Management",
   "file_management": "File Management",
   "manage_user_group": "Manage User Group",
@@ -12,5 +12,41 @@
   "first_name_label":"first Name",
   "first_name_placeholder":" first Name",
   "last_name_label":"last name",
-  "last_name_placeholder":"last name"
+  "last_name_placeholder":"last name",
+  "select_file_or_drag_here":"select file or drag here",
+  "select-image" :"select image",
+  "select-file":" select file",
+  "pdf-or-image":"pdf or image",
+  "upload-file": "upload file",
+  "are-you-sure":"are you sure that you want to delete this file?",
+  "not-reversible":"This action is not reversible and may result in the loss of files",
+  "delete-files": "Delete files",
+  "close":"close",
+  "new-file": "new file",
+
+  "File-name": "File Name",
+  "File-format": "File Format",
+  "size":"size",
+  "upload-time": "Upload Time",
+  "confirm-deletion": "Confirm Deletion",
+  "group-name": "Group Name",
+  "group-name-validation-message":"group name must be between 5 and 45 characters",
+  "find-user-names": "Find The User Names You Want",
+  "select-username-first":"Choose  The User Name First",
+  "add-group":"Add Group",
+  "creation-time":"Creation Time",
+  "last-modifier":"Last Modifier",
+  "last-modification-time":"last Modified Time",
+  "users-list":"Users List",
+  "actions":"Actions",
+  "creator-name":"Creator Name",
+  "users":"Users",
+  "new-group": "New group",
+  "new-user": "New user",
+  "invalid-group-name": "First name must be 48 characters at max level",
+"select-username": "First choose a username",
+"choose-group-names": "Choose group names",
+"update-user": "Update user",
+"edit-user": "Edit user"
+
 }

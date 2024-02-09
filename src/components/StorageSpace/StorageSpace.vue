@@ -25,7 +25,7 @@
             </b-col>
           </b-row>
           <b-row class="mt-3">
-            <b-table striped hover :items="files" :fields="fields" class="text-center">
+            <b-table striped hover :items="files" :fields="translationfields" class="text-center">
 
               <template #cell(creator_name)="data">
                 {{ data.item.file_name }}
@@ -39,11 +39,11 @@
               <template #cell(last_modifier)="data">
                 {{ data.item.upload_time }}
               </template>
-              <template #cell(customer_status)="data">
+              <!-- <template #cell(customer_status)="data">
                 <b-icon-bookmark-check-fill variant="success"
                   v-if="data.item.customer_status === 'active'"></b-icon-bookmark-check-fill>
                 <b-icon-bookmark-x-fill variant="danger" v-else></b-icon-bookmark-x-fill>
-              </template>
+              </template> -->
 
 
             </b-table>
@@ -79,32 +79,32 @@ export default {
       dismissCountDown: 0,
       showDismissibleAlert: false,
 
-      fields: [
+      // fields: [
 
-        {
-          key: 'file_name',
-          label: 'FileName',
-          sortable: false,
-        },
+      //   {
+      //     key: 'file_name',
+      //     label: 'FileName',
+      //     sortable: false,
+      //   },
 
-        {
-          key: 'file_format',
-          label: 'FileFormat',
-          sortable: false,
-        },
-        {
-          key: 'size',
-          label: 'Size',
-          sortable: false,
-        },
-        {
-          key: 'upload_time',
-          label: 'UploadTime',
-          sortable: false,
-        },
+      //   {
+      //     key: 'file_format',
+      //     label: 'FileFormat',
+      //     sortable: false,
+      //   },
+      //   {
+      //     key: 'size',
+      //     label: 'Size',
+      //     sortable: false,
+      //   },
+      //   {
+      //     key: 'upload_time',
+      //     label: 'UploadTime',
+      //     sortable: false,
+      //   },
 
-        //   'actions',
-      ],
+      //   //   'actions',
+      // ],
       items: [],
       customerId: 0,
       tableHeader: '',
@@ -116,7 +116,33 @@ export default {
   computed: {
     ...mapState('file', ['files']),
     ...mapGetters('file', ['allfiles']),
+    translationfields(){
+      return [
+      {
+        key: 'file_name',
+        label: this.$t('File-name'),
+        sortable: false,
+      },
+      {
+        key: 'file_format',
+        label: this.$t('File-format'),
+        sortable: false,
+      },
+      {
+        key: 'size',
+        label:  this.$t('size'),
+        sortable: false,
+      },
+      {
+        key: 'upload_time',
+        label:  this.$t('upload-time'),
+        sortable: false,
+      },
+      // 'actions',
+    ];
   },
+},
+
 
   mounted() {
     // this.fetchCustomers();

@@ -5,12 +5,13 @@
       <div class="groupName">
         <b-row>
           <b-col cols="5">
-            <b-form-group id="group-name" label="Group Name" label-for="group-name">
-              <b-form-input id="group-name" type="text" placeholder="Group Name" v-model="group.group_name"
+            <b-form-group id="group-name" :label="$t('group-name')"  label-for="group-name">
+              <b-form-input id="group-name" type="text" :placeholder="$t('group-name')" v-model="group.group_name"
                 :state="groupNameState" :valid="groupNameState"></b-form-input>
               <b-form-invalid-feedback>
-                group name must be between 5 and 45 characters.
-              </b-form-invalid-feedback>
+  {{ $t('group-name-validation-message') }}
+</b-form-invalid-feedback>
+
             </b-form-group>
           </b-col>
 
@@ -18,28 +19,14 @@
       </div>
       <b-row>
         <div v-if="isUserNamesEmpty" class="selectionError">
-          <p>first choose a username</p>
-        </div>
+  <p>{{ $t('select-username-first') }}</p>
+</div>
         <b-col cols="5">
           <div class="users-container">
 
-            <!-- <b-form-group id="user-list" label="User List" label-for="user-list"> -->
-
-            <!-- <div>
-    <label for="multi-select">Multiple Select</label>
-    <div class="select select--multiple">
-      <select id="multi-select" multiple v-model="selectedUsernames">
-        <option v-for="username in computedUserNames" :key="username" :value="username">
-          {{ username }}
-        </option>
-      </select>
-      <span class="focus"></span>
-    </div>
-  </div> -->
-
 
             <multiselect v-model="selectedUserNames" :options="userNames" :close-on-select="false" :searchable="true"
-              placeholder="find user names" id="selectedUserNames" name="selectedUserNames" :show-labels="false" multiple
+            :placeholder="$t('find-user-names')" id="selectedUserNames" name="selectedUserNames" :show-labels="false" multiple
               class="custom-multiselect"></multiselect>
 
 
@@ -55,11 +42,12 @@
 
       <b-row class="mt-4">
         <b-col cols="3">
-          <button class="create-btn" @click="addNewCustomer" :disabled="!groupNameState
-            ">Add group</button>
+          <button class="create-btn" @click="addNewCustomer" :disabled="!groupNameState">{{ $t('add-group') }}</button>
+
         </b-col>
         <b-col>
-          <button class="create-btn" @click="triggerClose">Close</button>
+          <button class="create-btn" @click="triggerClose">{{ $t('close') }}</button>
+
         </b-col>
       </b-row>
     </b-form>

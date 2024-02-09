@@ -4,39 +4,36 @@
       <div class="groupName">
         <b-row>
           <b-col cols="6">
-            <b-form-group id="group-name" label="group Name" label-for="group-name">
+            <b-form-group id="group-name" :label="$t('group-name')" label-for="group-name">
               <b-form-input id="group-name" type="text" :state="groupNameState" :valid="groupNameState"
                 v-model="group.group_name"></b-form-input>
               <b-form-invalid-feedback>
-                first name must be 48 characters at max level
+                {{ $t('invalid-group-name') }}
               </b-form-invalid-feedback>
             </b-form-group>
           </b-col>
         </b-row>
       </div>
       <div v-if="isUserNamesEmpty" class="selectionError">
-        <p>first choose a username</p>
+        <p>{{ $t('select-username') }}</p>
       </div>
       <div class="users-container">
         <b-row>
           <b-col cols="6">
             <multiselect v-model="selectedUserName" :options="userNames" :close-on-select="false" :searchable="true"
-              placeholder="choose group names" id="selectedUserName" name="selectedUserName" :show-labels="false" multiple
-              class="custom-multiselect">
-
+              :placeholder="$t('choose-group-names')" id="selectedUserName" name="selectedUserName"
+              :show-labels="false" multiple class="custom-multiselect">
             </multiselect>
           </b-col>
-
-
         </b-row>
       </div>
 
       <b-row class="mt-4">
         <b-col cols="3">
-          <button class="create-btn" @click="updateCustomer" :disabled="!groupNameState">Updateuser</button>
+          <button class="create-btn" @click="updateCustomer" :disabled="!groupNameState">{{ $t('update-user') }}</button>
         </b-col>
         <b-col>
-          <button class="create-btn" @click="triggerClose">Close</button>
+          <button class="create-btn" @click="triggerClose">{{ $t('close') }}</button>
         </b-col>
       </b-row>
     </b-form>

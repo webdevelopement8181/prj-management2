@@ -22,16 +22,21 @@
                 <b-col>
                   <!-- add sutomer the button -->
                   <b-button variant="primary" id="show-btn" @click="showCreateModal" class="btn">
-                    <!-- add customer part  icons and the text-->
-                    <b-icon-plus class="text-white"></b-icon-plus>
-                    <span class="h6 text-white">New File</span>
-                  </b-button>
+    <span class="text-white">
+        <b-icon-plus></b-icon-plus>
+        <span class="file-button" :style="{ fontSize: '16px' }" :dir="$i18n.locale === 'farsi' ? 'rtl' : ''">{{ $t('new-file') }}</span>
+
+
+    </span>
+</b-button>
+
                 </b-col>
               </b-row>
             </b-col>
           </b-row>
           <b-row class="mt-3">
-            <b-table striped hover :items="files" :fields="fields" class="text-center">
+            <b-table striped hover :items="files" :fields="translatedFields" class="text-center">
+
 
               <template #cell(creator_name)="data">
                 {{ data.item.file_name }}
@@ -65,11 +70,10 @@
       </b-row>
     </div>
     <!--  Modal for adding new customers -->
-    <b-modal ref="create-customer-modal" size="xl" hide-footer title="upload File">
-      <createFile @closeCreateModal="closeCreateModal" @reloadDataTable="getCustomerData"
-        @showSuccessAlert="showAlertCreate"></createFile>
-    </b-modal>
-    <b-modal ref="delete-customer-modal" size="md" hide-footer title="Confirm Deletion">
+    <b-modal ref="create-customer-modal" size="xl" hide-footer :title="$t('upload-file')">
+    <createFile @closeCreateModal="closeCreateModal" @reloadDataTable="getCustomerData" @showSuccessAlert="showAlertCreate"></createFile>
+</b-modal>
+<b-modal ref="delete-customer-modal" size="md" hide-footer :title="$t('confirm-deletion')">
       <DeleteFile @closeDeleteModal="closeDeleteModal" @reloadDataTable="getCustomerData"
         @showDeleteAlert="showDeleteSuccessModal" :customerId="customerId"></DeleteFile>
     </b-modal>
@@ -93,36 +97,37 @@ export default {
   },
   data() {
     return {
+      langKey: 0,
       dismissSecs: 10,
       dismissCountDown: 0,
       showDismissibleAlert: false,
-      // Note 'isActive' is left out and will not appear in the rendered table
-      fields: [
-        // {
-        {
-          key: 'file_name',
-          label: 'FileName',
-          sortable: false,
-        },
+  
+      // fields: [
+      //   // {
+      //   {
+      //     key: 'file_name',
+      //     label: this.$t('File-name'),
+      //     sortable: false,
+      //   },
 
-        {
-          key: 'file_format',
-          label: 'FileFormat',
-          sortable: false,
-        },
-        {
-          key: 'size',
-          label: 'Size',
-          sortable: false,
-        },
-        {
-          key: 'upload_time',
-          label: 'UploadTime',
-          sortable: false,
-        },
+      //   {
+      //     key: 'file_format',
+      //     label: this.$t('File-format'),
+      //     sortable: false,
+      //   },
+      //   {
+      //     key: 'size',
+      //     label:  this.$t('size'),
+      //     sortable: false,
+      //   },
+      //   {
+      //     key: 'upload_time',
+      //     label:  this.$t('upload-time'),
+      //     sortable: false,
+      //   },
 
-        'actions',
-      ],
+      //   'actions',
+      // ],
       items: [],
       customerId: 0,
       tableHeader: '',
@@ -130,11 +135,40 @@ export default {
       alertMessage: '',
     }
   },
-
+//added the header field to computed property for data reactivity
   computed: {
     ...mapState('file', ['files']),
     ...mapGetters('file', ['allfiles']),
+    
+    translatedFields() {
+    return [
+      {
+        key: 'file_name',
+        label: this.$t('File-name'),
+        sortable: false,
+      },
+      {
+        key: 'file_format',
+        label: this.$t('File-format'),
+        sortable: false,
+      },
+      {
+        key: 'size',
+        label:  this.$t('size'),
+        sortable: false,
+      },
+      {
+        key: 'upload_time',
+        label:  this.$t('upload-time'),
+        sortable: false,
+      },
+      {
+    key: 'actions',
+  label: this.$t('actions'),
+  }
+    ];
   },
+},
 
   mounted() {
 
@@ -260,4 +294,7 @@ margin-bottom:50%;
 color: aqua;
  
 }
+/* .file-button{
+  font-size: larger;
+} */
 </style>

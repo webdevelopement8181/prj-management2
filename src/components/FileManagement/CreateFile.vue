@@ -8,10 +8,10 @@
                         <font-awesome-icon :icon="['fas', 'upload']" style="font-size: 2.5em; color:#0F2167" />
                     </p>
                     <div id="start">
-                        <div class="upload-semi-text">Select a file or drag here</div>
-                        <div id="notimage" class="hidden">Please select an image</div>
-                        <span id="file-upload-btn" class="btn btn-primary" @click="handleFileUpload">Select a file</span>
-                        <div class="upload-semi-text" style="font-size: 13px;">PDF or Image</div>
+                        <div class="upload-semi-text">{{ $t('select_file_or_drag_here') }}</div>
+                        <div id="notimage" class="hidden">{{ $t('select-image') }}</div>
+                        <span id="file-upload-btn" class="btn btn-primary" @click="handleFileUpload">{{ $t('select-file') }}</span>
+                        <div class="upload-semi-text" style="font-size: 13px;">{{ $t('pdf-or-image') }}</div>
                     </div>
                 </label>
             </form>
