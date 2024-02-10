@@ -3,26 +3,26 @@
     <b-form class="mt-3">
       <b-row>
         <b-col cols="6">
-          <b-form-group id="user-name" label="user Name" label-for="user-name">
+          <b-form-group id="user-name" :label="$t('user_name_label')" label-for="user-name">
             <b-form-input id="user-name" type="text" readonly v-model="customer.user_name"></b-form-input>
           </b-form-group>
         </b-col>
 
         <b-col cols="6">
-          <b-form-group id="first-name" label="first Name" label-for="first-name">
-            <b-form-input id="first-name" type="text" placeholder="first Name" v-model="customer.first_name"
+          <b-form-group id="first-name" :label="$t('first_name_label')" label-for="first-name">
+            <b-form-input id="first-name" type="text" :placeholder="$t('first_name_placeholder')" v-model="customer.first_name"
               :state="firstNameState" :valid="firstNameState"></b-form-input>
             <b-form-invalid-feedback>
-              first name must be 48 characters at max level
+              {{ $t('name-validation-message') }}
             </b-form-invalid-feedback>
           </b-form-group>
         </b-col>
         <b-col cols="6">
-          <b-form-group id="last-name" label="last Name" label-for="last-name">
+          <b-form-group id="last-name" :label="$t('last_name_label')" label-for="last-name">
             <b-form-input id="last-name" type="text" placeholder="Last Name" v-model="customer.last_name"
               :state="lastNameState" :valid="lastNameState"></b-form-input>
             <b-form-invalid-feedback>
-              last name must be 48 characters at max level
+              {{ $t('name-validation-message') }}
             </b-form-invalid-feedback>
           </b-form-group>
 
@@ -34,7 +34,7 @@
         <b-row class=multiselect-container>
           <b-col cols="6">
             <multiselect v-model="selectedGroupNames" :options="groupNames" :close-on-select="false" :searchable="true"
-              placeholder="choose group names " id="selectedGroupNamess" name="selectedGroupNames" :show-labels="false"
+            :placeholder="$t('group-name')" id="selectedGroupNamess" name="selectedGroupNames" :show-labels="false"
               multiple class="custom-multiselect"></multiselect>
           </b-col>
         </b-row>
@@ -46,9 +46,9 @@
         <section class="radio-section">
           <div class="radio-list">
             <div class="radio-item"><input name="radio" id="radio2" type="radio" value="admin"
-                v-model="selectedRole"><label for="radio2">admin</label></div>
+                v-model="selectedRole"><label for="radio2">{{$t('admin')}}</label></div>
             <div class="radio-item"><input name="radio" id="radio3" type="radio" value="user"
-                v-model="selectedRole"><label for="radio3">user</label></div>
+                v-model="selectedRole"><label for="radio3">{{$t('user')}}</label></div>
           </div>
         </section>
 
@@ -57,10 +57,10 @@
       <b-row class="mt-4">
         <b-col cols="3">
           <button class="create-btn" @click="updateCustomer"
-            :disabled="!isRoleSelected || (!firstNameState && !lastNameState)">Updateuser</button>
+            :disabled="!isRoleSelected || (!firstNameState && !lastNameState)">{{ $t('update-user') }}</button>
         </b-col>
         <b-col>
-          <button class="create-btn" @click="triggerClose">Close</button>
+          <button class="create-btn" @click="triggerClose">{{ $t('close') }}</button>
         </b-col>
       </b-row>
     </b-form>

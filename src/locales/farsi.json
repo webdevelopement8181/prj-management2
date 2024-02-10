@@ -45,7 +45,19 @@
 "select-username": "ابتدا یک نام کاربری انتخاب کنید",
 "choose-group-names": "انتخاب نام‌های گروه",
 "update-user": "بروزرسانی کاربر",
-"edit-user": "ویرایش کاربر"
+"edit-user": "ویرایش کاربر",
+"user-name":"نام کاربری",
+"first-name":"نام",
+"last-name":"نام خانوادگی",
+"type":"نوع کاربر",
+"user-group":"نام گروه کاربری",
+"name-validation-message":" نام باید حداکثر 48 حرف باشد",
+"admin":"ادمین",
+"user":"کاربر",
+"add-user":"اضافه کردن کاربر"
+
+
+
 
 
   

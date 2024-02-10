@@ -21,7 +21,7 @@
               :valid="userNameState"
             ></b-form-input>
             <b-form-invalid-feedback>
-              User name must be between 5 and 45 characters.
+              {{ $t('group-name-validation-message') }}
             </b-form-invalid-feedback>
           </b-form-group>
         </b-col>
@@ -43,7 +43,8 @@
               :valid="firstNameState"
             ></b-form-input>
             <b-form-invalid-feedback>
-              first name must be 48 characters at max level
+              {{ $t('name-validation-message') }}
+              <!-- first name must be 48 characters at max level -->
             </b-form-invalid-feedback>
           </b-form-group>
         </b-col>
@@ -58,13 +59,14 @@
               :valid="lastNameState"
             ></b-form-input>
             <b-form-invalid-feedback>
-              last name must be 48 characters at max level
+              {{ $t('name-validation-message') }}
+              <!-- last name must be 48 characters at max level -->
             </b-form-invalid-feedback>
           </b-form-group>
         </b-col>
    
       </b-row>
-
+      <!-- placeholder="choose group names " -->
 <div class="multiselect-container">
       <b-row class=multiselect-container>
         <b-col cols="6">
@@ -73,7 +75,7 @@
         :options="groupNames" 
         :close-on-select="false"
         :searchable="true"
-        placeholder="choose group names "
+        :placeholder="$t('group-name')"
         id="selectedGroupNamess"
         name="selectedGroupNames"
         :show-labels="false"
@@ -87,8 +89,8 @@
 
         <section class="radio-section" >
 	<div class="radio-list" >
-		<div class="radio-item"><input name="radio" id="radio2" type="radio"     value="admin"  v-model="selectedRole"><label for="radio2">admin</label></div>
-		<div class="radio-item"><input name="radio" id="radio3" type="radio"   value="user"   v-model="selectedRole"><label for="radio3">user</label></div>
+		<div class="radio-item"><input name="radio" id="radio2" type="radio" value="admin" v-model="selectedRole"><label for="radio2">{{$t('admin')}}</label></div>
+          <div class="radio-item"><input name="radio" id="radio3" type="radio" value="user" v-model="selectedRole"><label for="radio3">{{$t('user')}}</label></div>
 	</div>
 </section>
       </b-row>
@@ -102,11 +104,11 @@
               !isRoleSelected ||
               (!firstNameState && !lastNameState)
             "
-            >Add Customer</button
+            >{{$t('add-user')}}</button
           >
         </b-col>
         <b-col>
-          <button class="create-btn" @click="triggerClose">Close</button>
+          <button class="create-btn" @click="triggerClose">{{ $t('close') }}</button>
         </b-col>
       </b-row>
     </b-form>

@@ -47,6 +47,16 @@
 "select-username": "First choose a username",
 "choose-group-names": "Choose group names",
 "update-user": "Update user",
-"edit-user": "Edit user"
+"edit-user": "Edit user",
+"user-name":"User Name",
+"first-name":"First Name",
+"last-name":"Last Name",
+"type":"Type",
+"user-group":"User Group",
+"name-validation-message":"name must be 48 charactor characters at muximum level",
+"admin":"admin",
+"user":"user",
+"add-user":"Add User"
+
 
 }

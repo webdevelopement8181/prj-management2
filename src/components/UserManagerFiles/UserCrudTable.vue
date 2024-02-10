@@ -25,14 +25,14 @@
                   <button class="btn" id="show-btn" @click="showCreateModal">
                     <!-- add customer part  icons and the text-->
                     <b-icon-plus class="text-white"></b-icon-plus>
-                    <span class="h6 text-white">New User</span>
+                    <span class="h6 text-white">{{ $t('new-user') }}</span>
                   </button>
                 </b-col>
               </b-row>
             </b-col>
           </b-row>
           <b-row class="mt-3">
-            <b-table striped hover :items="customers" :fields="fields" class="text-center">
+            <b-table striped hover :items="customers" :fields="translatedFields" class="text-center">
               <template #cell(user_name)="data">
                 {{ data.item.user_name }}
               </template>
@@ -84,20 +84,20 @@
       </b-row>
     </div>
     <!--  Modal for adding new customers -->
-    <b-modal ref="create-customer-modal" size="xl" hide-footer title="New user" id="create-modal">
+    <b-modal ref="create-customer-modal" size="xl" hide-footer :title="$t('new-user')" id="create-modal">
 
       <create-customer-form @closeCreateModal="closeCreateModal" @reloadDataTable="getCustomerData"
         @showSuccessAlert="showAlertCreate"></create-customer-form>
     </b-modal>
 
 
-    <b-modal ref="edit-customer-modal" size="xl" hide-footer title="Edit user">
+    <b-modal ref="edit-customer-modal" size="xl" hide-footer :title="$t('edit-user')">
       <edit-customer-form @closeEditModal="closeEditModal" @reloadDataTable="getCustomerData"
         @showSuccessAlert="showAlertUpdate" :customerId="customerId"></edit-customer-form>
     </b-modal>
 
 
-    <b-modal ref="delete-customer-modal" size="md" hide-footer title="Confirm Deletion">
+    <b-modal ref="delete-customer-modal" size="md" hide-footer :title="$t('confirm-deletion')">
       <delete-customer-modal @closeDeleteModal="closeDeleteModal" @reloadDataTable="getCustomerData"
         @showDeleteAlert="showDeleteSuccessModal" :customerId="customerId"></delete-customer-modal>
     </b-modal>
@@ -126,56 +126,56 @@ export default {
       dismissSecs: 10,
       dismissCountDown: 0,
       showDismissibleAlert: false,
-      // Note 'isActive' is left out and will not appear in the rendered table
-      fields: [
-        {
-          key: 'user_name',
-          label: 'UserName',
-          sortable: false,
-        },
-        {
-          key: 'first_name',
-          label: 'First Name',
-          sortable: false,
-        },
-        {
-          key: 'last_name',
-          label: 'Last Name',
-          sortable: false,
-        },
-        {
-          key: 'user_type',
-          label: 'Type',
-          sortable: false,
-        },
-        //
-        {
-          key: 'creator_name',
-          label: 'Creator Name',
-          sortable: false,
-        },
-        {
-          key: 'creation_time',
-          label: 'Creation Time',
-          sortable: false,
-        },
-        {
-          key: 'last_modifier',
-          label: 'Last Modifier',
-          sortable: false,
-        },
-        {
-          key: 'last_modification_time',
-          label: 'Last Modification Time',
-          sortable: false,
-        },
-        {
-          key: 'user_group',
-          label: ' User Group',
-          sortable: false,
-        },
-        'actions',
-      ],
+    
+      // fields: [
+      //   {
+      //     key: 'user_name',
+      //     label: 'UserName',
+      //     sortable: false,
+      //   },
+      //   {
+      //     key: 'first_name',
+      //     label: 'First Name',
+      //     sortable: false,
+      //   },
+      //   {
+      //     key: 'last_name',
+      //     label: 'Last Name',
+      //     sortable: false,
+      //   },
+      //   {
+      //     key: 'user_type',
+      //     label: 'Type',
+      //     sortable: false,
+      //   },
+      //   //
+      //   {
+      //     key: 'creator_name',
+      //     label: 'Creator Name',
+      //     sortable: false,
+      //   },
+      //   {
+      //     key: 'creation_time',
+      //     label: 'Creation Time',
+      //     sortable: false,
+      //   },
+      //   {
+      //     key: 'last_modifier',
+      //     label: 'Last Modifier',
+      //     sortable: false,
+      //   },
+      //   {
+      //     key: 'last_modification_time',
+      //     label: 'Last Modification Time',
+      //     sortable: false,
+      //   },
+      //   {
+      //     key: 'user_group',
+      //     label: ' User Group',
+      //     sortable: false,
+      //   },
+      //   'actions',
+      // ],
       items: [],
       numberOfCustomers: 0,
       activeCustomers: 0,
@@ -191,6 +191,63 @@ export default {
   computed: {
     ...mapState('customer', ['customers']),
     ...mapGetters('customer', ['allCustomers']),
+    translatedFields()  {
+    return[
+      {
+    key: 'user_name',
+    label: this.$t('user-name'),
+    sortable: false,
+  },
+  {
+          key: 'first_name',
+          label: this.$t('first-name'),
+          sortable: false,
+        },
+        {
+          key: 'last_name',
+          label: this.$t('last-name'),
+          sortable: false,
+        },
+        {
+          key: 'user_type',
+          label: this.$t('type'),
+          sortable: false,
+        },
+        {
+    key: 'creator_name',
+    label: this.$t('creator-name'),
+    sortable: false,
+  },
+  {
+    key: 'creation_time',
+    label: this.$t('creation-time'),
+    sortable: false,
+  },
+  {
+    key: 'last_modifier',
+    label: this.$t('last-modifier'),
+    sortable: false,
+  },
+    {
+    key: 'last_modification_time',
+    label: this.$t('last-modification-time'),
+    sortable: false,
+  },
+  {
+          key: 'user_group',
+          label: this.$t('user-group'),
+          sortable: false,
+        },
+  {
+    key: 'actions',
+  label: this.$t('actions'),
+  }
+    
+      // ],
+      
+      ]
+    }
+  
   },
 
   mounted() {
